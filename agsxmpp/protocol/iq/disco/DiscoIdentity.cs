@@ -59,7 +59,14 @@ namespace agsXMPP.protocol.iq.disco
 			this.TagName	= "identity";
 			this.Namespace	= Uri.DISCO_INFO;
 		}
-		
+
+        public DiscoIdentity(string type, string name, string category) : this()
+        {
+            Type        = type;
+            Name        = name;
+            Category    = category;
+        }
+
 		public string Type
 		{
 			get { return GetAttribute("type"); }

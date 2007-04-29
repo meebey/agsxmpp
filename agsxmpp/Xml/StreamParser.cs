@@ -100,6 +100,8 @@ namespace agsXMPP.Xml
 			get { return m_Depth; }
 		}
 
+        private Object thisLock = new Object();
+
 		/// <summary>
 		/// Put bytes into the parser.
 		/// </summary>
@@ -107,117 +109,114 @@ namespace agsXMPP.Xml
 		/// <param name="offset">Offset into buf to start at</param>
 		/// <param name="length">Number of bytes to write</param>
 		public void Push(byte[] buf, int offset, int length)
-		{			
-			// or assert, really, but this is a little nicer.
-			if (length == 0)
-				return;
+		{
+            
+            // or assert, really, but this is a little nicer.
+            if (length == 0)
+                return;
 
-			// No locking is required.  Read() won't get called again
-			// until this method returns.  Keep in mind that we're
-			// already on a thread in a ThreadPool, which is created
-			// and managed by System.IO at the end of the day.
+            // No locking is required.  Read() won't get called again
+            // until this method returns.
 
-			// TODO: only do this copy if we have a partial token at the
-			// end of parsing.
-			byte[] copy = new byte[length];
-			System.Buffer.BlockCopy(buf, offset, copy, 0, length);
-			m_buf.Write(copy);
-        
-			byte[] b = m_buf.GetBuffer();
-			int off = 0;
-			TOK tok = TOK.END_TAG;
-			ContentToken ct = new ContentToken();
-			try
-			{
-				while (off < b.Length)
-				{
-					if (m_cdata)
-						tok = m_enc.tokenizeCdataSection(b, off, b.Length, ct);
-					else
-						tok = m_enc.tokenizeContent(b, off, b.Length, ct);
+            // TODO: only do this copy if we have a partial token at the
+            // end of parsing.
+            byte[] copy = new byte[length];
+            System.Buffer.BlockCopy(buf, offset, copy, 0, length);
+            m_buf.Write(copy);
 
-					switch (tok)
-					{
-						case TOK.EMPTY_ELEMENT_NO_ATTS:
-						case TOK.EMPTY_ELEMENT_WITH_ATTS:
-							StartTag(b, off, ct, tok);
-							EndTag(b, off, ct, tok);
-							break;
-						case TOK.START_TAG_NO_ATTS:
-						case TOK.START_TAG_WITH_ATTS:
-							StartTag(b, off, ct, tok);
-							break;
-						case TOK.END_TAG:
-							EndTag(b, off, ct, tok);
-							break;
-						case TOK.DATA_CHARS:
-						case TOK.DATA_NEWLINE:
-							AddText(utf.GetString(b, off, ct.TokenEnd - off));
-							break;
-						case TOK.CHAR_REF:
-						case TOK.MAGIC_ENTITY_REF:
-							AddText(new string(new char[] {ct.RefChar1}));
-							break;
-						case TOK.CHAR_PAIR_REF:
-							AddText(new string(new char[] {ct.RefChar1,
-																ct.RefChar2}));
-							break;
-						case TOK.COMMENT:
-							if (current != null)
-							{
-								// <!-- 4
-								//  --> 3
-								int start = off + 4*m_enc.MinBytesPerChar;
-								int end = ct.TokenEnd - off -
-									7*m_enc.MinBytesPerChar;
-								string text = utf.GetString(b, start, end);
-								current.AddChild(new Comment(text));
-							}
-							break;
-						case TOK.CDATA_SECT_OPEN:
-							m_cdata = true;
-							break;
-						case TOK.CDATA_SECT_CLOSE:
-							m_cdata = false;
-							break;
-						case TOK.XML_DECL:
-							// thou shalt use UTF8, and XML version 1.
-							// i shall ignore evidence to the contrary...
-                    
-							// TODO: Throw an exception if these assuptions are
-							// wrong
-							break;
-						case TOK.ENTITY_REF:
-						case TOK.PI:
+            byte[] b = m_buf.GetBuffer();
+            int off = 0;
+            TOK tok = TOK.END_TAG;
+            ContentToken ct = new ContentToken();
+            try
+            {
+                while (off < b.Length)
+                {
+                    if (m_cdata)
+                        tok = m_enc.tokenizeCdataSection(b, off, b.Length, ct);
+                    else
+                        tok = m_enc.tokenizeContent(b, off, b.Length, ct);
+
+                    switch (tok)
+                    {
+                        case TOK.EMPTY_ELEMENT_NO_ATTS:
+                        case TOK.EMPTY_ELEMENT_WITH_ATTS:
+                            StartTag(b, off, ct, tok);
+                            EndTag(b, off, ct, tok);
+                            break;
+                        case TOK.START_TAG_NO_ATTS:
+                        case TOK.START_TAG_WITH_ATTS:
+                            StartTag(b, off, ct, tok);
+                            break;
+                        case TOK.END_TAG:
+                            EndTag(b, off, ct, tok);
+                            break;
+                        case TOK.DATA_CHARS:
+                        case TOK.DATA_NEWLINE:
+                            AddText(utf.GetString(b, off, ct.TokenEnd - off));
+                            break;
+                        case TOK.CHAR_REF:
+                        case TOK.MAGIC_ENTITY_REF:
+                            AddText(new string(new char[] { ct.RefChar1 }));
+                            break;
+                        case TOK.CHAR_PAIR_REF:
+                            AddText(new string(new char[] {ct.RefChar1,
+															ct.RefChar2}));
+                            break;
+                        case TOK.COMMENT:
+                            if (current != null)
+                            {
+                                // <!-- 4
+                                //  --> 3
+                                int start = off + 4 * m_enc.MinBytesPerChar;
+                                int end = ct.TokenEnd - off -
+                                    7 * m_enc.MinBytesPerChar;
+                                string text = utf.GetString(b, start, end);
+                                current.AddChild(new Comment(text));
+                            }
+                            break;
+                        case TOK.CDATA_SECT_OPEN:
+                            m_cdata = true;
+                            break;
+                        case TOK.CDATA_SECT_CLOSE:
+                            m_cdata = false;
+                            break;
+                        case TOK.XML_DECL:
+                            // thou shalt use UTF8, and XML version 1.
+                            // i shall ignore evidence to the contrary...
+
+                            // TODO: Throw an exception if these assuptions are
+                            // wrong
+                            break;
+                        case TOK.ENTITY_REF:
+                        case TOK.PI:
 #if CF
-						throw new util.NotImplementedException("Token type not implemented: " + tok);
+					    throw new util.NotImplementedException("Token type not implemented: " + tok);
 #else
-						throw new System.NotImplementedException("Token type not implemented: " + tok);
+                        throw new System.NotImplementedException("Token type not implemented: " + tok);
 #endif
-					}
-					off = ct.TokenEnd;
-				}
-			}
-			catch (PartialTokenException)
-			{
-				// ignored;
-			}
-			catch (ExtensibleTokenException)
-			{
-				// ignored;
-			}
-			catch (Exception ex)
-			{
-				if (OnStreamError != null)
-					OnStreamError(this, ex);
-			}
-			finally
-			{
-				m_buf.Clear(off);
-			}
-			
-		}
-		
+                    }
+                    off = ct.TokenEnd;
+                }
+            }
+            catch (PartialTokenException)
+            {
+                // ignored;
+            }
+            catch (ExtensibleTokenException)
+            {
+                // ignored;
+            }
+            catch (Exception ex)
+            {
+                if (OnStreamError != null)
+                    OnStreamError(this, ex);
+            }
+            finally
+            {
+                m_buf.Clear(off);
+            }            
+		}		
 		
 		private void StartTag(byte[] buf, int offset,
 			ContentToken ct, TOK tok)
@@ -342,7 +341,7 @@ namespace agsXMPP.Xml
 
 			Element parent = (Element) current.Parent;
 			if (parent == null)
-			{
+            {               
                 DoRaiseOnStreamElement(current);
                 //if (OnStreamElement!=null)
                 //    OnStreamElement(this, current);

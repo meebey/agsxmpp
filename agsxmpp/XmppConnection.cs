@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading;
 
 using agsXMPP.net;
+using agsXMPP.protocol.extensions.bosh;
 
 using agsXMPP.Xml;
 using agsXMPP.Xml.Dom;
@@ -38,8 +39,7 @@ namespace agsXMPP
 	/// abstract base class XmppConnection.
 	/// </summary>
 	public abstract class XmppConnection
-	{
-		
+	{	
 
         private Timer m_KeepaliveTimer = null;
 
@@ -69,8 +69,7 @@ namespace agsXMPP
         /// <summary>
         /// Data was sent to the socket for sending
         /// </summary>
-        public event BaseSocket.OnSocketDataHandler OnWriteSocketData;
-
+        public event BaseSocket.OnSocketDataHandler OnWriteSocketData;                      
         
 		#endregion
 
@@ -80,11 +79,12 @@ namespace agsXMPP
 			InitSocket();
 			// Streamparser stuff
 			m_StreamParser = new StreamParser();
-			m_StreamParser.OnStreamStart		+= new StreamHandler(StreamParserOnStreamStart);
+			
+            m_StreamParser.OnStreamStart		+= new StreamHandler(StreamParserOnStreamStart);
 			m_StreamParser.OnStreamEnd			+= new StreamHandler(StreamParserOnStreamEnd);
 			m_StreamParser.OnStreamElement		+= new StreamHandler(StreamParserOnStreamElement);
 			m_StreamParser.OnStreamError		+= new StreamError	(StreamParserOnStreamError);
-            m_StreamParser.OnError              += new ErrorHandler(StreamParserOnError);
+            m_StreamParser.OnError              += new ErrorHandler (StreamParserOnError);            
 		}
         
 		public XmppConnection(agsXMPP.net.SocketConnectionType type) : this()
@@ -237,7 +237,7 @@ namespace agsXMPP
 		{
 			
 		}
-	
+        
 		public virtual void SocketOnReceive(object sender, byte[] data, int count)
 		{
             
@@ -247,35 +247,35 @@ namespace agsXMPP
             // put the received bytes to the parser
             lock (this)
             {
-				StreamParser.Push(data, 0, count);
+                StreamParser.Push(data, 0, count);
 			}
 		}
 
         public virtual void SocketOnError(object sender, Exception ex)
         {
-            FireOnError(sender, ex);
+   
         }
 		#endregion
 
 		#region << StreamParser Events >>
 		public virtual void StreamParserOnStreamStart		(object sender, Node e)
-		{
-			string xml = e.ToString().Trim();
-			xml = xml.Substring(0, xml.Length-2) + ">";
+		{            
+            string xml = e.ToString().Trim();
+            xml = xml.Substring(0, xml.Length - 2) + ">";
 
-			this.FireOnReadXml(this, xml);
+            this.FireOnReadXml(this, xml);
 
-			protocol.Stream st = (protocol.Stream) e;
-			if (st!= null)
-			{
-				m_StreamId		= st.StreamId;
-				m_StreamVersion = st.Version;
-			}
+            protocol.Stream st = (protocol.Stream)e;
+            if (st != null)
+            {
+                m_StreamId = st.StreamId;
+                m_StreamVersion = st.Version;
+            }        
 		}
 
 		public virtual void StreamParserOnStreamEnd			(object sender, Node e)
 		{
-			Element tag = e as Element;
+            Element tag = e as Element;
 			
 			string qName;
 			if (tag.Prefix == null)
@@ -316,8 +316,11 @@ namespace agsXMPP
 			// Socket Stuff
 			if (m_SocketConnectionType == agsXMPP.net.SocketConnectionType.HttpPolling)
 				m_ClientSocket	= new PollClientSocket();
-			else
-				m_ClientSocket	= new ClientSocket();
+            // TODO, most Bosh implemtation are not ready for production, so delay this task
+            //else if (m_SocketConnectionType == agsXMPP.net.SocketConnectionType.Bosh)
+            //    m_ClientSocket = new BoshClientSocket();
+            else
+                m_ClientSocket = new ClientSocket();
 		
 			m_ClientSocket.OnConnect	+= new ObjectHandler(SocketOnConnect);
 			m_ClientSocket.OnDisconnect	+= new ObjectHandler(SocketOnDisconnect);

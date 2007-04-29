@@ -122,6 +122,13 @@ namespace agsXMPP.Factory
 			AddElementType("auth",				Uri.SASL,					typeof(agsXMPP.protocol.sasl.Auth));
 			AddElementType("response",			Uri.SASL,					typeof(agsXMPP.protocol.sasl.Response));
 			AddElementType("challenge",			Uri.SASL,					typeof(agsXMPP.protocol.sasl.Challenge));
+            
+            // TODO, this is a dirty hacks for the buggy BOSH Proxy
+            // BEGIN
+            AddElementType("challenge",         Uri.CLIENT,                 typeof(agsXMPP.protocol.sasl.Challenge));
+            AddElementType("success",           Uri.CLIENT,                 typeof(agsXMPP.protocol.sasl.Success));
+            // END
+
 			AddElementType("failure",			Uri.SASL,					typeof(agsXMPP.protocol.sasl.Failure));
 			AddElementType("abort",				Uri.SASL,					typeof(agsXMPP.protocol.sasl.Abort));
 			AddElementType("success",			Uri.SASL,					typeof(agsXMPP.protocol.sasl.Success));
@@ -269,6 +276,9 @@ namespace agsXMPP.Factory
             AddElementType("subscription",      Uri.PUBSUB,                 typeof(agsXMPP.protocol.extensions.pubsub.Subscription));
             AddElementType("subscriptions",     Uri.PUBSUB,                 typeof(agsXMPP.protocol.extensions.pubsub.Subscriptions));
             AddElementType("unsubscribe",       Uri.PUBSUB,                 typeof(agsXMPP.protocol.extensions.pubsub.Unsubscribe));           
+
+            // HTTP Binding XEP-0124
+            AddElementType("body",              Uri.HTTP_BIND,              typeof(agsXMPP.protocol.extensions.bosh.Body));
             
 		}		
 		

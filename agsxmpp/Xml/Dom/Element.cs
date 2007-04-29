@@ -208,6 +208,25 @@ namespace agsXMPP.Xml.Dom
 				return 0;
 		}
 
+        /// <summary>
+        /// Reads a boolean Attribute, if the attrib is absent it returns also false.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public bool GetAttributeBool(string name)
+        {
+            if (HasAttribute(name))
+            {
+                string tmp = (string) m_Attributes[name];
+                if (tmp.ToLower() == "true")
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+
         public Jid GetAttributeJid(string name)
         {
             if (HasAttribute(name))
@@ -237,7 +256,7 @@ namespace agsXMPP.Xml.Dom
             }
             else
                 return double.NaN;
-        }
+        }        
 
         /// <summary>
         /// Get a Attribute of type double (Decimal seperator = ".")
@@ -656,6 +675,22 @@ namespace agsXMPP.Xml.Dom
         }
 
         /// <summary>
+        /// Writes a boolean attribute, the value is either 'true' or 'false'
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="val"></param>
+        public void SetAttribute(string name, bool val)
+        {
+            // When the attrib already exists then we overweite it
+            // So we must remove it first and add it again then
+            if (this.HasAttribute(name))
+            {
+                this.Attributes.Remove(name);
+            }
+            m_Attributes.Add(name, val == true ? "true" : "false");
+        }
+
+        /// <summary>
         /// Set a attribute of type Jid
         /// </summary>
         /// <param name="name"></param>
@@ -803,6 +838,47 @@ namespace agsXMPP.Xml.Dom
 					return null;
 			}
 		}
+
+        internal string StartTag()
+        {
+            System.IO.StringWriter sw = new StringWriter();
+            XmlTextWriter tw = new XmlTextWriter(sw);
+            tw.Formatting = Formatting.None;
+                        
+            if (this.Prefix == null)
+                tw.WriteStartElement(this.TagName);
+            else
+                tw.WriteStartElement(this.Prefix + ":" + this.TagName);
+
+            // Write Namespace
+            if (this.Namespace != null
+                && this.Namespace.Length != 0
+                )
+            {
+                if (this.Prefix == null)
+                    tw.WriteAttributeString("xmlns", this.Namespace);
+                else
+                    tw.WriteAttributeString("xmlns:" + this.Prefix, this.Namespace);
+            }
+
+            foreach (string attName in this.Attributes.Keys)
+            {
+                tw.WriteAttributeString(attName, this.Attribute(attName));
+            }
+                        
+            tw.Flush();
+            tw.Close();
+            
+            return sw.ToString().Replace("/>", ">");
+        }
+        
+        internal string EndTag()
+        {
+            if (this.Prefix == null)
+                return "</" + this.TagName + ">";
+            else
+                return "</" + this.Prefix + ":" + this.TagName + ">";
+        }
 
 		#region << Xml Select Functions >>
         /// <summary>

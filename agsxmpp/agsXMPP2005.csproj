@@ -103,6 +103,7 @@
     <Compile Include="Idn\RFC3454.cs" />
     <Compile Include="Idn\Stringprep.cs" />
     <Compile Include="Idn\StringprepException.cs" />
+    <Compile Include="net\BoshClientSocket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -162,6 +163,7 @@
     <Compile Include="protocol\extensions\bytestreams\UdpSuccess.cs" />
     <Compile Include="protocol\extensions\caps\Capabilities.cs" />
     <Compile Include="protocol\extensions\html\Body.cs" />
+    <Compile Include="protocol\extensions\bosh\Body.cs" />
     <Compile Include="protocol\extensions\nickname\Nickname.cs" />
     <Compile Include="protocol\extensions\ping\Ping.cs" />
     <Compile Include="protocol\extensions\ping\PingIq.cs" />

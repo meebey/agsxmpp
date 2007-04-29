@@ -36,6 +36,12 @@ namespace agsXMPP.net
 		/// <summary>
 		/// A HTTP Polling Socket connection (JEP-0025)
 		/// </summary>
-		HttpPolling
+		HttpPolling,
+
+        /// <summary>
+        /// <para>XEP-0124: Bidirectional-streams Over Synchronous HTTP (BOSH)</para>
+        /// <para>http://www.xmpp.org/extensions/xep-0124.html</para>
+        /// </summary>
+        //Bosh
 	}
 }

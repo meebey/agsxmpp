@@ -1,5 +1,12 @@
 version 0.93
 ============
+- improvements on socket errors
+- imporvements in resource binding. Leave resource empty and the server will asign a resource for you.
+- Added ClientName and ClientFeatures
+- Automatic response to DiscoInfo requests to clients
+
+version 0.93
+============
 - improvements in XmppComponentConnection
 - improved Keep Alive logic
 - OnXmppErrorHandler -> XmppElementHandler

@@ -223,6 +223,9 @@ namespace agsXMPP
         public const string PUBSUB_EVENT        = "http://jabber.org/protocol/pubsub#event";        
         public const string PUBSUB_OWNER        = "http://jabber.org/protocol/pubsub#owner";
 
+        // Http-Binding XEP-0124
+        public const string HTTP_BIND           = "http://jabber.org/protocol/httpbind";
+
 	}
 	
 }

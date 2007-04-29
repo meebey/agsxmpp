@@ -44,7 +44,8 @@ namespace agsXMPP
 		public delegate void RouteHandler	(object sender, Route r);        
 
 		private bool						m_CleanUpDone;
-
+        private bool						m_StreamStarted;
+        
 		#region << Constructors >>
 		/// <summary>
 		/// Creates a new Component Connection to a given server and port
@@ -136,6 +137,10 @@ namespace agsXMPP
         /// </summary>
         public event XmppElementHandler     OnStreamError;
 
+        /// <summary>
+        /// Event occurs on Socket Errors
+        /// </summary>
+        public event ErrorHandler           OnSocketError;
 
         /// <summary>
         /// 
@@ -175,7 +180,10 @@ namespace agsXMPP
 		}
 
 		private void _Open()
-		{			
+		{
+            m_CleanUpDone   = false;
+            m_StreamStarted = false;
+
             if (ConnectServer == null)
                 SocketConnect(base.Server, base.Port);
             else
@@ -214,8 +222,10 @@ namespace agsXMPP
 		public override void StreamParserOnStreamStart(object sender, Node e)
 		{
 			base.StreamParserOnStreamStart (sender, e);
+            
+            m_StreamStarted = true;
 			
-			Login();
+            Login();
 		}
 
 		public override void StreamParserOnStreamEnd(object sender, Node e)
@@ -303,16 +313,24 @@ namespace agsXMPP
 			if(!m_CleanUpDone)
 				CleanupSession();
 		}
-		#endregion
 
-
-        private void InitSession()
+        public override void SocketOnError(object sender, Exception ex)
         {
+            base.SocketOnError(sender, ex);
+        
+            if (m_StreamStarted && !m_CleanUpDone)
+                CleanupSession();            
 
+            if (OnSocketError != null)
+                OnSocketError(this, ex);
+                   
         }
+		#endregion
+                    
 
 		private void CleanupSession()
 		{
+            // This cleanup has only to be done if we were able to connect and teh XMPP Stream was started
             DestroyKeepAliveTimer();			
 			m_CleanUpDone = true;
 			StreamParser.Reset();

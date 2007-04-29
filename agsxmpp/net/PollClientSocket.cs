@@ -271,11 +271,11 @@ namespace agsXMPP.net
 					}
 					else
 					{
-						//				m_CurrentKey = CreateNextKey(m_CurrentKey);
+						// m_CurrentKey = CreateNextKey(m_CurrentKey);
 						content = string.Format("{0};{1},{2}", m_ID, m_Keys[m_CurrentKeyIdx], data);
 					}
 				}
-				Console.WriteLine("used Key index: " + m_CurrentKeyIdx.ToString());
+				//Console.WriteLine("used Key index: " + m_CurrentKeyIdx.ToString());
 				m_CurrentKeyIdx--;				
 
 				byte[] bytes = Encoding.UTF8.GetBytes(content);
@@ -292,7 +292,7 @@ namespace agsXMPP.net
 				//req.KeepAlive		= true;
 				req.ContentType     = CONTENT_TYPE;
 				req.ContentLength	= bytes.Length;
-				req.Timeout = 5000;
+				req.Timeout         = 5000;
 				
 				Stream outputStream = req.GetRequestStream();
 				
@@ -419,9 +419,10 @@ namespace agsXMPP.net
 					{
 						if (m_SendQueue.Count == 0)
 						{
-							Console.WriteLine("Start Wait: " + m_Interval.ToString());							
+                            // Left for debugging
+							//Console.WriteLine("Start Wait: " + m_Interval.ToString());							
 							Monitor.Wait(m_Lock, m_Interval);							
-							Console.WriteLine("End Wait:");
+							//Console.WriteLine("End Wait:");
 						}
 					}
 #endif

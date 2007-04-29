@@ -23,6 +23,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections;
+using System.Collections.Specialized;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
@@ -34,13 +35,16 @@ using agsXMPP.protocol;
 using agsXMPP.protocol.iq;
 using agsXMPP.protocol.iq.auth;
 using agsXMPP.protocol.iq.agent;
+using agsXMPP.protocol.iq.disco;
 using agsXMPP.protocol.iq.roster;
 using agsXMPP.protocol.iq.register;
+using agsXMPP.protocol.iq.version;
 using agsXMPP.protocol.stream;
 using agsXMPP.protocol.stream.feature.compression;
 using agsXMPP.protocol.client;
 using agsXMPP.protocol.tls;
 
+using agsXMPP.protocol.extensions.caps;
 using agsXMPP.protocol.extensions.compression;
 
 using agsXMPP.exceptions;
@@ -62,20 +66,23 @@ namespace agsXMPP
 	/// Summary description for XmppClient.
 	/// </summary>
 	public class XmppClientConnection : XmppConnection
-	{
+	{       
+        
         const string SRV_RECORD_PREFIX = "_xmpp-client._tcp.";
 
 		// Delegates		
 		public delegate void RosterHandler				(object sender, RosterItem item);
 		public delegate void AgentHandler				(object sender, Agent agent);     
                
-		private SaslHandler					m_SaslHandler			= null;
+		private SaslHandler					m_SaslHandler		= null;
 	
 		private bool						m_CleanUpDone;
+        private bool                        m_StreamStarted;
         
         private SRVRecord[]                 _SRVRecords;
         private SRVRecord                   _currentSRVRecord;
-
+                
+        
 		#region << Properties and Member Variables >>
         private     string                  m_ClientLanguage    = "en";
         private     string                  m_ServerLanguage    = null;
@@ -103,6 +110,11 @@ namespace agsXMPP
 		private		bool					m_RegisterAccount	= false;
 		private		PresenceManager			m_PresenceManager;
 		private		RosterManager			m_RosterManager;
+               
+
+        private     Capabilities            m_Capabilities          = new Capabilities();
+        private     string                  m_ClientVersion         = "1.0";
+        private     bool                    m_EnableCapabilities    = false;
 
         /// <summary>
         /// The prefered Client Language Attribute
@@ -142,8 +154,8 @@ namespace agsXMPP
 		}
                 
 		/// <summary>
-		/// the resource for this connection
-		/// each connection to the server with the same jid needs a unique resource
+		/// the resource for this connection each connection to the server with the same jid needs a unique resource.
+        /// You can also set <code>Resource = null</code> and the server will assign a random Resource for you.
 		/// </summary>
 		public string Resource
 		{
@@ -158,7 +170,7 @@ namespace agsXMPP
 		{
 			get	
 			{ 
-				return BuildMyJid();
+				return BuildMyJid();               
 			}
 		}
 
@@ -189,13 +201,13 @@ namespace agsXMPP
         /// <remarks>you have to call the method <b>SendMyPresence</b> to send your updated presence to the server.</remarks>
 		public int Priority
 		{
-			get
-			{
-				return m_Priority;
-			}
+			get { return m_Priority; }
 			set
 			{
-				m_Priority = value;
+                if (value > -128  &&  value < 128)
+                    m_Priority = value;
+                else
+                    throw new ArgumentException("The value MUST be an integer between -128 and +127");
 			}
 		}
 
@@ -205,14 +217,8 @@ namespace agsXMPP
         /// <remarks>you have to call the method <b>SendMyPresence</b> to send your updated presence to the server.</remarks>
 		public ShowType Show
 		{
-			get
-			{
-				return m_Show;
-			}
-			set
-			{
-				m_Show = value;
-			}
+			get { return m_Show; }
+			set { m_Show = value; }
 		}
 
         /// <summary>
@@ -223,14 +229,8 @@ namespace agsXMPP
         /// <remarks>default value is <b>true</b></remarks>
 		public bool AutoRoster
 		{
-			get
-			{
-				return m_AutoRoster;
-			}
-			set
-			{
-				m_AutoRoster = value;
-			}
+			get	{ return m_AutoRoster; }
+			set	{ m_AutoRoster = value;	}
 		}
 
 		/// <summary>
@@ -240,14 +240,8 @@ namespace agsXMPP
         /// <remarks>default value is <b>true</b></remarks>
 		public bool AutoAgents
 		{
-			get
-			{
-				return m_AutoAgents;
-			}
-			set
-			{
-				m_AutoAgents = value;
-			}
+			get	{ return m_AutoAgents; }
+			set	{ m_AutoAgents = value;	}
 		}
 
 		/// <summary>
@@ -255,10 +249,8 @@ namespace agsXMPP
 		/// </summary>
 		public bool UseSSL
 		{
-			get
-			{
-				return m_UseSSL;
-			}
+			get	{ return m_UseSSL; }
+
 #if SSL || MONOSSL
 			set
 			{
@@ -276,10 +268,8 @@ namespace agsXMPP
 		/// </summary>
 		public bool UseStartTLS
 		{
-			get
-			{
-				return m_UseStartTLS;
-			}
+			get { return m_UseStartTLS; }
+
 #if SSL || MONOSSL
 			set
 			{
@@ -298,14 +288,8 @@ namespace agsXMPP
         /// </summary>
         public bool UseCompression
         {
-            get
-			{
-				return m_UseCompression;
-			}
-			set
-			{
-				m_UseCompression = value;
-			}
+            get { return m_UseCompression; }
+			set	{ m_UseCompression = value;	}
         }
 
 		/// <summary>
@@ -313,10 +297,7 @@ namespace agsXMPP
 		/// </summary>
 		public bool Authenticated
 		{
-			get
-			{
-				return m_Authenticated;
-			}				
+			get { return m_Authenticated; }				
 		}
 
 		/// <summary>
@@ -324,10 +305,7 @@ namespace agsXMPP
 		/// </summary>
 		public bool Binded
 		{
-			get
-			{
-				return m_Binded;
-			}				
+			get { return m_Binded; }				
 		}
 
 		/// <summary>
@@ -363,7 +341,29 @@ namespace agsXMPP
 		{
 			get { return m_PresenceManager; }
 		}
+        
+       
+        public bool EnableCapabilities
+        {
+            get { return m_EnableCapabilities; }
+            set { m_EnableCapabilities = value; }
+        }
 
+        public string ClientVersion
+        {
+            get { return m_ClientVersion; }
+            set
+            {
+                m_ClientVersion         = value;
+                m_Capabilities.Version  = value;
+            }
+        }
+
+        public Capabilities Capabilities
+        {
+            get { return m_Capabilities; }
+            set { m_Capabilities = value; }
+        }
 		#endregion
 		
 		#region << Events >>			
@@ -408,12 +408,12 @@ namespace agsXMPP
 		/// e.g. wrong password, user doesnt exist etc...
 		/// </summary>
 		public event XmppElementHandler			OnAuthError;
-        
+
         /// <summary>
         /// Event occurs on Socket Errors
         /// </summary>
         public event ErrorHandler               OnSocketError;
-		
+        		
 		public event ObjectHandler				OnClose;
 
 
@@ -497,7 +497,7 @@ namespace agsXMPP
 			m_MessageGrabber	= new MessageGrabber(this);
             m_PresenceGrabber   = new PresenceGrabber(this);
 			m_PresenceManager	= new PresenceManager(this);
-			m_RosterManager		= new RosterManager(this);
+			m_RosterManager		= new RosterManager(this);            
 		}
 
 		public XmppClientConnection(SocketConnectionType type) : this()
@@ -516,6 +516,7 @@ namespace agsXMPP
 		}
 		#endregion
 		
+        
         /// <summary>
         /// This method open the connections to the xmpp server and authenticates you to ther server.
         /// This method is async, don't assume you are already connected when it returns. You have to wait for the OnLogin Event
@@ -590,7 +591,7 @@ namespace agsXMPP
 		{
 			base.SocketOnConnect(sender);
 
-			SendStreamHeader(true);
+            SendStreamHeader(true);
 		}
 
 		public override void SocketOnDisconnect(object sender)
@@ -620,14 +621,15 @@ namespace agsXMPP
             }
             else
             {
-                //if (!m_CleanUpDone)
-                //    CleanupSession();
 
+                // Fires the socket error
                 if (OnSocketError != null)
                     OnSocketError(this, ex);
 
-                if (!m_CleanUpDone)
-                    CleanupSession();
+                // Only cleaneUp Session and raise on close if the stream already has started
+                // if teh stream gets closed because of a socket error we have to raise both errors fo course
+                if (m_StreamStarted && !m_CleanUpDone)
+                    CleanupSession();                
             }            
         }
 		
@@ -635,7 +637,8 @@ namespace agsXMPP
 
 		private void _Open()
 		{
-            m_CleanUpDone = false;
+            m_CleanUpDone   = false;
+            m_StreamStarted = false;
 
 			StreamParser.Reset();
 #if SSL || MONOSSL
@@ -840,7 +843,13 @@ namespace agsXMPP
 		/// </summary>
 		public void SendMyPresence()
 		{
-			this.Send(new Presence(m_Show, m_Status, m_Priority));
+            Presence pres = new Presence(m_Show, m_Status, m_Priority);
+
+            // Add client caps when enabled
+            if (m_EnableCapabilities)
+                pres.AddChild(m_Capabilities);
+
+            this.Send(pres);
 		}
 
 		internal void RequestLoginInfo()
@@ -1148,6 +1157,10 @@ namespace agsXMPP
 		}
 		#endregion
 
+        
+
+       
+
 		private void OnAuthenticate(object sender, IQ iq, object data)
 		{			
 			if (iq.Type == IqType.result)
@@ -1167,8 +1180,8 @@ namespace agsXMPP
 				 *		<error code="401">Unauthorized</error>
 				 * </iq>
 				 * 
-				 */				 
-				if (OnAuthError!=null)
+				 */
+                if (OnAuthError!=null)
 					OnAuthError(this, iq);
 			}
 			
@@ -1185,15 +1198,18 @@ namespace agsXMPP
 		{
 			base.StreamParserOnStreamStart(this, e);
 
-			//m_CleanUpDone = false; moved that to _Open();
+            m_StreamStarted = true;
 
-			protocol.Stream st = (protocol.Stream) e;
-			if (st == null)
-				return;
+			//m_CleanUpDone = false; moved that to _Open();
+                            
+            protocol.Stream st = (protocol.Stream)e;
+            if (st == null)
+                return;
 
             // Read the server language string
-            m_ServerLanguage = st.Language;
-            
+            m_ServerLanguage = st.Language;               
+        
+
 			// Auth stuff
 			if (!RegisterAccount)
 			{
@@ -1203,8 +1219,7 @@ namespace agsXMPP
 					{
 						// we assume server supports SASL here, because it advertised a StreamVersion 1.X
 						// and wait for the stream features and initialize the SASL Handler
-                        InitSaslHandler();
-						
+                        InitSaslHandler();						
 					}				
 				}
 				else
@@ -1253,8 +1268,8 @@ namespace agsXMPP
 				if ( iq != null && iq.Query != null)
 				{
 					// Roster
-					if ( iq.Query.GetType() == typeof(Roster) )
-						OnRosterIQ(iq);
+                    if (iq.Query is Roster)
+                        OnRosterIQ(iq);                              
 				}	
 			}
 			else if ( e.GetType() == typeof(Message) )
@@ -1347,8 +1362,12 @@ namespace agsXMPP
 		private void CleanupSession()
 		{		
 			m_CleanUpDone = true;
-			ClientSocket.Disconnect();
-			DoChangeXmppConnectionState(XmppConnectionState.Disconnected);
+           
+            // TODO, check if this is always OK
+            if (ClientSocket.Connected)
+			    ClientSocket.Disconnect();
+			
+            DoChangeXmppConnectionState(XmppConnectionState.Disconnected);
 			
 			StreamParser.Reset();
 			
@@ -1412,7 +1431,6 @@ namespace agsXMPP
 					
 			m_Authenticated = true;
 		}
-		#endregion
-		
+		#endregion        
 	}
 }

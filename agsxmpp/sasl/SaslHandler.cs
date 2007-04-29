@@ -146,8 +146,14 @@ namespace agsXMPP.sasl
 					if (f.SupportsBind)
 					{
 						m_XmppClient.DoChangeXmppConnectionState(XmppConnectionState.Binding);
-						BindIq bIq = new BindIq(IqType.set, new Jid(m_XmppClient.Server), m_XmppClient.Resource);						
-						m_XmppClient.IqGrabber.SendIq(bIq, new IqCB(BindResult), null);					
+                        
+                        BindIq bIq;
+                        if (m_XmppClient.Resource == null || m_XmppClient.Resource.Length == 0)
+						    bIq = new BindIq(IqType.set, new Jid(m_XmppClient.Server));
+                        else
+                            bIq = new BindIq(IqType.set, new Jid(m_XmppClient.Server), m_XmppClient.Resource);						
+						
+                        m_XmppClient.IqGrabber.SendIq(bIq, new IqCB(BindResult), null);					
 					}
 				}
 								

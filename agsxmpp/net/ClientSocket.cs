@@ -546,7 +546,14 @@ namespace agsXMPP.net
             else
             {
                 m_PendingSend = true;
-                m_NetworkStream.BeginWrite(bData, 0, bData.Length, new AsyncCallback(EndSend), null);
+                try
+                {
+                    m_NetworkStream.BeginWrite(bData, 0, bData.Length, new AsyncCallback(EndSend), null);
+                }
+                catch
+                {
+                    Disconnect();
+                }
             }           
 		}
 
@@ -618,7 +625,7 @@ namespace agsXMPP.net
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+                Disconnect();
 			}
         }
 
