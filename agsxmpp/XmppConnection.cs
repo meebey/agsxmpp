@@ -28,6 +28,7 @@ using agsXMPP.protocol.extensions.bosh;
 
 using agsXMPP.Xml;
 using agsXMPP.Xml.Dom;
+using agsXMPP.Idn;
 
 namespace agsXMPP
 {
@@ -121,7 +122,20 @@ namespace agsXMPP
 		public string Server
 		{
 			get { return m_Server; }
-			set { m_Server = value;	}
+            set
+            {
+#if !STRINGPREP
+                if (value != null)
+				    m_Server = value.ToLower();
+                else
+                    m_Server = null;
+#else
+                if (value != null)
+                    m_Server = Stringprep.NamePrep(value);
+                else
+                    m_Server = null;
+#endif
+            }
 		}
 
 		/// <summary>

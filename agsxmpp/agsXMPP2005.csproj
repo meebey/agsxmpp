@@ -103,7 +103,6 @@
     <Compile Include="Idn\RFC3454.cs" />
     <Compile Include="Idn\Stringprep.cs" />
     <Compile Include="Idn\StringprepException.cs" />
-    <Compile Include="net\BoshClientSocket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

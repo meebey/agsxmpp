@@ -53,6 +53,8 @@ using agsXMPP.sasl;
 using agsXMPP.net;
 using agsXMPP.net.dns;
 
+using agsXMPP.Idn;
+
 #if MONOSSL
 using  Mono.Security.Protocol.Tls;
 #endif
@@ -141,7 +143,26 @@ namespace agsXMPP
 		public string Username
 		{
 			get { return m_Username; }
-			set { m_Username = value; }
+			set
+            {
+                // first Encode the user/node
+                m_Username = value;
+
+                string tmpUser = Jid.EscapeNode(value);
+#if !STRINGPREP
+                if (value != null)
+				    m_Username = tmpUser.ToLower();
+                else
+                    m_User = null;
+#else
+                if (value != null)
+                    m_Username = Stringprep.NodePrep(tmpUser);
+                else
+                    m_Username = null;
+#endif
+                
+            }                            
+                
 		}
 
 		/// <summary>
