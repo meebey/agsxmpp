@@ -21,6 +21,8 @@
 
 using System;
 
+using agsXMPP.protocol.x.data;
+
 using agsXMPP.Xml;
 using agsXMPP.Xml.Dom;
 
@@ -97,6 +99,26 @@ namespace agsXMPP.protocol.iq.register
                     SetTag("remove");
                 else
                     RemoveTag("remove");
+            }
+        }
+
+        /// <summary>
+        /// The X-Data Element
+        /// </summary>
+        public Data Data
+        {
+            get
+            {
+                return SelectSingleElement(typeof(Data)) as Data;
+
+            }
+            set
+            {
+                if (HasTag(typeof(Data)))
+                    RemoveTag(typeof(Data));
+
+                if (value != null)
+                    this.AddChild(value);
             }
         }
 		#endregion
