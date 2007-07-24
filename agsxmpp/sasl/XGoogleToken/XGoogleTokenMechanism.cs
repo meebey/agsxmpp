@@ -44,6 +44,7 @@ namespace agsXMPP.sasl.XGoogleToken
         
         */
 
+        private         string                  _Auth                   = null;
         private         string                  _Sid                    = null;
         private         string                  _Lsid                   = null;
         private         string                  _Base64Token            = null;
@@ -102,7 +103,10 @@ namespace agsXMPP.sasl.XGoogleToken
             data += "Email=" + base.XmppClientConnection.MyJID.Bare;
             data += "&Passwd=" + base.Password;
             data += "&PersistentCookie=false";
-            data += "&source=googletalk";
+            //data += "&source=googletalk";
+            data += "&source=" + base.XmppClientConnection.Resource;
+            data += "&service=mail";
+            
             
             byte[] bytes = Encoding.UTF8.GetBytes(data);
             outputStream.Write(bytes, 0, bytes.Length);
@@ -124,8 +128,11 @@ namespace agsXMPP.sasl.XGoogleToken
                                 
                 dataStream.Close();
                 response.Close();
+                               
+                _Base64Token = GetToken(_Auth);
 
-                DoIssueAuthToken();
+                Console.WriteLine(_Base64Token);
+                DoSaslAuth();
             }
             else
                 base.XmppClientConnection.Close();
@@ -142,76 +149,18 @@ namespace agsXMPP.sasl.XGoogleToken
                     _Sid = line.Substring(4);
                 else if(line.StartsWith("LSID="))
                     _Lsid = line.Substring(5);
+                else if (line.StartsWith("Auth="))
+                    _Auth = line.Substring(5);
             }
 
             reader.Close();            
         }
-
-        private void DoIssueAuthToken()
+        
+        private string GetToken(string line)
         {
-            HttpWebRequest request = (HttpWebRequest) HttpWebRequest.Create(URL_ISSUE_AUTH_TOKEN);
-                        
-            request.Method = METHOD;
-            request.ContentType = CONTENT_TYPE;
-#if CF || CF_2
-            //required for bug workaround
-            request.AllowWriteStreamBuffering = true;
-#endif
-            request.BeginGetRequestStream(new AsyncCallback(this.OnGetIssueAuthTokenRequestStream), request);
+            string temp = "\0" + base.XmppClientConnection.MyJID.Bare + "\0" + line;
+            byte[] b = Encoding.UTF8.GetBytes(temp);
+            return Convert.ToBase64String(b, 0, b.Length);
         }
-
-        private void OnGetIssueAuthTokenRequestStream(IAsyncResult result)
-        {
-            WebRequest request = (System.Net.WebRequest)result.AsyncState;
-            Stream outputStream = request.EndGetRequestStream(result);
-
-            string data = null;                        
-            data += "SID=" + _Sid;
-            data += "&LSID=" + _Lsid;
-            data += "&service=mail&Session=true";            
-            
-            byte[] bytes = Encoding.UTF8.GetBytes(data);
-            outputStream.Write(bytes, 0, bytes.Length);
-            outputStream.Close();
-
-            request.BeginGetResponse(new AsyncCallback(OnGetIssueAuthTokenResponse), request);
-        }
-
-        private void OnGetIssueAuthTokenResponse(IAsyncResult result)
-        {
-            WebRequest request = (WebRequest)result.AsyncState;
-            HttpWebResponse response = (HttpWebResponse) request.EndGetResponse(result);
-            
-            if (response.StatusCode == HttpStatusCode.OK)
-            {                
-                Stream dataStream = response.GetResponseStream();
-                ParseIssueAuthTokenResponse(dataStream);
-                             
-                dataStream.Close();
-                response.Close();
-
-                DoSaslAuth();
-            }
-            else
-                base.XmppClientConnection.Close();
-        }
-
-        /// <summary>
-        /// Parse the response and build the token
-        /// </summary>
-        /// <param name="responseStream"></param>
-        private void ParseIssueAuthTokenResponse(Stream responseStream)
-        {           
-            StreamReader reader = new StreamReader(responseStream);
-            
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {                
-                string temp = "\0" + base.XmppClientConnection.MyJID.Bare + "\0" + line;
-                byte[] b = Encoding.UTF8.GetBytes(temp);
-                _Base64Token = Convert.ToBase64String(b, 0, b.Length);                
-            }
-            reader.Close();            
-        }        
 	}
 }

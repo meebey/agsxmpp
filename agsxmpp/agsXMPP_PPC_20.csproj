@@ -46,13 +46,6 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Collections\BareJidComparer.cs" />
     <Compile Include="Collections\FullJidComparer.cs" />
     <Compile Include="exceptions\RegisterException.cs" />
@@ -135,6 +128,7 @@
     <Compile Include="protocol\component\Presence.cs" />
     <Compile Include="protocol\component\Route.cs" />
     <Compile Include="protocol\Error.cs" />
+    <Compile Include="protocol\extensions\bosh\Body.cs" />
     <Compile Include="protocol\extensions\bytestreams\Activate.cs" />
     <Compile Include="protocol\extensions\bytestreams\ByteStream.cs" />
     <Compile Include="protocol\extensions\bytestreams\ByteStreamIq.cs" />
@@ -167,11 +161,15 @@
     <Compile Include="protocol\extensions\geoloc\GeoLocIq.cs" />
     <Compile Include="protocol\extensions\html\Body.cs" />
     <Compile Include="protocol\extensions\html\Html.cs" />
-    <Compile Include="protocol\extensions\jivesoftware\phone\Action.cs" />
-    <Compile Include="protocol\extensions\jivesoftware\phone\ActionType.cs" />
-    <Compile Include="protocol\extensions\jivesoftware\phone\Event.cs" />
-    <Compile Include="protocol\extensions\jivesoftware\phone\PhoneStatus.cs" />
-    <Compile Include="protocol\extensions\jivesoftware\phone\StatusType.cs" />
+    <Compile Include="protocol\extensions\jivesoftware\phone\ActionType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="protocol\extensions\jivesoftware\phone\PhoneAction.cs" />
+    <Compile Include="protocol\extensions\jivesoftware\phone\PhoneEvent.cs" />
+    <Compile Include="protocol\extensions\jivesoftware\phone\PhoneStatus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="protocol\extensions\jivesoftware\phone\PhoneStatusType.cs" />
     <Compile Include="protocol\extensions\nickname\Nickname.cs" />
     <Compile Include="protocol\extensions\ping\Ping.cs" />
     <Compile Include="protocol\extensions\ping\PingIq.cs" />
@@ -378,6 +376,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="protocol\server\" />

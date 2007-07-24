@@ -42,7 +42,7 @@ namespace agsXMPP.protocol.extensions.geoloc
     */
 
     /// <summary>
-    /// JEP-0080 Geographical Location (GeoLoc)
+    /// XEP-0080 Geographical Location (GeoLoc)
     /// This JEP defines a format for capturing data about an entity's geographical location (geoloc).
     /// The namespace defined herein is intended to provide a semi-structured format for 
     /// describing a geographical location that may change fairly frequently, 

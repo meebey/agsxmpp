@@ -35,7 +35,7 @@ using agsXMPP.protocol;
 using agsXMPP.protocol.iq;
 using agsXMPP.protocol.iq.auth;
 using agsXMPP.protocol.iq.agent;
-using agsXMPP.protocol.iq.disco;
+//using agsXMPP.protocol.iq.disco;
 using agsXMPP.protocol.iq.roster;
 using agsXMPP.protocol.iq.register;
 using agsXMPP.protocol.iq.version;

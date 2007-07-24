@@ -15,17 +15,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agsXMPP2005", "agsXMPP2005.
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataStorageComponent", "..\..\RealFleet\DataStorageComponent\DataStorageComponent.vbproj", "{DEA3FD8B-3B1F-4AC5-99E3-45F6F3DEDD58}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MiniClientVB", "..\samples\VS2005\MiniClientVB\MiniClientVB.vbproj", "{E918133C-69DC-4E7B-B955-30ED80411117}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StressTest", "..\..\RealFleet\StressTest\StressTest.csproj", "{1F8C4C58-9415-4455-AF34-A42838E46645}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agsXMPP.ui.2005", "..\agsxmpp.ui\agsXMPP.ui.2005.csproj", "{93F68E40-C0FC-4B7F-8331-8EEB95A5E3DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniClient", "..\samples\VS2005\MiniClient\MiniClient.csproj", "{692CC1BB-F48B-4790-866F-CBFA81975156}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniClient", "..\..\..\..\Dokumente und Einstellungen\gnauck\Eigene Dateien\Visual Studio 2005\Projects\agsxmpp_Net2.0\samples\VS2005\MiniClient\MiniClient.csproj", "{692CC1BB-F48B-4790-866F-CBFA81975156}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmppServer", "..\..\XMPPServer\XmppServer.csproj", "{5D6ECA73-83A2-48A8-85BF-43365CD7AFA6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendMessage", "..\samples\VS2005\SendMessage\SendMessage.csproj", "{D861BADB-BC3D-413C-A589-E2A597F3D524}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MiniClientVB", "..\..\..\..\Dokumente und Einstellungen\gnauck\Eigene Dateien\Visual Studio 2005\Projects\agsxmpp_Net2.0\samples\VS2005\MiniClientVB_Register\MiniClientVB.vbproj", "{E918133C-69DC-4E7B-B955-30ED80411117}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniClientWM5", "..\..\..\..\Dokumente und Einstellungen\gnauck\Eigene Dateien\Visual Studio 2005\Projects\agsxmpp_Net2.0\samples\VS2005\MiniClientWM5\MiniClientWM5.csproj", "{A25AA758-756E-4522-9EDD-5F9A5225BDFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,10 +63,6 @@ Global
 		{DEA3FD8B-3B1F-4AC5-99E3-45F6F3DEDD58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEA3FD8B-3B1F-4AC5-99E3-45F6F3DEDD58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEA3FD8B-3B1F-4AC5-99E3-45F6F3DEDD58}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E918133C-69DC-4E7B-B955-30ED80411117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E918133C-69DC-4E7B-B955-30ED80411117}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E918133C-69DC-4E7B-B955-30ED80411117}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E918133C-69DC-4E7B-B955-30ED80411117}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1F8C4C58-9415-4455-AF34-A42838E46645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1F8C4C58-9415-4455-AF34-A42838E46645}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F8C4C58-9415-4455-AF34-A42838E46645}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -85,6 +83,16 @@ Global
 		{D861BADB-BC3D-413C-A589-E2A597F3D524}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D861BADB-BC3D-413C-A589-E2A597F3D524}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D861BADB-BC3D-413C-A589-E2A597F3D524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E918133C-69DC-4E7B-B955-30ED80411117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E918133C-69DC-4E7B-B955-30ED80411117}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E918133C-69DC-4E7B-B955-30ED80411117}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E918133C-69DC-4E7B-B955-30ED80411117}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

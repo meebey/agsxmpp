@@ -150,7 +150,8 @@ namespace agsXMPP.Xml.Dom
 			}
 			set 
 			{
-				byte[] b = Encoding.Default.GetBytes(value);
+                byte[] b = Encoding.UTF8.GetBytes(value);
+				//byte[] b = Encoding.Default.GetBytes(value);
 				this.Value = Convert.ToBase64String(b, 0, b.Length);
 			}
 		}
