@@ -31,10 +31,7 @@ namespace agsXMPP
 	public delegate void MessageCB(object sender, Message msg, object data);
 	
 	public class MessageGrabber : PacketGrabber
-	{
-		//private Hashtable				m_grabbing		= new Hashtable();		
-		//private XmppClientConnection	m_connection	= null;
-		
+	{				
 		/// <summary>
 		/// 
 		/// </summary>
@@ -47,28 +44,40 @@ namespace agsXMPP
         
 		public void Add(Jid jid, MessageCB cb, object cbArg)
 		{
-			if (m_grabbing.ContainsKey(jid.ToString()))
-				return;
+            lock (m_grabbing)
+            {
+                if (m_grabbing.ContainsKey(jid.ToString()))
+                    return;
+            }
 
 			TrackerData td = new TrackerData();
 			td.cb		= cb;
 			td.data		= cbArg;
-			td.comparer = new BareJidComparer();	
+			td.comparer = new BareJidComparer();
 
-			m_grabbing.Add(jid.ToString(), td);
+            lock (m_grabbing)
+            {
+                m_grabbing.Add(jid.ToString(), td);
+            }
 		}
 
 		public void Add(Jid jid, IComparer comparer, MessageCB cb, object cbArg)
 		{
-			if (m_grabbing.ContainsKey(jid.ToString()))
-				return;
+            lock (m_grabbing)
+            {
+                if (m_grabbing.ContainsKey(jid.ToString()))
+                    return;
+            }
 
 			TrackerData td = new TrackerData();
 			td.cb		= cb;
 			td.data		= cbArg;
 			td.comparer = comparer;
 
-			m_grabbing.Add(jid.ToString(), td);			
+            lock (m_grabbing)
+            {
+                m_grabbing.Add(jid.ToString(), td);
+            }
 		}
 
 		/// <summary>
@@ -79,8 +88,11 @@ namespace agsXMPP
 		/// <param name="id">ID of the Iq we are not interested anymore</param>
 		public void Remove(Jid jid)
 		{
-			if(m_grabbing.ContainsKey(jid.ToString()))
-				m_grabbing.Remove(jid.ToString());
+            lock (m_grabbing)
+            {
+                if (m_grabbing.ContainsKey(jid.ToString()))
+                    m_grabbing.Remove(jid.ToString());
+            }
 		}
 
 		private class TrackerData
@@ -102,7 +114,7 @@ namespace agsXMPP
 			if (msg == null)
 				return;
 
-            lock (this)
+            lock (m_grabbing)
             {
 				IDictionaryEnumerator myEnum = m_grabbing.GetEnumerator();
 
@@ -117,6 +129,5 @@ namespace agsXMPP
 				}
             }
 		}
-
 	}
 }

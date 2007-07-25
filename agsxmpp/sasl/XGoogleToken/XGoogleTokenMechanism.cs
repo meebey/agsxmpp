@@ -130,8 +130,7 @@ namespace agsXMPP.sasl.XGoogleToken
                 response.Close();
                                
                 _Base64Token = GetToken(_Auth);
-
-                Console.WriteLine(_Base64Token);
+                                
                 DoSaslAuth();
             }
             else

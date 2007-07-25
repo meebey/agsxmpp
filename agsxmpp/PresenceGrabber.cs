@@ -44,28 +44,40 @@ namespace agsXMPP
         
 		public void Add(Jid jid, PresenceCB cb, object cbArg)
 		{
-			if (m_grabbing.ContainsKey(jid.ToString()))
-				return;
+            lock (m_grabbing)
+            {
+                if (m_grabbing.ContainsKey(jid.ToString()))
+                    return;
+            }
 
 			TrackerData td = new TrackerData();
 			td.cb		= cb;
 			td.data		= cbArg;
-			td.comparer = new BareJidComparer();	
+			td.comparer = new BareJidComparer();
 
-			m_grabbing.Add(jid.ToString(), td);
+            lock (m_grabbing)
+            {
+                m_grabbing.Add(jid.ToString(), td);
+            }
 		}
 
 		public void Add(Jid jid, IComparer comparer, PresenceCB cb, object cbArg)
 		{
-			if (m_grabbing.ContainsKey(jid.ToString()))
-				return;
+            lock (m_grabbing)
+            {
+                if (m_grabbing.ContainsKey(jid.ToString()))
+                    return;
+            }
 
 			TrackerData td = new TrackerData();
 			td.cb		= cb;
 			td.data		= cbArg;
 			td.comparer = comparer;
 
-			m_grabbing.Add(jid.ToString(), td);			
+            lock (m_grabbing)
+            {
+                m_grabbing.Add(jid.ToString(), td);
+            }
 		}
 
 		/// <summary>
@@ -76,8 +88,11 @@ namespace agsXMPP
 		/// <param name="id">ID of the Iq we are not interested anymore</param>
 		public void Remove(Jid jid)
 		{
-			if(m_grabbing.ContainsKey(jid.ToString()))
-				m_grabbing.Remove(jid.ToString());
+            lock (m_grabbing)
+            {
+                if (m_grabbing.ContainsKey(jid.ToString()))
+                    m_grabbing.Remove(jid.ToString());
+            }
 		}
 
 		private class TrackerData
