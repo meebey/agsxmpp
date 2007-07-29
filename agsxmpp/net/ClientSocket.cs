@@ -520,41 +520,51 @@ namespace agsXMPP.net
 		/// Send data to the server.
 		/// </summary>
 		public override void Send(byte[] bData)
-		{           
-            base.FireOnSend(bData, bData.Length);
-
-            //Console.WriteLine("Socket OnSend: " + System.Text.Encoding.UTF8.GetString(bData, 0, bData.Length));
-
-            // compress bytes if we are on a compressed socket
-            if (m_Compressed)
+		{
+            lock (this)
             {
-                byte[] tmpData = new byte[bData.Length];
-                bData.CopyTo(tmpData, 0);
-
-                bData = Compress(bData);
-                
-                // for compression debug statistics
-                // base.FireOnOutgoingCompressionDebug(this, bData, bData.Length, tmpData, tmpData.Length);
-            }
-
-            // .NET 2.0 SSL Stream issues when sending multiple async packets
-            // http://forums.microsoft.com/MSDN/ShowPost.aspx?PostID=124213&SiteID=1
-            if (m_PendingSend)
-            {
-                m_SendQueue.Enqueue(bData);
-            }
-            else
-            {
-                m_PendingSend = true;
                 try
                 {
-                    m_NetworkStream.BeginWrite(bData, 0, bData.Length, new AsyncCallback(EndSend), null);
+                    base.FireOnSend(bData, bData.Length);
+
+                    //Console.WriteLine("Socket OnSend: " + System.Text.Encoding.UTF8.GetString(bData, 0, bData.Length));
+
+                    // compress bytes if we are on a compressed socket
+                    if (m_Compressed)
+                    {
+                        byte[] tmpData = new byte[bData.Length];
+                        bData.CopyTo(tmpData, 0);
+
+                        bData = Compress(bData);
+
+                        // for compression debug statistics
+                        // base.FireOnOutgoingCompressionDebug(this, bData, bData.Length, tmpData, tmpData.Length);
+                    }
+
+                    // .NET 2.0 SSL Stream issues when sending multiple async packets
+                    // http://forums.microsoft.com/MSDN/ShowPost.aspx?PostID=124213&SiteID=1
+                    if (m_PendingSend)
+                    {
+                        m_SendQueue.Enqueue(bData);                        
+                    }
+                    else
+                    {
+                        m_PendingSend = true;                        
+                        try
+                        {
+                            m_NetworkStream.BeginWrite(bData, 0, bData.Length, new AsyncCallback(EndSend), null);
+                        }
+                        catch
+                        {
+                            Disconnect();
+                        }
+                    }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    Disconnect();
+                    Console.WriteLine(ex.StackTrace);
                 }
-            }           
+            }
 		}
 
 		/// <summary>
@@ -610,23 +620,27 @@ namespace agsXMPP.net
 
 		private void EndSend(IAsyncResult ar)
 		{
-			try
-			{
-				m_NetworkStream.EndWrite(ar);
-                if (m_SendQueue.Count > 0)
+            lock (this)
+            {
+                try
                 {
-                    byte[] bData = (byte[])m_SendQueue.Dequeue();
-                    m_NetworkStream.BeginWrite(bData, 0, bData.Length, new AsyncCallback(EndSend), null);
+                    m_NetworkStream.EndWrite(ar);
+                    if (m_SendQueue.Count > 0)
+                    {                        
+                        byte[] bData = (byte[])m_SendQueue.Dequeue();
+                        m_NetworkStream.BeginWrite(bData, 0, bData.Length, new AsyncCallback(EndSend), null);                        
+                    }
+                    else
+                    {                        
+                        m_PendingSend = false;                        
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    m_PendingSend = false;
+                    Console.WriteLine(ex.StackTrace);
+                    Disconnect();
                 }
-			}
-			catch (Exception ex)
-			{
-                Disconnect();
-			}
+            }
         }
 
         #region << compression functions >>

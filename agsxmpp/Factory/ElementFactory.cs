@@ -295,10 +295,14 @@ namespace agsXMPP.Factory
 		{
             ElementType et = new ElementType(tag, ns);
             string key = et.ToString();
-            if (m_table.ContainsKey(key))
-                m_table[key] = t;
-            else
-                m_table.Add(et.ToString(), t);
+            // added thread safety on a user request
+            lock (m_table)
+            {
+                if (m_table.ContainsKey(key))
+                    m_table[key] = t;
+                else
+                    m_table.Add(et.ToString(), t);
+            }
 		}
         
 		/// <summary>
@@ -329,6 +333,5 @@ namespace agsXMPP.Factory
 			
 			return ret;
 		}		
-	}
-  
+	}  
 }
