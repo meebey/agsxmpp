@@ -153,7 +153,7 @@ namespace agsXMPP
                 if (value != null)
 				    m_Username = tmpUser.ToLower();
                 else
-                    m_User = null;
+                    m_Username = null;
 #else
                 if (value != null)
                     m_Username = Stringprep.NodePrep(tmpUser);
