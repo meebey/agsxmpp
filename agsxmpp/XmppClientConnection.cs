@@ -161,8 +161,7 @@ namespace agsXMPP
                     m_Username = null;
 #endif
                 
-            }                            
-                
+            }                
 		}
 
 		/// <summary>
