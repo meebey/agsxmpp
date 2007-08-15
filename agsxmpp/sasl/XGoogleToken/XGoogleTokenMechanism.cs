@@ -117,24 +117,35 @@ namespace agsXMPP.sasl.XGoogleToken
 
         private void OnGetClientAuthResponse(IAsyncResult result)
         {
-            WebRequest request = (WebRequest)result.AsyncState;            
-            HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(result);
-
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                Stream dataStream = response.GetResponseStream();
+                WebRequest request = (WebRequest)result.AsyncState;
+                HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(result);
 
-                ParseClientAuthResponse(dataStream);
-                                
-                dataStream.Close();
-                response.Close();
-                               
-                _Base64Token = GetToken(_Auth);
-                                
-                DoSaslAuth();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    Stream dataStream = response.GetResponseStream();
+
+                    ParseClientAuthResponse(dataStream);
+
+                    dataStream.Close();
+                    response.Close();
+
+                    _Base64Token = GetToken(_Auth);
+
+                    DoSaslAuth();
+                }
+                else
+                    base.XmppClientConnection.Close();
             }
-            else
-                base.XmppClientConnection.Close();
+            catch (WebException we)
+            {
+                if (((HttpWebResponse)we.Response).StatusCode == HttpStatusCode.Forbidden)
+                {
+                    base.XmppClientConnection.FireOnAuthError(null);
+                    base.XmppClientConnection.Close();
+                }
+            }
         }              
 
         private void ParseClientAuthResponse(Stream responseStream)
