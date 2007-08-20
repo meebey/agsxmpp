@@ -1454,6 +1454,34 @@ namespace agsXMPP.protocol.x.muc
         }
         #endregion       
 
+        public void ModifyList(Jid room, agsXMPP.protocol.x.muc.iq.admin.Item[] items)
+        {
+            ModifyList(room, items, null, null);
+        }
+
+        public void ModifyList(Jid room, agsXMPP.protocol.x.muc.iq.admin.Item[] items, IqCB cb)
+        {
+            ModifyList(room, items, cb, null);
+        }
+
+        public void ModifyList(Jid room, agsXMPP.protocol.x.muc.iq.admin.Item[] items, IqCB cb, object cbArg)
+        {
+            AdminIq aIq = new AdminIq();
+            aIq.To = room;
+            aIq.Type = IqType.set;
+
+            foreach (agsXMPP.protocol.x.muc.iq.admin.Item itm in items)
+            {
+                aIq.Query.AddItem(itm);
+            }           
+
+            if (cb == null)
+                m_connection.Send(aIq);
+            else
+                m_connection.IqGrabber.SendIq(aIq, cb, cbArg);
+        }
+
+
         #region << private functions >>
 
         private void ChangeRole(Role role, Jid room, string nickname, string reason, IqCB cb, object cbArg)
