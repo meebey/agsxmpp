@@ -51,8 +51,25 @@ namespace agsXMPP.protocol.x.muc
             this.TagName = "destroy";
             this.Namespace = Uri.MUC_OWNER;
         }
+
+        public Destroy(string reason) : this()
+        {
+            Reason = reason;
+        }
+
+        public Destroy(Jid altVenue) : this()
+        {
+            AlternateVenue = altVenue;
+        }
+
+        public Destroy(string reason, Jid altVenue) : this()
+        {
+            Reason = reason;
+            AlternateVenue = altVenue;
+        }
         #endregion                     
 
+        
         /// <summary>
         /// Pptional attribute for a alternate venue
         /// </summary>

@@ -1454,6 +1454,87 @@ namespace agsXMPP.protocol.x.muc
         }
         #endregion       
 
+
+        #region << Destroy Room >>
+        public void DestroyRoom(Jid room, Jid altVenue)
+        {
+            DestroyRoom(room, altVenue, null, null, null);
+        }
+
+        public void DestroyRoom(Jid room, Jid altVenue, IqCB cb)
+        {
+            DestroyRoom(room, altVenue, null, cb, null);
+        }
+
+        public void DestroyRoom(Jid room, Jid altVenue, IqCB cb, object cbArg)
+        {
+            DestroyRoom(room, altVenue, null, cb, cbArg);
+        }
+
+        public void DestroyRoom(Jid room, string reason)
+        {
+            DestroyRoom(room, null, reason, null, null);
+        }
+
+        public void DestroyRoom(Jid room, string reason, IqCB cb)
+        {
+            DestroyRoom(room, null, reason, cb, null);
+        }
+
+        public void DestroyRoom(Jid room, string reason, IqCB cb, object cbArg)
+        {
+            DestroyRoom(room, null, reason, cb, cbArg);
+        }
+
+        public void DestroyRoom(Jid room, Jid altVenue, string reason)
+        {
+            DestroyRoom(room, altVenue, reason, null, null);
+        }
+
+        public void DestroyRoom(Jid room, Jid altVenue, string reason, IqCB cb)
+        {
+            DestroyRoom(room, altVenue, reason, cb, null);
+        }
+
+        public void DestroyRoom(Jid room, Jid altVenue, string reason, IqCB cb, object cbArg)       
+        {
+            /*
+             Example 177. Owner Submits Room Destruction Request
+
+            <iq from='crone1@shakespeare.lit/desktop'
+                id='begone'
+                to='heath@macbeth.shakespeare.lit'
+                type='set'>
+              <query xmlns='http://jabber.org/protocol/muc#owner'>
+                <destroy jid='darkcave@macbeth.shakespeare.lit'>
+                  <reason>Macbeth doth come.</reason>
+                </destroy>
+              </query>
+            </iq>
+            */
+
+            OwnerIq iq = new OwnerIq();
+            iq.Type = IqType.set;
+            iq.To = room;
+
+            Destroy destroy = new Destroy();
+
+            if (reason != null)
+                destroy.Reason = reason;
+
+            if (altVenue != null)
+                destroy.AlternateVenue = altVenue;
+
+            iq.Query.AddChild(destroy);
+            
+            if (cb == null)
+                m_connection.Send(iq);
+            else
+                m_connection.IqGrabber.SendIq(iq, cb, cbArg);
+
+        }
+        #endregion
+
         public void ModifyList(Jid room, agsXMPP.protocol.x.muc.iq.admin.Item[] items)
         {
             ModifyList(room, items, null, null);
