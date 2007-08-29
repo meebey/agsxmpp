@@ -279,6 +279,17 @@ namespace agsXMPP.Factory
 
             // HTTP Binding XEP-0124
             AddElementType("body",              Uri.HTTP_BIND,              typeof(agsXMPP.protocol.extensions.bosh.Body));
+
+            // Message receipts XEP-0184
+            AddElementType("received",          Uri.MSG_RECEIPT,            typeof(agsXMPP.protocol.extensions.msgreceipts.Received));
+            AddElementType("request",           Uri.MSG_RECEIPT,            typeof(agsXMPP.protocol.extensions.msgreceipts.Request));
+
+            // Bookmark storage XEP-0048         
+            AddElementType("storage",           Uri.STORAGE_BOOKMARKS,      typeof(agsXMPP.protocol.extensions.bookmarks.Storage));
+            AddElementType("url",               Uri.STORAGE_BOOKMARKS,      typeof(agsXMPP.protocol.extensions.bookmarks.Url));
+            AddElementType("conference",        Uri.STORAGE_BOOKMARKS,      typeof(agsXMPP.protocol.extensions.bookmarks.Conference));
+
+          
             
 		}		
 		

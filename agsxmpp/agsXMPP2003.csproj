@@ -543,6 +543,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "protocol\extensions\bosh\Body.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "protocol\extensions\bytestreams\Activate.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -703,17 +708,17 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "protocol\extensions\jivesoftware\phone\Action.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "protocol\extensions\jivesoftware\phone\ActionType.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "protocol\extensions\jivesoftware\phone\Event.cs"
+                    RelPath = "protocol\extensions\jivesoftware\phone\PhoneAction.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\jivesoftware\phone\PhoneEvent.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -723,7 +728,7 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "protocol\extensions\jivesoftware\phone\StatusType.cs"
+                    RelPath = "protocol\extensions\jivesoftware\phone\PhoneStatusType.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

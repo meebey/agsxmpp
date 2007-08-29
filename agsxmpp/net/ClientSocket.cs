@@ -562,7 +562,7 @@ namespace agsXMPP.net
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.StackTrace);
+                    
                 }
             }
 		}
@@ -636,8 +636,7 @@ namespace agsXMPP.net
                     }
                 }
                 catch (Exception ex)
-                {
-                    Console.WriteLine(ex.StackTrace);
+                {                    
                     Disconnect();
                 }
             }

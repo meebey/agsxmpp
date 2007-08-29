@@ -232,6 +232,12 @@
     <Compile Include="protocol\component\Presence.cs" />
     <Compile Include="protocol\component\Route.cs" />
     <Compile Include="protocol\Error.cs" />
+    <Compile Include="protocol\extensions\bookmarks\BookmarkManager.cs" />
+    <Compile Include="protocol\extensions\bookmarks\Conference.cs" />
+    <Compile Include="protocol\extensions\bookmarks\Storage.cs" />
+    <Compile Include="protocol\extensions\bookmarks\StorageIq.cs" />
+    <Compile Include="protocol\extensions\bookmarks\Url.cs" />
+    <Compile Include="protocol\extensions\bosh\Body.cs" />
     <Compile Include="protocol\extensions\bytestreams\Activate.cs" />
     <Compile Include="protocol\extensions\bytestreams\ByteStream.cs" />
     <Compile Include="protocol\extensions\bytestreams\ByteStreamIq.cs" />
@@ -272,11 +278,17 @@
     <Compile Include="protocol\extensions\geoloc\GeoLocIq.cs" />
     <Compile Include="protocol\extensions\html\Body.cs" />
     <Compile Include="protocol\extensions\html\Html.cs" />
-    <Compile Include="protocol\extensions\jivesoftware\phone\Action.cs" />
-    <Compile Include="protocol\extensions\jivesoftware\phone\ActionType.cs" />
-    <Compile Include="protocol\extensions\jivesoftware\phone\Event.cs" />
-    <Compile Include="protocol\extensions\jivesoftware\phone\PhoneStatus.cs" />
-    <Compile Include="protocol\extensions\jivesoftware\phone\StatusType.cs" />
+    <Compile Include="protocol\extensions\jivesoftware\phone\ActionType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="protocol\extensions\jivesoftware\phone\PhoneAction.cs" />
+    <Compile Include="protocol\extensions\jivesoftware\phone\PhoneEvent.cs" />
+    <Compile Include="protocol\extensions\jivesoftware\phone\PhoneStatus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="protocol\extensions\jivesoftware\phone\PhoneStatusType.cs" />
+    <Compile Include="protocol\extensions\msgreceipts\Received.cs" />
+    <Compile Include="protocol\extensions\msgreceipts\Request.cs" />
     <Compile Include="protocol\extensions\nickname\Nickname.cs" />
     <Compile Include="protocol\extensions\ping\Ping.cs" />
     <Compile Include="protocol\extensions\ping\PingIq.cs" />

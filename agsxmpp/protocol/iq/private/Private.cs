@@ -24,6 +24,8 @@ using System;
 using agsXMPP.Xml;
 using agsXMPP.Xml.Dom;
 
+using agsXMPP.protocol.extensions.bookmarks;
+
 namespace agsXMPP.protocol.iq.@private
 {
 	/// <summary>
@@ -48,5 +50,24 @@ namespace agsXMPP.protocol.iq.@private
 			this.TagName	= "query";
 			this.Namespace	= Uri.IQ_PRIVATE;			
 		}
+        
+        /// <summary>
+        /// The <see cref="agsXMPP.protocol.extensions.bookmarks.Storage">Storage</see> object 
+        /// </summary>
+        public Storage Storage
+        {
+            get
+            {
+                return SelectSingleElement(typeof(Storage)) as Storage;
+            }
+            set
+            {
+                if (HasTag(typeof(Storage)))
+                    RemoveTag(typeof(Storage));
+
+                if (value != null)
+                    this.AddChild(value);
+            }
+        }
 	}
 }

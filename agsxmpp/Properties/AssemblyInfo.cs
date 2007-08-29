@@ -48,7 +48,7 @@ using System.Runtime.CompilerServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("0.9.2")]
+[assembly: AssemblyVersion("0.9.5")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
@@ -71,9 +71,9 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
 
-// There was no need yet for a .NET 1.1 Condition. SO use MONOSSL here
+// There was no need yet for a .NET 1.1 Condition. So use MONOSSL here
 // because its only used with .NET 1.1
 #if CF || MONOSSL
 [assembly: AssemblyKeyFile(@"..\..\key.snk")]
 #endif
-[assembly: AssemblyKeyName("")]
+//[assembly: AssemblyKeyName("")]

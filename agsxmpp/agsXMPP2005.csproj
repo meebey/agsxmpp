@@ -153,6 +153,11 @@
     <Compile Include="protocol\component\IQ.cs" />
     <Compile Include="protocol\component\Message.cs" />
     <Compile Include="protocol\component\Presence.cs" />
+    <Compile Include="protocol\extensions\bookmarks\BookmarkManager.cs" />
+    <Compile Include="protocol\extensions\bookmarks\Conference.cs" />
+    <Compile Include="protocol\extensions\bookmarks\Storage.cs" />
+    <Compile Include="protocol\extensions\bookmarks\StorageIq.cs" />
+    <Compile Include="protocol\extensions\bookmarks\Url.cs" />
     <Compile Include="protocol\extensions\bytestreams\Activate.cs" />
     <Compile Include="protocol\extensions\bytestreams\ByteStream.cs" />
     <Compile Include="protocol\extensions\bytestreams\ByteStreamIq.cs" />
@@ -163,6 +168,8 @@
     <Compile Include="protocol\extensions\caps\Capabilities.cs" />
     <Compile Include="protocol\extensions\html\Body.cs" />
     <Compile Include="protocol\extensions\bosh\Body.cs" />
+    <Compile Include="protocol\extensions\msgreceipts\Received.cs" />
+    <Compile Include="protocol\extensions\msgreceipts\Request.cs" />
     <Compile Include="protocol\extensions\nickname\Nickname.cs" />
     <Compile Include="protocol\extensions\ping\Ping.cs" />
     <Compile Include="protocol\extensions\ping\PingIq.cs" />

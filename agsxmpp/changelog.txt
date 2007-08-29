@@ -1,3 +1,12 @@
+version 0.9x
+- added bookmark storage XEP-0048
+- added message receipts XEP-0184
+
+version 0.95
+============
+- many improvements and bugfixes
+- added more stuff to the MucManager
+
 version 0.93
 ============
 - improvements on socket errors

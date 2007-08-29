@@ -553,9 +553,10 @@ namespace agsXMPP
         /// <param name="username">your username</param>
         /// <param name="password">your password</param>
 		public void Open(string username, string password)
-		{
-			this.m_Username = username;
-			this.m_Password	= password;
+		{            
+            this.Username   = username;
+            this.Password   = password;
+
 			_Open();
 		}
 
