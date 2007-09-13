@@ -1,5 +1,6 @@
 version 0.9x
 ============
+- added XEP-0153: vCard-Based Avatars
 - added bookmark storage XEP-0048
 - added message receipts XEP-0184
 - added XEP-0047: In-Band Bytestreams (IBB)
