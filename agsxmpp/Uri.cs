@@ -238,6 +238,12 @@ namespace agsXMPP
         /// </summary>
         public const string STORAGE_BOOKMARKS   = "storage:bookmarks";
 
+        /// <summary>
+        /// <para>XEP-0047: In-Band Bytestreams (IBB)</para>
+        /// <para>http://jabber.org/protocol/ibb</para>
+        /// </summary>
+        public const string IBB                 = "http://jabber.org/protocol/ibb";
+
 	}
 	
 }

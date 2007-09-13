@@ -168,6 +168,9 @@
     <Compile Include="protocol\extensions\caps\Capabilities.cs" />
     <Compile Include="protocol\extensions\html\Body.cs" />
     <Compile Include="protocol\extensions\bosh\Body.cs" />
+    <Compile Include="protocol\extensions\ibb\Close.cs" />
+    <Compile Include="protocol\extensions\ibb\Data.cs" />
+    <Compile Include="protocol\extensions\ibb\Open.cs" />
     <Compile Include="protocol\extensions\msgreceipts\Received.cs" />
     <Compile Include="protocol\extensions\msgreceipts\Request.cs" />
     <Compile Include="protocol\extensions\nickname\Nickname.cs" />

@@ -288,9 +288,11 @@ namespace agsXMPP.Factory
             AddElementType("storage",           Uri.STORAGE_BOOKMARKS,      typeof(agsXMPP.protocol.extensions.bookmarks.Storage));
             AddElementType("url",               Uri.STORAGE_BOOKMARKS,      typeof(agsXMPP.protocol.extensions.bookmarks.Url));
             AddElementType("conference",        Uri.STORAGE_BOOKMARKS,      typeof(agsXMPP.protocol.extensions.bookmarks.Conference));
-
-          
             
+            // XEP-0047: In-Band Bytestreams (IBB)
+            AddElementType("open",              Uri.IBB,                    typeof(agsXMPP.protocol.extensions.ibb.Open));
+            AddElementType("data",              Uri.IBB,                    typeof(agsXMPP.protocol.extensions.ibb.Data));
+            AddElementType("close",             Uri.IBB,                    typeof(agsXMPP.protocol.extensions.ibb.Close));
 		}		
 		
 		/// <summary>
