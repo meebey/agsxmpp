@@ -32,10 +32,10 @@ namespace agsXMPP
 	
 	public class PresenceGrabber : PacketGrabber
 	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="conn"></param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PresenceGrabber"/> class.
+        /// </summary>
+        /// <param name="conn">The conn.</param>
 		public PresenceGrabber(XmppClientConnection conn)
 		{
 			m_connection		= conn;			
@@ -61,6 +61,13 @@ namespace agsXMPP
             }
 		}
 
+        /// <summary>
+        /// Adds the specified jid.
+        /// </summary>
+        /// <param name="jid">The jid.</param>
+        /// <param name="comparer">The comparer.</param>
+        /// <param name="cb">The callback.</param>
+        /// <param name="cbArg">The callback Arguments.</param>
 		public void Add(Jid jid, IComparer comparer, PresenceCB cb, object cbArg)
 		{
             lock (m_grabbing)

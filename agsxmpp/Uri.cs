@@ -244,6 +244,12 @@ namespace agsXMPP
         /// </summary>
         public const string IBB                 = "http://jabber.org/protocol/ibb";
 
+        /// <summary>
+        /// <para>XEP-0153: vCard-Based Avatars</para>
+        /// <para>vcard-temp:x:update</para>
+        /// </summary>
+        public const string VCARD_UPDATE        = "vcard-temp:x:update";
+
 	}
 	
 }

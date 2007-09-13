@@ -293,6 +293,10 @@ namespace agsXMPP.Factory
             AddElementType("open",              Uri.IBB,                    typeof(agsXMPP.protocol.extensions.ibb.Open));
             AddElementType("data",              Uri.IBB,                    typeof(agsXMPP.protocol.extensions.ibb.Data));
             AddElementType("close",             Uri.IBB,                    typeof(agsXMPP.protocol.extensions.ibb.Close));
+                    
+            // XEP-0153: vCard-Based Avatars
+           AddElementType("x",                  Uri.VCARD_UPDATE,           typeof(agsXMPP.protocol.x.vcard_update.VcardUpdate));
+
 		}		
 		
 		/// <summary>

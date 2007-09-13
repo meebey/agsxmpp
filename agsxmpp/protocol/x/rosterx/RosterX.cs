@@ -25,9 +25,9 @@ using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.x.rosterx
 {
-	/// <summary>
-	/// Roster Item Exchange (JEP-0144)
-	/// </summary>
+    /// <summary>
+    /// Roster Item Exchange (JEP-0144)
+    /// </summary>
 	public class RosterX : Element
 	{
 		/*
@@ -48,12 +48,20 @@ namespace agsXMPP.protocol.x.rosterx
 		</message>
 		*/
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RosterX"/> class.
+        /// </summary>
 		public RosterX()
 		{
 			this.TagName	= "x";
 			this.Namespace	= Uri.X_ROSTERX;
 		}
-		
+
+
+        /// <summary>
+        /// Gets the roster.
+        /// </summary>
+        /// <returns></returns>
 		public RosterItem[] GetRoster()
 		{
             ElementList nl = SelectElements(typeof(RosterItem));
@@ -66,7 +74,11 @@ namespace agsXMPP.protocol.x.rosterx
 			}
 			return result;
 		}
-		
+
+        /// <summary>
+        /// Adds a roster item.
+        /// </summary>
+        /// <param name="r">The r.</param>
 		public void AddRosterItem(RosterItem r)
 		{
 			this.ChildNodes.Add(r);

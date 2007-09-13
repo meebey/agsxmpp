@@ -606,6 +606,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="protocol\iq\privacy\RuleManager.cs" />
+    <Compile Include="protocol\x\vcard_update\VcardUpdate.cs" />
     <Compile Include="sasl\SaslEventArgs.cs">
       <SubType>Code</SubType>
     </Compile>
