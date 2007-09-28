@@ -280,6 +280,9 @@
     <Compile Include="protocol\extensions\geoloc\GeoLocIq.cs" />
     <Compile Include="protocol\extensions\html\Body.cs" />
     <Compile Include="protocol\extensions\html\Html.cs" />
+    <Compile Include="protocol\extensions\ibb\Close.cs" />
+    <Compile Include="protocol\extensions\ibb\Data.cs" />
+    <Compile Include="protocol\extensions\ibb\Open.cs" />
     <Compile Include="protocol\extensions\jivesoftware\phone\ActionType.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -603,6 +606,7 @@
     <Compile Include="protocol\x\rosterx\RosterX.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="protocol\x\vcard_update\VcardUpdate.cs" />
     <Compile Include="sasl\Anonymous\AnonymousMechanism.cs" />
     <Compile Include="sasl\DigestMD5\DigestMD5Mechanism.cs">
       <SubType>Code</SubType>

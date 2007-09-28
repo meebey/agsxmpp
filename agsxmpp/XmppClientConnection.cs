@@ -1376,6 +1376,21 @@ namespace agsXMPP
 				OnClose(this);
 		}                
         #endregion
+
+        public override void Send(Element e)
+        {
+            // this is a hack to not send the xmlns="jabber:client" with all packets
+            Element dummyEl = new Element("a");
+            dummyEl.Namespace = Uri.CLIENT;
+
+            dummyEl.AddChild(e);
+            string toSend = dummyEl.ToString();
+
+            toSend.TrimEnd(dummyEl.EndTag().ToCharArray());
+            toSend.TrimStart(dummyEl.StartTag().ToCharArray());
+
+            Send(toSend.Substring(25, toSend.Length - 25 - 4));
+        }
 		
 		/// <summary>
 		/// Does the Clieanup of the Session and sends the OnClose Event

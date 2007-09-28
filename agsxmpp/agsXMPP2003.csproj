@@ -543,6 +543,31 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "protocol\extensions\bookmarks\BookmarkManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\bookmarks\Conference.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\bookmarks\Storage.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\bookmarks\StorageIq.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\bookmarks\Url.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "protocol\extensions\bosh\Body.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -708,6 +733,21 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "protocol\extensions\ibb\Close.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\ibb\Data.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\ibb\Open.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "protocol\extensions\jivesoftware\phone\ActionType.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -729,6 +769,16 @@
                 />
                 <File
                     RelPath = "protocol\extensions\jivesoftware\phone\PhoneStatusType.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\msgreceipts\Received.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\msgreceipts\Request.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -1535,6 +1585,11 @@
                 />
                 <File
                     RelPath = "protocol\x\rosterx\RosterX.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\x\vcard_update\VcardUpdate.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

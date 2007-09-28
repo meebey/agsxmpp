@@ -4,6 +4,7 @@ version 0.9x
 - added bookmark storage XEP-0048
 - added message receipts XEP-0184
 - added XEP-0047: In-Band Bytestreams (IBB)
+- added a hack to not send xmlns="jabbe:client" with all stanzas
 
 version 0.95
 ============
