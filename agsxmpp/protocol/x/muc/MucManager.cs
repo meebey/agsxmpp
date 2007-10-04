@@ -1252,7 +1252,7 @@ namespace agsXMPP.protocol.x.muc
         /// </summary>
         /// <param name="room"></param>
         /// <param name="nickname"></param>
-        public void GrantModeratorPrivilegesPrivileges(Jid room, string nickname)
+        public void GrantModeratorPrivileges(Jid room, string nickname)
         {
             GrantModeratorPrivileges(room, nickname, null, null, null);
         }
@@ -1264,7 +1264,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         /// <param name="nickname"></param>
         /// <param name="reason"></param>
-        public void GrantModeratorPrivilegesPrivileges(Jid room, string nickname, string reason)
+        public void GrantModeratorPrivileges(Jid room, string nickname, string reason)
         {
             GrantModeratorPrivileges(room, nickname, reason, null, null);
         }
