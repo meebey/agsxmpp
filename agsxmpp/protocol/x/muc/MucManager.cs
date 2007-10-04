@@ -911,7 +911,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         /// <param name="nickname"></param>
         /// <param name="reason"></param>
-        public void GrantMembershipship(Jid room, string nickname, string reason)
+        public void GrantMembership(Jid room, string nickname, string reason)
         {
             GrantMembership(room, nickname, reason, null, null);
         }
