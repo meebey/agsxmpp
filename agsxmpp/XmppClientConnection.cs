@@ -1385,10 +1385,7 @@ namespace agsXMPP
 
             dummyEl.AddChild(e);
             string toSend = dummyEl.ToString();
-
-            toSend.TrimEnd(dummyEl.EndTag().ToCharArray());
-            toSend.TrimStart(dummyEl.StartTag().ToCharArray());
-
+            
             Send(toSend.Substring(25, toSend.Length - 25 - 4));
         }
 		

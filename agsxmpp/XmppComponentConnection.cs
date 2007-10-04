@@ -326,7 +326,18 @@ namespace agsXMPP
                    
         }
 		#endregion
-                    
+
+        public override void Send(Element e)
+        {
+            // this is a hack to not send the xmlns="jabber:component:accept" with all packets                
+            Element dummyEl = new Element("a");
+            dummyEl.Namespace = Uri.ACCEPT;
+
+            dummyEl.AddChild(e);
+            string toSend = dummyEl.ToString();
+                       
+            Send(toSend.Substring(35, toSend.Length - 35 - 4));
+        }
 
 		private void CleanupSession()
 		{

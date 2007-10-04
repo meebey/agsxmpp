@@ -708,7 +708,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="key.snk" />
   </ItemGroup>
