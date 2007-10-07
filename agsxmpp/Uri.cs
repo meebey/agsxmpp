@@ -226,11 +226,12 @@ namespace agsXMPP
         // Http-Binding XEP-0124
         public const string HTTP_BIND           = "http://jabber.org/protocol/httpbind";
 
-        // XEP-0184: Message Receipts
+        
         /// <summary>
-        /// http://www.xmpp.org/extensions/xep-0184.html#ns
+        /// <para>XEP-0184: Message Receipts</para>
+        /// <para>urn:xmpp:receipts</para>        
         /// </summary>
-        public const string MSG_RECEIPT         = "http://www.xmpp.org/extensions/xep-0184.html#ns";
+        public const string MSG_RECEIPT = "urn:xmpp:receipts";
 
         /// <summary>
         /// <para>XEP-0048: Bookmark Storage</para>
