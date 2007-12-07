@@ -23,7 +23,7 @@ using System;
 using System.Xml;
 using System.IO;
 using System.Collections;
-using System.Collections.Specialized;
+//using System.Collections.Specialized;
 
 namespace agsXMPP.Xml.Dom
 {

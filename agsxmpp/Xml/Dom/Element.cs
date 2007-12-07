@@ -35,78 +35,62 @@ namespace agsXMPP.Xml.Dom
 		// Member Variables
 		private		string			m_TagName;
 		private		string			m_Prefix			= null;
-		private		ListDictionary	m_Attributes;	
+        private     ListDictionary  m_Attributes;
 		private		Text			m_Value				= new Text();
 
 		public Element() 
 		{
 			this.NodeType = NodeType.Element;
 			this.AddChild(m_Value);
-			m_Attributes = new ListDictionary();
-			
-			this.m_TagName	= "";
+
+            m_Attributes = new ListDictionary();
+
+            this.m_TagName	= "";
 			this.Value		= "";			
 		}
 
-		public Element(NodeType type)
+        /* 
+         * don't think we need this 2 constructors anymore
+         * 
+        public Element(NodeType type)
+        {
+            this.NodeType = NodeType.Element;
+            this.AddChild(m_Value);
+
+            m_Attributes = new ListDictionary();
+
+            NodeType = type;
+        }
+
+        public Element(NodeType type, string text)
+        {
+            this.NodeType = NodeType.Element;
+            this.AddChild(m_Value);
+
+            m_Attributes = new ListDictionary();
+
+            NodeType = type;
+            Value = text;
+        }
+         */
+
+		public Element(string tagName) :this() 
 		{
-			this.NodeType = NodeType.Element;
-			this.AddChild(m_Value);
-			m_Attributes = new ListDictionary();
-			
-			NodeType = type;
+            this.m_TagName = tagName;
 		}
 
-		public Element(NodeType type, string text)
+		public Element(string tagName, string tagText) : this(tagName)
 		{
-			this.NodeType = NodeType.Element;
-			this.AddChild(m_Value);
-			m_Attributes = new ListDictionary();
-
-			
-			NodeType	= type;
-			Value		= text;
+            this.Value		= tagText;			
 		}
 
-		public Element(string tagName) 
-		{
-			this.NodeType = NodeType.Element;
-			this.AddChild(m_Value);
-			m_Attributes = new ListDictionary();
-			
-			this.m_TagName	= tagName;			
-			this.Value		="";
-		}
-		
-		public Element(string tagName, bool tagText) 
-		{
-			this.NodeType = NodeType.Element;
-			this.AddChild(m_Value);
-			m_Attributes = new ListDictionary();
-			
-			this.m_TagName	= tagName;
-			this.Value		= tagText ? "true" : "false";			
-		}
+        public Element(string tagName, bool tagText) : this(tagName, tagText ? "true" : "false")
+		{            
+		}		
 
-		public Element(string tagName, string tagText) 
+		public Element(string tagName, string tagText, string ns) : this(tagName, tagText)
 		{
-			this.NodeType = NodeType.Element;
-			this.AddChild(m_Value);
-			m_Attributes = new ListDictionary();
-			
-			this.m_TagName	= tagName;
-			this.Value		= tagText;			
-		}
-
-		public Element(string tagName, string tagText, string ns) 
-		{
-			this.NodeType = NodeType.Element;
-			this.AddChild(m_Value);
-			m_Attributes = new ListDictionary();
-			
-			this.m_TagName		= tagName;
-			this.Value			= tagText;
-			this.Namespace		= ns;			
+           this.Namespace		= ns;			
 		}
 				
 		/// <summary>
@@ -156,11 +140,10 @@ namespace agsXMPP.Xml.Dom
 			}
 		}
       
-		public ListDictionary Attributes 
-		{
-			get { return this.m_Attributes;	}
-		}
-      
+        public ListDictionary Attributes
+        {
+            get { return this.m_Attributes; }
+        }
 
 		public object GetAttributeEnum(string name, System.Type enumType)
 		{
@@ -395,6 +378,16 @@ namespace agsXMPP.Xml.Dom
             SetTag(argTagname, dbl, nfi);
         }
 
+        public void SetTag(string argTagname, bool val)
+        {
+            SetTag(argTagname, val == true ? "true" : "false");
+        }
+
+        public void SetTag(string argTagname, Jid jid)
+        {
+            SetTag(argTagname, jid.ToString());
+        }
+
 		public void AddTag(string argTagname, string argText)
 		{			
 			this.AddChild(new Element(argTagname, argText));			
@@ -462,9 +455,18 @@ namespace agsXMPP.Xml.Dom
 				return 0;
 		}
 
+
+        public Jid GetTagJid(string TagName)
+        {
+            string jid = GetTag(TagName);
+            
+            if (jid != null)
+                return new Jid(jid);
+            else
+                return null;
+        }         
          
         
-
         /// <summary>
         /// Get a Tag of type double (Decimal seperator = ".")
         /// </summary>
@@ -775,23 +777,25 @@ namespace agsXMPP.Xml.Dom
             }
 		}
 
-		public bool HasChildElements
-		{
-			get
-			{
-				if (this.ChildNodes.Count > 0)
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-		}
+        /// <summary>
+        /// returns whether the current element has child elements or not.
+        /// cares only about element, not text nodes etc...
+        /// </summary>
+        public bool HasChildElements
+        {
+	        get
+	        {
+                foreach (Node e in this.ChildNodes)
+                {
+                    if (e.NodeType == NodeType.Element)
+                        return true;
+                }
+		        return false;	     
+	        }
+        }
 
 		/// <summary>
-		/// returns the first child element (no textNodes
+		/// returns the first child element (no textNodes)
 		/// </summary>
 		public Element FirstChild
 		{
