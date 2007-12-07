@@ -223,6 +223,11 @@ namespace agsXMPP.protocol.client
 		{			
 			this.Condition	= condition;
 		}
+
+        public Error(ErrorType type, ErrorCondition condition) : this(type)
+        {
+            this.Condition = condition;
+        }
 		#endregion
 
 		/// <summary>

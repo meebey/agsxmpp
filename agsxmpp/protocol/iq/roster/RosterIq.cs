@@ -49,10 +49,7 @@ namespace agsXMPP.protocol.iq.roster
 
 		public new Roster Query
 		{
-			get
-			{
-				return m_Roster;
-			}
+			get { return m_Roster; }            
 		}
 	}
 }

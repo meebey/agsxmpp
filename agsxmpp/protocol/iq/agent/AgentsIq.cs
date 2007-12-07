@@ -59,10 +59,7 @@ namespace agsXMPP.protocol.iq.agent
 
 		public new Agents Query
 		{
-			get
-			{
-				return m_Agents;
-			}
+			get	{ return m_Agents; }            
 		}
 	}
 }

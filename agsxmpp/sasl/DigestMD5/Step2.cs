@@ -235,7 +235,7 @@ namespace agsXMPP.sasl.DigestMD5
 			Array.Copy(bA1, 0, bH1A1, H1.Length, bA1.Length);
 #if !CF
 			H1 =  new MD5CryptoServiceProvider().ComputeHash(bH1A1);			
-			Console.WriteLine(util.Hash.HexToString(H1));
+			//Console.WriteLine(util.Hash.HexToString(H1));
 #else
 			//H1 = Encoding.Default.GetBytes(util.Hash.MD5Hash(sb.ToString()));
 			//H1 =util.Hash.MD5Hash(Encoding.Default.GetBytes(sb.ToString()));

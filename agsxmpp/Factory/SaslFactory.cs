@@ -24,7 +24,9 @@ using System.Collections;
 
 using agsXMPP.sasl;
 using agsXMPP.sasl.Plain;
+#if !SL
 using agsXMPP.sasl.DigestMD5;
+#endif
 using agsXMPP.sasl.Anonymous;
 using agsXMPP.sasl.XGoogleToken;
 

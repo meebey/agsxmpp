@@ -90,10 +90,11 @@ namespace agsXMPP.protocol.sasl
 	{
 		public Mechanism()
 		{
-			this.TagName = "mechanism";
+			this.TagName    = "mechanism";
+            this.Namespace  = Uri.SASL;
 		}
 
-		public Mechanism(MechanismType mechanism)
+		public Mechanism(MechanismType mechanism) : this()
 		{
 			MechanismType = mechanism;
 		}

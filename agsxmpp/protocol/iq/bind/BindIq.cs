@@ -52,6 +52,14 @@ namespace agsXMPP.protocol.iq.bind
 		public BindIq(IqType type, Jid to, string resource) : this(type, to)
 		{			
 			m_Bind.Resource = resource;
-		}		
+		}
+
+        public new Bind Query
+        {
+            get
+            {
+                return m_Bind;
+            }
+        }
 	}
 }

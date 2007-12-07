@@ -25,7 +25,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\PPC_20\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CF_2;STRINGPREP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CF_2;STRINGPREP;BCCRYPTO</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -134,6 +134,7 @@
     <Compile Include="protocol\extensions\bookmarks\StorageIq.cs" />
     <Compile Include="protocol\extensions\bookmarks\Url.cs" />
     <Compile Include="protocol\extensions\bosh\Body.cs" />
+    <Compile Include="protocol\extensions\bosh\BoshType.cs" />
     <Compile Include="protocol\extensions\bytestreams\Activate.cs" />
     <Compile Include="protocol\extensions\bytestreams\ByteStream.cs" />
     <Compile Include="protocol\extensions\bytestreams\ByteStreamIq.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="protocol\extensions\geoloc\GeoLocIq.cs" />
     <Compile Include="protocol\extensions\html\Body.cs" />
     <Compile Include="protocol\extensions\html\Html.cs" />
+    <Compile Include="protocol\extensions\ibb\Base.cs" />
     <Compile Include="protocol\extensions\ibb\Close.cs" />
     <Compile Include="protocol\extensions\ibb\Data.cs" />
     <Compile Include="protocol\extensions\ibb\Open.cs" />
@@ -297,6 +299,7 @@
     <Compile Include="protocol\sasl\Auth.cs" />
     <Compile Include="protocol\sasl\Challenge.cs" />
     <Compile Include="protocol\sasl\Failure.cs" />
+    <Compile Include="protocol\sasl\FailureCondition.cs" />
     <Compile Include="protocol\sasl\Mechanism.cs" />
     <Compile Include="protocol\sasl\Mechanisms.cs" />
     <Compile Include="protocol\sasl\Response.cs" />
@@ -391,6 +394,7 @@
   <ItemGroup>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>

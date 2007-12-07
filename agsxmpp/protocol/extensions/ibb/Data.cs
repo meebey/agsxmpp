@@ -50,15 +50,14 @@ namespace agsXMPP.protocol.extensions.ibb
     /// <summary>
     /// 
     /// </summary>
-    public class Data : Element
+    public class Data : Base
     {
         /// <summary>
         /// 
         /// </summary>
         public Data()
         {
-            this.TagName    = "data";
-            this.Namespace  = Uri.IBB;
+            this.TagName    = "data";            
         }
 
         /// <summary>
@@ -70,15 +69,6 @@ namespace agsXMPP.protocol.extensions.ibb
         {
             this.Sid        = sid;
             this.Sequence   = seq;
-        }
-
-        /// <summary>
-        /// Sid
-        /// </summary>
-        public string Sid
-        {
-            get { return GetAttribute("sid"); }
-            set { SetAttribute("sid", value); }
         }
 
         /// <summary>

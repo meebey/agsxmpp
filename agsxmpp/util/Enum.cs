@@ -108,7 +108,7 @@ namespace agsXMPP.util
 		#endregion
 #endif
 
-#if CF || CF_2
+#if CF || CF_2 || SL
 		public static string[] GetNames(System.Type enumType)
 		{
 			if(enumType.BaseType==Type.GetType("System.Enum"))

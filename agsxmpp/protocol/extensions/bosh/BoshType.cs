@@ -19,37 +19,12 @@
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Text;
-
-using agsXMPP.Xml.Dom;
-
-namespace agsXMPP.protocol.extensions.ibb
+namespace agsXMPP.protocol.extensions.bosh
 {
-    /*
-         <close xmlns='http://jabber.org/protocol/ibb' sid='mySID'/>      
-    */
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class Close : Base
+    public enum BoshType
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public Close()
-        {
-            this.TagName = "close";           
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sid"></param>
-        public Close(string sid) : this()
-        {
-            this.Sid = sid;            
-        }       
+        NONE = -1,
+        error,
+        terminate
     }
 }

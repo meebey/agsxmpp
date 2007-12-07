@@ -28,11 +28,12 @@ namespace agsXMPP.net
 	/// </summary>
 	public enum SocketConnectionType
 	{
+#if !SL
 		/// <summary>
 		/// Direct TCP/IP Connection
 		/// </summary>
 		Direct,
-		
+#endif	
 		/// <summary>
 		/// A HTTP Polling Socket connection (JEP-0025)
 		/// </summary>

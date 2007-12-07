@@ -53,6 +53,7 @@ using agsXMPP.sasl;
 using agsXMPP.net;
 using agsXMPP.net.dns;
 
+
 using agsXMPP.Idn;
 
 #if MONOSSL
@@ -83,7 +84,7 @@ namespace agsXMPP
         
         private SRVRecord[]                 _SRVRecords;
         private SRVRecord                   _currentSRVRecord;
-                
+       
         
 		#region << Properties and Member Variables >>
         private     string                  m_ClientLanguage    = "en";
@@ -95,12 +96,14 @@ namespace agsXMPP
 		private		int						m_Priority			= 5;
 		private		ShowType				m_Show				= ShowType.NONE;
 		private		bool					m_AutoRoster		= true;
-		private		bool					m_AutoAgents		= true;		
+		private		bool					m_AutoAgents		= true;
+        private     bool                    m_AutoPresence      = true;
+        
 		private		bool					m_UseSSL			= false;
-#if CF || CF_2
+#if (CF || CF_2)
         private     bool                    m_UseStartTLS       = false;
 #else
-		private		bool					m_UseStartTLS		= true;
+        private		bool					m_UseStartTLS		= true;
 #endif
         private     bool                    m_UseCompression    = false;
 		internal	bool					m_Binded			= false;
@@ -252,6 +255,16 @@ namespace agsXMPP
 			get	{ return m_AutoRoster; }
 			set	{ m_AutoRoster = value;	}
 		}
+
+        /// <summary>
+        /// Sends the presence Automatically after successful login.
+        /// This property works only in combination with AutoRoster (AutoRoster = true).
+        /// </summary>
+        public bool AutoPresence
+        {
+            get { return m_AutoPresence; }
+            set { m_AutoPresence = value; }
+        }
 
 		/// <summary>
         /// If set to true then the Agents are requested automatically after sucessful login. 
@@ -535,15 +548,14 @@ namespace agsXMPP
 			base.Port = port;
 		}
 		#endregion
-		
-        
+                
         /// <summary>
         /// This method open the connections to the xmpp server and authenticates you to ther server.
         /// This method is async, don't assume you are already connected when it returns. You have to wait for the OnLogin Event
         /// </summary>
 		public void Open()
 		{
-			_Open();
+			_Open();            
 		}       
 
         /// <summary>
@@ -655,7 +667,7 @@ namespace agsXMPP
         }
 		
 		#endregion
-
+               
 		private void _Open()
 		{
             m_CleanUpDone   = false;
@@ -673,7 +685,7 @@ namespace agsXMPP
             if (AutoResolveConnectServer)
                 ResolveSrv();
 
-            OpenSocket();		
+            OpenSocket();          
 		}
 
         private void OpenSocket()
@@ -732,7 +744,7 @@ namespace agsXMPP
                 this.ConnectServer = null;
             }
         }
-        
+
         private void RemoveSrvRecord(SRVRecord rec)
         {
             int i = 0;
@@ -831,6 +843,7 @@ namespace agsXMPP
 
             return ret;
         }
+
         #endregion
 
         private void SendStreamHeader(bool startParser)
@@ -1173,14 +1186,14 @@ namespace agsXMPP
 				}
 			}
 
-			if (iq.Type == IqType.result && OnRosterEnd != null)
-				OnRosterEnd(this);
+            if (iq.Type == IqType.result && OnRosterEnd != null)
+            {
+                OnRosterEnd(this);
+                if (m_AutoPresence)
+                    SendMyPresence();
+            }
 		}
-		#endregion
-
-        
-
-       
+		#endregion       
 
 		private void OnAuthenticate(object sender, IQ iq, object data)
 		{			
@@ -1379,14 +1392,19 @@ namespace agsXMPP
 
         public override void Send(Element e)
         {
-            // this is a hack to not send the xmlns="jabber:client" with all packets
-            Element dummyEl = new Element("a");
-            dummyEl.Namespace = Uri.CLIENT;
+            //if (!(ClientSocket is BoshClientSocket))
+            //{
+                // this is a hack to not send the xmlns="jabber:client" with all packets
+                Element dummyEl = new Element("a");
+                dummyEl.Namespace = Uri.CLIENT;
 
-            dummyEl.AddChild(e);
-            string toSend = dummyEl.ToString();
-            
-            Send(toSend.Substring(25, toSend.Length - 25 - 4));
+                dummyEl.AddChild(e);
+                string toSend = dummyEl.ToString();
+
+                Send(toSend.Substring(25, toSend.Length - 25 - 4));
+            //}
+            //else
+            //    base.Send(e);
         }
 		
 		/// <summary>
@@ -1423,9 +1441,9 @@ namespace agsXMPP
 		}
 
 		internal void Reset()
-		{			
-			StreamParser.Reset();
-			SendStreamHeader(false);
+		{            
+            StreamParser.Reset();
+            SendStreamHeader(false);        
 		}
 		
 		internal void DoRaiseEventBinded()
@@ -1446,7 +1464,7 @@ namespace agsXMPP
 		{
             if (KeepAlive)
                 CreateKeepAliveTimer();
-
+                       
 			if (OnLogin!=null)
 				OnLogin(this);
 				

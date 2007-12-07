@@ -74,6 +74,15 @@ namespace agsXMPP.protocol.extensions.shim
 			return header;
 		}
 
+        public void SetHeader(string name, string val)
+        {
+            Header header = GetHeader(name);
+            if (header != null)
+                header.Value = val;
+            else
+                AddHeader(name, val);
+        }
+
 		/// <summary>
 		/// 
 		/// </summary>

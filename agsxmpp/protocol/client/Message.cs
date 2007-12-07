@@ -25,6 +25,7 @@ using agsXMPP.protocol.x;
 using agsXMPP.protocol.extensions.html;
 using agsXMPP.protocol.extensions.chatstates;
 using agsXMPP.protocol.extensions.nickname;
+using agsXMPP.protocol.extensions.shim;
 
 namespace agsXMPP.protocol.client
 {
@@ -306,6 +307,26 @@ namespace agsXMPP.protocol.client
             {
                 if (HasTag(typeof(Delay)))
                     RemoveTag(typeof(Delay));
+
+                if (value != null)
+                    this.AddChild(value);
+            }
+        }
+
+
+        /// <summary>
+        /// Stanza Headers and Internet Metadata
+        /// </summary>
+        public Headers Headers
+        {
+            get
+            {
+                return SelectSingleElement(typeof(Headers)) as Headers;
+            }
+            set
+            {
+                if (HasTag(typeof(Headers)))
+                    RemoveTag(typeof(Headers));
 
                 if (value != null)
                     this.AddChild(value);

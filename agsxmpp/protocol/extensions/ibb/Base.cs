@@ -26,30 +26,23 @@ using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.extensions.ibb
 {
-    /*
-         <close xmlns='http://jabber.org/protocol/ibb' sid='mySID'/>      
-    */
-
     /// <summary>
-    /// 
+    /// IBB base class
     /// </summary>
-    public class Close : Base
+    public abstract class Base : Element
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public Close()
+        public Base()
         {
-            this.TagName = "close";           
+            this.Namespace = Uri.IBB;
         }
 
         /// <summary>
-        /// 
+        /// Sid
         /// </summary>
-        /// <param name="sid"></param>
-        public Close(string sid) : this()
+        public string Sid
         {
-            this.Sid = sid;            
-        }       
+            get { return GetAttribute("sid"); }
+            set { SetAttribute("sid", value); }
+        }
     }
 }

@@ -31,11 +31,11 @@ namespace agsXMPP.net
 	/// <summary>
 	/// Base Socket class
 	/// </summary>
-	public abstract class BaseSocket
+	public abstract class BaseSocket : IDisposable
 	{
 		public delegate void OnSocketDataHandler(object sender, byte[] data, int count);
 
-        public delegate void OnSocketCompressionDebugHandler(object sender, byte[] CompData, int CompCount, byte[] UncompData, int UncompCount);
+        //public delegate void OnSocketCompressionDebugHandler(object sender, byte[] CompData, int CompCount, byte[] UncompData, int UncompCount);
         
         /*
         // for compression debug statistics
@@ -71,6 +71,8 @@ namespace agsXMPP.net
 		private string	m_Address		    = null;
 		private int		m_Port			    = 0;
         private long    m_ConnectTimeout    = 10000; // 10 seconds is default
+
+        internal XmppConnection  m_XmppCon = null;
         
 		public BaseSocket()
 		{
@@ -214,5 +216,14 @@ namespace agsXMPP.net
 			
 		}
 		#endregion
-	}
+
+        #region IDisposable Members
+
+        public virtual void Dispose()
+        {
+            //throw new Exception("The method or operation is not implemented.");
+        }
+
+        #endregion
+    }
 }

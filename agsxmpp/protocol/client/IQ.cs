@@ -26,6 +26,8 @@ using agsXMPP.Xml.Dom;
 
 using agsXMPP.protocol.iq;
 using agsXMPP.protocol.iq.vcard;
+using agsXMPP.protocol.iq.bind;
+using agsXMPP.protocol.iq.session;
 
 namespace agsXMPP.protocol.client
 {
@@ -137,5 +139,40 @@ namespace agsXMPP.protocol.client
 					RemoveTag("vCard");
 			}
 		}
+
+        /// <summary>
+        /// Get or Set the Bind ELement if it is a BingIq
+        /// </summary>
+        public virtual Bind Bind
+        {
+            get
+            {
+                return this.SelectSingleElement(typeof(Bind)) as Bind;
+            }
+            set
+            {
+                RemoveTag(typeof(Bind));
+                if (value != null)
+                    AddChild(value);                
+            }
+        }
+
+
+        /// <summary>
+        /// Get or Set the Session Element if it is a SessionIq
+        /// </summary>
+        public virtual Session Session
+        {
+            get
+            {
+                return this.SelectSingleElement(typeof(Session)) as Session;
+            }
+            set
+            {
+                RemoveTag(typeof(Session));
+                if (value != null)
+                    AddChild(value);
+            }
+        }
 	}
 }

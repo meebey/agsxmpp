@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>8.0.50727</ProductVersion>
@@ -26,6 +26,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <SignAssembly>true</SignAssembly>
+    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Windows\Debug\</OutputPath>
@@ -103,6 +104,7 @@
     <Compile Include="Idn\RFC3454.cs" />
     <Compile Include="Idn\Stringprep.cs" />
     <Compile Include="Idn\StringprepException.cs" />
+    <Compile Include="net\BoshClientSocket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -158,6 +160,7 @@
     <Compile Include="protocol\extensions\bookmarks\Storage.cs" />
     <Compile Include="protocol\extensions\bookmarks\StorageIq.cs" />
     <Compile Include="protocol\extensions\bookmarks\Url.cs" />
+    <Compile Include="protocol\extensions\bosh\BoshType.cs" />
     <Compile Include="protocol\extensions\bytestreams\Activate.cs" />
     <Compile Include="protocol\extensions\bytestreams\ByteStream.cs" />
     <Compile Include="protocol\extensions\bytestreams\ByteStreamIq.cs" />
@@ -168,6 +171,7 @@
     <Compile Include="protocol\extensions\caps\Capabilities.cs" />
     <Compile Include="protocol\extensions\html\Body.cs" />
     <Compile Include="protocol\extensions\bosh\Body.cs" />
+    <Compile Include="protocol\extensions\ibb\Base.cs" />
     <Compile Include="protocol\extensions\ibb\Close.cs" />
     <Compile Include="protocol\extensions\ibb\Data.cs" />
     <Compile Include="protocol\extensions\ibb\Open.cs" />
@@ -186,6 +190,7 @@
     <Compile Include="protocol\iq\browse\Service.cs" />
     <Compile Include="protocol\iq\disco\DiscoManager.cs" />
     <Compile Include="protocol\iq\register\RegisterEventArgs.cs" />
+    <Compile Include="protocol\sasl\FailureCondition.cs" />
     <Compile Include="protocol\server\Presence.cs" />
     <Compile Include="protocol\x\muc\Actor.cs" />
     <Compile Include="protocol\x\muc\MucManager.cs" />

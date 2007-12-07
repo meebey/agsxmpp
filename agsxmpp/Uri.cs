@@ -186,17 +186,17 @@ namespace agsXMPP
         /// <summary>
         /// Jingle http://jabber.org/protocol/jingle
         /// </summary>
-        public const string JINGLE              = "http://jabber.org/protocol/jingle";
+        public const string JINGLE                  = "http://jabber.org/protocol/jingle";
 
         /// <summary>
         /// Jingle audio format description http://jabber.org/protocol/jingle/description/audio
         /// </summary>
-        public const string JINGLE_AUDIO_DESCRIPTION        = "http://jabber.org/protocol/jingle/description/audio";
+        public const string JINGLE_AUDIO_DESCRIPTION = "http://jabber.org/protocol/jingle/description/audio";
 
         /// <summary>
         /// Jingle Info audio http://jabber.org/protocol/jingle/info/audio;
         /// </summary>
-        public const string JINGLE_AUDIO_INFO               = "http://jabber.org/protocol/jingle/info/audio";
+        public const string JINGLE_AUDIO_INFO        = "http://jabber.org/protocol/jingle/info/audio";
 
 
         public const string JINGLE_VIDEO_DESCRIPTION = "http://jabber.org/protocol/jingle/description/video";
@@ -225,13 +225,12 @@ namespace agsXMPP
 
         // Http-Binding XEP-0124
         public const string HTTP_BIND           = "http://jabber.org/protocol/httpbind";
-
         
         /// <summary>
         /// <para>XEP-0184: Message Receipts</para>
         /// <para>urn:xmpp:receipts</para>        
         /// </summary>
-        public const string MSG_RECEIPT = "urn:xmpp:receipts";
+        public const string MSG_RECEIPT         = "urn:xmpp:receipts";
 
         /// <summary>
         /// <para>XEP-0048: Bookmark Storage</para>
@@ -250,7 +249,5 @@ namespace agsXMPP
         /// <para>vcard-temp:x:update</para>
         /// </summary>
         public const string VCARD_UPDATE        = "vcard-temp:x:update";
-
-	}
-	
+	}	
 }

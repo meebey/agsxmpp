@@ -140,13 +140,14 @@ namespace agsXMPP.sasl.XGoogleToken
             }
             catch (WebException we)
             {
-                if (((HttpWebResponse)we.Response).StatusCode == HttpStatusCode.Forbidden)
+                if (we.Response is HttpWebResponse // this is also false when Response is null
+                    && ((HttpWebResponse)we.Response).StatusCode == HttpStatusCode.Forbidden)
                 {
                     base.XmppClientConnection.FireOnAuthError(null);
-                    base.XmppClientConnection.Close();
                 }
+                base.XmppClientConnection.Close();
             }
-        }              
+        }             
 
         private void ParseClientAuthResponse(Stream responseStream)
         {            

@@ -34,6 +34,7 @@ using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 #endif
+
 #if MONOSSL
 using System.Security.Cryptography.X509Certificates;
 using Mono.Security.Protocol.Tls;
@@ -94,9 +95,12 @@ namespace agsXMPP.net
         private Timer connectTimeoutTimer;
         //private System.Timers.Timer connectTimeoutTimer;
 
+        
+
         #region << Constructor >>
         public ClientSocket()
         {
+           
         }        
         #endregion
 
@@ -551,10 +555,10 @@ namespace agsXMPP.net
                     {
                         m_PendingSend = true;                        
                         try
-                        {
+                        { 
                             m_NetworkStream.BeginWrite(bData, 0, bData.Length, new AsyncCallback(EndSend), null);
                         }
-                        catch
+                        catch(Exception ex)
                         {
                             Disconnect();
                         }

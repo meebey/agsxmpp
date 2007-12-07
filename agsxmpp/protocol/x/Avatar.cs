@@ -39,6 +39,11 @@ namespace agsXMPP.protocol.x
 			this.Namespace	= Uri.X_AVATAR;
 		}
 
+        public Avatar(string hash) : this()
+        {
+            Hash = hash;
+        }
+
 		public string Hash
 		{
 			get

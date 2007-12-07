@@ -2,70 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agsXMPP2005", "agsXMPP2005.csproj", "{DC39021C-FA24-4E34-AB4A-3260BB5314AF}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agsXMPP.ui.2005", "..\agsxmpp.ui\agsXMPP.ui.2005.csproj", "{93F68E40-C0FC-4B7F-8331-8EEB95A5E3DF}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendMessage", "..\samples\VS2005\SendMessage\SendMessage.csproj", "{D861BADB-BC3D-413C-A589-E2A597F3D524}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniClient", "..\samples\VS2005\MiniClient\MiniClient.csproj", "{692CC1BB-F48B-4790-866F-CBFA81975156}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MiniClientVB", "..\samples\VS2005\MiniClientVB\MiniClientVB.vbproj", "{E918133C-69DC-4E7B-B955-30ED80411117}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agsXMPP_PPC", "agsXMPP_PPC.csproj", "{E236C510-8B5D-4F06-AD31-97900F72FCF4}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agsXMPP_PPC_20", "agsXMPP_PPC_20.csproj", "{33BAFD81-945E-46CF-A6E1-42CB7B626CDB}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniClientWM5", "..\samples\VS2005\MiniClientWM5\MiniClientWM5.csproj", "{A25AA758-756E-4522-9EDD-5F9A5225BDFC}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Component", "..\samples\VS2005\Component\Component.csproj", "{256D6B55-E66C-4812-8E7B-F701A298533F}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agsXMPP_Smartphone", "agsXMPP_Smartphone.csproj", "{A7198538-8BDD-444A-8F18-A44FC1AE46EC}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "..\samples\VS2005\server\server.csproj", "{1C05730C-F517-46D2-843A-156288B39A25}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,48 +15,10 @@ Global
 		{DC39021C-FA24-4E34-AB4A-3260BB5314AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC39021C-FA24-4E34-AB4A-3260BB5314AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC39021C-FA24-4E34-AB4A-3260BB5314AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93F68E40-C0FC-4B7F-8331-8EEB95A5E3DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93F68E40-C0FC-4B7F-8331-8EEB95A5E3DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93F68E40-C0FC-4B7F-8331-8EEB95A5E3DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93F68E40-C0FC-4B7F-8331-8EEB95A5E3DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D861BADB-BC3D-413C-A589-E2A597F3D524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D861BADB-BC3D-413C-A589-E2A597F3D524}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D861BADB-BC3D-413C-A589-E2A597F3D524}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D861BADB-BC3D-413C-A589-E2A597F3D524}.Release|Any CPU.Build.0 = Release|Any CPU
 		{692CC1BB-F48B-4790-866F-CBFA81975156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{692CC1BB-F48B-4790-866F-CBFA81975156}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{692CC1BB-F48B-4790-866F-CBFA81975156}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{692CC1BB-F48B-4790-866F-CBFA81975156}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E918133C-69DC-4E7B-B955-30ED80411117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E918133C-69DC-4E7B-B955-30ED80411117}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E918133C-69DC-4E7B-B955-30ED80411117}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E918133C-69DC-4E7B-B955-30ED80411117}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E236C510-8B5D-4F06-AD31-97900F72FCF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E236C510-8B5D-4F06-AD31-97900F72FCF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E236C510-8B5D-4F06-AD31-97900F72FCF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E236C510-8B5D-4F06-AD31-97900F72FCF4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33BAFD81-945E-46CF-A6E1-42CB7B626CDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33BAFD81-945E-46CF-A6E1-42CB7B626CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33BAFD81-945E-46CF-A6E1-42CB7B626CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33BAFD81-945E-46CF-A6E1-42CB7B626CDB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{256D6B55-E66C-4812-8E7B-F701A298533F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{256D6B55-E66C-4812-8E7B-F701A298533F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{256D6B55-E66C-4812-8E7B-F701A298533F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{256D6B55-E66C-4812-8E7B-F701A298533F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7198538-8BDD-444A-8F18-A44FC1AE46EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7198538-8BDD-444A-8F18-A44FC1AE46EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7198538-8BDD-444A-8F18-A44FC1AE46EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7198538-8BDD-444A-8F18-A44FC1AE46EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C05730C-F517-46D2-843A-156288B39A25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C05730C-F517-46D2-843A-156288B39A25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C05730C-F517-46D2-843A-156288B39A25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C05730C-F517-46D2-843A-156288B39A25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

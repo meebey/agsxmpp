@@ -55,8 +55,7 @@ namespace agsXMPP.net
 #endif
 		
 		public PollClientSocket()
-		{
-
+		{            
 		}
 
 		#region << Properties and Members >>
@@ -287,7 +286,7 @@ namespace agsXMPP.net
 				// Set Proxy Information
 				if (m_Proxy != null)
 					req.Proxy = m_Proxy;
-				
+		
 				req.Method          = METHOD;
 				//req.KeepAlive		= true;
 				req.ContentType     = CONTENT_TYPE;

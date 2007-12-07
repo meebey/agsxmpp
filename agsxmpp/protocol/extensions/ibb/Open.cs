@@ -42,15 +42,14 @@ namespace agsXMPP.protocol.extensions.ibb
          </xs:complexType>
        </xs:element>
     */
-    public class Open : Element
+    public class Open : Base
     {
         /// <summary>
         /// 
         /// </summary>
         public Open()
         {
-            this.TagName    = "open";
-            this.Namespace  = Uri.IBB;
+            this.TagName    = "open";            
         }
 
         /// <summary>
@@ -62,16 +61,7 @@ namespace agsXMPP.protocol.extensions.ibb
         {
             this.Sid        = sid;
             this.BlockSize  = blocksize;
-        }
-
-        /// <summary>
-        /// Sid
-        /// </summary>
-        public string Sid
-        {
-            get { return GetAttribute("sid"); }
-            set { SetAttribute("sid", value); }
-        }
+        }  
 
         /// <summary>
         /// Block size

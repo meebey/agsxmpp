@@ -21,9 +21,10 @@
 #if !CF
 using System;
 using System.IO;
+#if !SL
 using System.Drawing;
 using System.Drawing.Imaging;
-
+#endif
 using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.iq.vcard
@@ -43,12 +44,12 @@ namespace agsXMPP.protocol.iq.vcard
 			this.TagName	= "PHOTO";
 			this.Namespace	= Uri.VCARD;
 		}
-		
+#if !SL
 		public Photo(Image image, ImageFormat format) : this()
 		{
 			SetImage(image, format);
 		}
-		
+#endif	
 		public Photo(string url) : this()
 		{
 			SetImage(url);
@@ -85,6 +86,7 @@ namespace agsXMPP.protocol.iq.vcard
 		}
         */
 
+#if !SL
         public void SetImage(Image image, ImageFormat format)
         {
             // if we have no FOrmatprovider then we save the image as PNG
@@ -147,6 +149,7 @@ namespace agsXMPP.protocol.iq.vcard
                     return null;
             }
         }
+
 		/// <summary>
 		/// gets or sets the from internal (binary) or external source
 		/// When external then it trys to get the image with a Webrequest
@@ -189,7 +192,7 @@ namespace agsXMPP.protocol.iq.vcard
 			}
             */
 		}
-
-	}
+#endif
+    }
 }
 #endif

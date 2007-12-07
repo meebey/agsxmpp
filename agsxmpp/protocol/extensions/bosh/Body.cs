@@ -182,5 +182,17 @@ namespace agsXMPP.protocol.extensions.bosh
             get { return GetAttribute("key"); }
             set { SetAttribute("key", value); }
         }
+
+        public BoshType Type
+        {
+            get { return (BoshType) GetAttributeEnum("type", typeof(BoshType)); }
+            set
+            {
+                if (value == BoshType.NONE)
+                    RemoveAttribute("type");
+                else
+                    SetAttribute("type", value.ToString());
+            }
+        }
     }
 }
