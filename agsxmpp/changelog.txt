@@ -5,6 +5,14 @@ version 0.9x
 - added message receipts XEP-0184
 - added XEP-0047: In-Band Bytestreams (IBB)
 - added a hack to not send xmlns="jabbe:client" with all stanzas
+- added AutoPresence Property. This sends the own presence in XmppClientConnection automatically after login. If you already
+  send your presence after succesful login set AutoPresence to false or remove the SendMyPresence call
+- fixed a bug in agsXMPP.protocol.sasl.Mechamism  
+- added SASL failure conditions (FailureConditions.cs)
+- fixed HasChildElements property in Element.cs
+- did some refactoring on Element.cs
+- added some members to Element
+- added Console Client example
 
 version 0.95
 ============
