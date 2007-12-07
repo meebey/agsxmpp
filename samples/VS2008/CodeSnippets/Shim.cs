@@ -11,7 +11,7 @@ namespace CodeSnippets
 {
     class Shim
     {
-        public Shim()
+        internal Shim()
         {
             /*
                 Example of an Urgent Message

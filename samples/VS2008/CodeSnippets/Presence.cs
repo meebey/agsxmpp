@@ -36,9 +36,9 @@ namespace CodeSnippets
 
             pres.AddChild(caps);
             pres.AddChild(avatar);
-
+                        
             Console.WriteLine("Custom Presence Packet:");
-            Program.Print(pres);            
+            Program.Print(pres);           
         }
     }
 }
