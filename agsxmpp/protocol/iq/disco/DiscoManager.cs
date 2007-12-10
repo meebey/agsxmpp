@@ -40,61 +40,61 @@ namespace agsXMPP.protocol.iq.disco
         }
 
         #region << Discover Info >>
-        public void DisoverInformation(Jid to)
+        public void DiscoverInformation(Jid to)
         {
-            DisoverInformation(to, null, null, null, null);
+            DiscoverInformation(to, null, null, null, null);
         }
 
-        public void DisoverInformation(Jid to, Jid from)
+        public void DiscoverInformation(Jid to, Jid from)
         {
-            DisoverInformation(to, from, null, null, null);
+            DiscoverInformation(to, from, null, null, null);
         }
 
-        public void DisoverInformation(Jid to, IqCB cb)
+        public void DiscoverInformation(Jid to, IqCB cb)
         {
-            DisoverInformation(to, null, null, cb, null);
+            DiscoverInformation(to, null, null, cb, null);
         }
 
-        public void DisoverInformation(Jid to, Jid from, IqCB cb)
+        public void DiscoverInformation(Jid to, Jid from, IqCB cb)
         {
-            DisoverInformation(to, from, null, cb, null);
+            DiscoverInformation(to, from, null, cb, null);
         }
 
-        public void DisoverInformation(Jid to, IqCB cb, object cbArgs)
+        public void DiscoverInformation(Jid to, IqCB cb, object cbArgs)
         {
-            DisoverInformation(to, null, null, cb, cbArgs);
+            DiscoverInformation(to, null, null, cb, cbArgs);
         }
 
-        public void DisoverInformation(Jid to, Jid from, IqCB cb, object cbArgs)
+        public void DiscoverInformation(Jid to, Jid from, IqCB cb, object cbArgs)
         {
-            DisoverInformation(to, from, null, cb, cbArgs);
+            DiscoverInformation(to, from, null, cb, cbArgs);
         }
 
-        public void DisoverInformation(Jid to, string node)
+        public void DiscoverInformation(Jid to, string node)
         {
-            DisoverInformation(to, null, node, null, null);
+            DiscoverInformation(to, null, node, null, null);
         }
 
-        public void DisoverInformation(Jid to, Jid from, string node)
+        public void DiscoverInformation(Jid to, Jid from, string node)
         {
-            DisoverInformation(to, from, node, null, null);
+            DiscoverInformation(to, from, node, null, null);
         }
 
-        public void DisoverInformation(Jid to, string node, IqCB cb)
+        public void DiscoverInformation(Jid to, string node, IqCB cb)
         {
-            DisoverInformation(to, null, node, cb, null);
+            DiscoverInformation(to, null, node, cb, null);
         }
 
-        public void DisoverInformation(Jid to, Jid from, string node, IqCB cb)
+        public void DiscoverInformation(Jid to, Jid from, string node, IqCB cb)
         {
-            DisoverInformation(to, from, node, cb, null);
+            DiscoverInformation(to, from, node, cb, null);
         }
 
-        public void DisoverInformation(Jid to, string node, IqCB cb, object cbArgs)
+        public void DiscoverInformation(Jid to, string node, IqCB cb, object cbArgs)
         {
-            DisoverInformation(to, null, node, cb, cbArgs);
+            DiscoverInformation(to, null, node, cb, cbArgs);
         }
-        public void DisoverInformation(Jid to, Jid from, string node, IqCB cb, object cbArgs)
+        public void DiscoverInformation(Jid to, Jid from, string node, IqCB cb, object cbArgs)
         {
             /*
             
