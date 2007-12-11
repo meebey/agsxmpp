@@ -55,6 +55,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shim.cs" />
+    <Compile Include="XmppPing.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\agsxmpp\agsXMPP2008.csproj">

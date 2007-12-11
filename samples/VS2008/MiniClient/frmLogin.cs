@@ -264,20 +264,19 @@ namespace MiniClient
 
 		private void cmdLogin_Click(object sender, System.EventArgs e)
 		{
-			//http://jabberes.org:5280/http-poll
 			Jid jid = new Jid(txtJid.Text);
 			
 			_connection.Server			            = jid.Server;
 			_connection.Username		            = jid.User;
 			_connection.Password		            = txtPassword.Text;
-            _connection.Resource = null;// txtResource.Text;
+            _connection.Resource                    = txtResource.Text;
 			_connection.Priority		            = (int) numPriority.Value;
 			_connection.Port			            = int.Parse(txtPort.Text);
 			_connection.UseSSL			            = chkSSL.Checked;
             _connection.AutoResolveConnectServer    = true;
 						
 			_connection.ConnectServer			= null;
-			_connection.SocketConnectionType	= agsXMPP.net.SocketConnectionType.Bosh;
+			//_connection.SocketConnectionType	= agsXMPP.net.SocketConnectionType.Bosh;
             _connection.SocketConnectionType    = agsXMPP.net.SocketConnectionType.Direct;
            
 			_connection.UseStartTLS	= true;
@@ -325,15 +324,7 @@ namespace MiniClient
 			if (System.IO.File.Exists(SettingsFilename))
 			{
 				Document doc = new Document();
-                //doc.LoadFile(SettingsFilename);
-                //Element Login = doc.RootElement.SelectSingleElement("Login");
-
-                //txtJid.Text = Login.GetTag("Jid");
-                //txtPassword.Text = Login.GetTag("Password");
-                //txtResource.Text = Login.GetTag("Resource");
-                //numPriority.Value = Login.GetTagInt("Priority");
-                //chkSSL.Checked = Login.GetTagBool("Ssl");
-
+                
                 doc.LoadFile(SettingsFilename);
                 Settings.Login login = doc.RootElement.SelectSingleElement(typeof(Settings.Login)) as Settings.Login;
 

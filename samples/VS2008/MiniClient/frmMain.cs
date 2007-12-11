@@ -1292,7 +1292,7 @@ namespace MiniClient
         private void DiscoServer()
         {             
             DiscoManager dm = new DiscoManager(XmppCon);
-            dm.DisoverItems(new Jid(XmppCon.Server), new IqCB(OnDiscoServerResult), null);            
+            dm.DiscoverItems(new Jid(XmppCon.Server), new IqCB(OnDiscoServerResult), null);            
         }
 
         /// <summary>
@@ -1316,7 +1316,7 @@ namespace MiniClient
                     foreach (DiscoItem itm in itms)
                     {
                         if (itm.Jid != null)
-                            dm.DisoverInformation(itm.Jid, new IqCB(OnDiscoInfoResult), itm);
+                            dm.DiscoverInformation(itm.Jid, new IqCB(OnDiscoInfoResult), itm);
                     }
                 }
             }

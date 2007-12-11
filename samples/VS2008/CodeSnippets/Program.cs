@@ -15,6 +15,8 @@ namespace CodeSnippets
 
             Presence pres = new Presence();
 
+            XmppPing ping = new XmppPing();
+
             Console.WriteLine("Press enter key to close this program!");
             Console.ReadLine();
         }

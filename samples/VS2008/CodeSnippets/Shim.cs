@@ -56,7 +56,7 @@ namespace CodeSnippets
 
             // Remove all Headers
             msg.Headers = null;
-            Program.Print(msg);
+            Program.Print(msg);            
         }
     }
 }
