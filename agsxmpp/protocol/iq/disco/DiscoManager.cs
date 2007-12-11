@@ -137,62 +137,62 @@ namespace agsXMPP.protocol.iq.disco
         #endregion
 
         #region << Discover Items >>
-        public void DisoverItems(Jid to)
+        public void DiscoverItems(Jid to)
         {
-            DisoverItems(to, null, null, null);
+            DiscoverItems(to, null, null, null);
         }
 
-        public void DisoverItems(Jid to, Jid from)
+        public void DiscoverItems(Jid to, Jid from)
         {
-            DisoverItems(to, from, null, null, null);
+            DiscoverItems(to, from, null, null, null);
         }
 
-        public void DisoverItems(Jid to, IqCB cb)
+        public void DiscoverItems(Jid to, IqCB cb)
         {
-            DisoverItems(to, null, null, cb, null);
+            DiscoverItems(to, null, null, cb, null);
         }
 
-        public void DisoverItems(Jid to, Jid from, IqCB cb)
+        public void DiscoverItems(Jid to, Jid from, IqCB cb)
         {
-            DisoverItems(to, from, null, cb, null);
+            DiscoverItems(to, from, null, cb, null);
         }
 
-        public void DisoverItems(Jid to, IqCB cb, object cbArgs)
+        public void DiscoverItems(Jid to, IqCB cb, object cbArgs)
         {
-            DisoverItems(to, null, null, cb, cbArgs);
+            DiscoverItems(to, null, null, cb, cbArgs);
         }
 
-        public void DisoverItems(Jid to, Jid from, IqCB cb, object cbArgs)
+        public void DiscoverItems(Jid to, Jid from, IqCB cb, object cbArgs)
         {
-            DisoverItems(to, from, null, cb, cbArgs);
+            DiscoverItems(to, from, null, cb, cbArgs);
         }
 
-        public void DisoverItems(Jid to, string node)
+        public void DiscoverItems(Jid to, string node)
         {
-            DisoverItems(to, null, node, null, null);
+            DiscoverItems(to, null, node, null, null);
         }
 
-        public void DisoverItems(Jid to, Jid from, string node)
+        public void DiscoverItems(Jid to, Jid from, string node)
         {
-            DisoverItems(to, from, node, null, null);
+            DiscoverItems(to, from, node, null, null);
         }
 
-        public void DisoverItems(Jid to, string node, IqCB cb)
+        public void DiscoverItems(Jid to, string node, IqCB cb)
         {
-            DisoverItems(to, null, node, cb, null);
+            DiscoverItems(to, null, node, cb, null);
         }
 
-        public void DisoverItems(Jid to, Jid from, string node, IqCB cb)
+        public void DiscoverItems(Jid to, Jid from, string node, IqCB cb)
         {
-            DisoverItems(to, from, node, cb, null);
+            DiscoverItems(to, from, node, cb, null);
         }
 
-        public void DisoverItems(Jid to, string node, IqCB cb, object cbArgs)
+        public void DiscoverItems(Jid to, string node, IqCB cb, object cbArgs)
         {
-            DisoverItems(to, null, node, cb, cbArgs);
+            DiscoverItems(to, null, node, cb, cbArgs);
         }
 
-        public void DisoverItems(Jid to, Jid from, string node, IqCB cb, object cbArgs)
+        public void DiscoverItems(Jid to, Jid from, string node, IqCB cb, object cbArgs)
         {
             DiscoItemsIq discoIq = new DiscoItemsIq(IqType.get);
             discoIq.To = to;
