@@ -29,6 +29,7 @@ namespace CodeSnippets
             Capabilities caps = new Capabilities();
             caps.Node = "http://www.ag-software.de/caps";
             caps.Version = "1.1.0";
+            // don't use the follwing anymore, its deprecated
             caps.Extensions = new string[] { "rtf", "html-im", "crypt"};
 
             Avatar avatar = new Avatar();
