@@ -20,7 +20,10 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 using System;
+using System.Collections;
 using System.Text;
+
+using agsXMPP.protocol.iq.disco;
 
 using agsXMPP.Xml.Dom;
 
@@ -112,6 +115,7 @@ namespace agsXMPP.protocol.extensions.caps
             set { SetAttribute("ver", value); }
         }
 
+        [Obsolete("This property is deprecated with version 1.4 of XEP-0115. You shouldn't use this propety anymore.")]
         public string[] Extensions
         {
             get 
@@ -136,12 +140,57 @@ namespace agsXMPP.protocol.extensions.caps
                     {
                         temp += value[i];
                         if (i < value.Length - 1)
-                            temp += " ";
-                            
+                            temp += " ";                            
                     }                    
                     SetAttribute("ext", temp);
                 }
             }
+        }
+
+        /// <summary>
+        /// Builds and sets the caps ver attribute from a DiscoInfo object
+        /// </summary>
+        /// <param name="di"></param>
+        public void SetVersion(DiscoInfo di)
+        {
+            Version = BuildCapsVersion(di);
+        }
+
+        private string BuildCapsVersion(DiscoInfo di)
+        {
+            /*
+                1.  Initialize an empty string S.
+                2. Sort the service discovery identities by category and then by type (if it exists), formatted as 'category' '/' 'type'.
+                3. For each identity, append the 'category/type' to S, followed by the '<' character.
+                4. Sort the supported features.
+                5. For each feature, append the feature to S, followed by the '<' character.
+                6. Compute ver by hashing S using the SHA-1 algorithm as specified in RFC 3174 [17] (with binary output) and 
+                   encoding the hash using Base64 as specified in Section 4 of RFC 4648 [18] 
+                   (note: the Base64 output MUST NOT include whitespace and MUST set padding bits to zero). [19]
+             */
+            ArrayList features      = new ArrayList();
+            ArrayList identities    = new ArrayList();
+
+            foreach (DiscoIdentity did in di.GetIdentities())
+                identities.Add(did.Type == null ? did.Category : did.Category + "/" + did.Type);
+
+            foreach (DiscoFeature df in di.GetFeatures())
+                features.Add(df.Var);
+            
+            identities.Sort();
+            features.Sort();            
+
+            StringBuilder S = new StringBuilder();
+
+            foreach (string s in identities)
+                S.Append(s + "<");
+
+            foreach (string s in features)
+                S.Append(s + "<");
+
+            byte[] sha1 = util.Hash.Sha1HashBytes(S.ToString());
+
+            return Convert.ToBase64String(sha1);
         }
 
         #region << Extension Helpers >>
