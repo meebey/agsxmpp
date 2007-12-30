@@ -64,6 +64,8 @@ namespace agsXMPP.Xml.Dom
 		public Element Item(int index) 
 		{
 			return (Element) this.List[index];
-		}      
+		}
+
+       
     }
 }

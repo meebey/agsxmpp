@@ -194,5 +194,17 @@ namespace agsXMPP.protocol.extensions.bosh
                     SetAttribute("type", value.ToString());
             }
         }
+
+        public string XmppVersion
+        {
+            get { return GetAttribute("xmpp:version"); }
+            set {SetAttribute("xmpp:version", value); }
+        }
+
+        public bool XmppRestart
+        {
+            get { return GetAttributeBool("xmpp:restart"); }
+            set { SetAttribute("xmpp:restart", value); }
+        }
     }
 }

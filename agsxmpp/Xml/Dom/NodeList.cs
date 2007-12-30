@@ -21,46 +21,45 @@
 
 using System;
 using System.Collections;
-
 namespace agsXMPP.Xml.Dom
 {
 	/// <summary>
 	/// 
 	/// </summary>	
-	public class NodeList : CollectionBase 
-	{
+	public class NodeList : CollectionBase
+    {
 		/// <summary>
 		/// Owner (Parent) of the ChildElement Collection
 		/// </summary>
 		private Node m_Owner		= null;
 
-		public NodeList() 
+		public NodeList()
 		{			
 		}
 
 		public NodeList(Node owner) 
 		{
-			m_Owner = owner;
-		}		
-	
-		public void Add(Node e) 
-		{
+			m_Owner = owner;            
+		}
+
+        public void Add(Node e)
+        {
             // can't add a empty node, so return immediately
-            // Some people tried dthis which caused an error
+            // Some people tried this which caused an error
             if (e == null)
                 return;
 
-			if (m_Owner!=null)
-			{
-				e.Parent = m_Owner;
-				if (e.Namespace == null)
-					e.Namespace = m_Owner.Namespace;
-			}
-		
-			e.m_Index = Count;
-		
-			this.List.Add(e);
-		}
+            if (m_Owner != null)
+            {
+                e.Parent = m_Owner;
+                if (e.Namespace == null)
+                    e.Namespace = m_Owner.Namespace;
+            }
+
+            e.m_Index = Count;
+
+            this.List.Add(e);
+        }
 	
 		// Method implementation from the CollectionBase class
 		public void Remove(int index)
@@ -95,16 +94,16 @@ namespace agsXMPP.Xml.Dom
 		{
 			return (Node) this.List[index];
 		}
-    
-		public object[] ToArray() 
-		{
-			object[] ar = new object[this.List.Count];
-			for (int i=0; i < this.List.Count; i++) 
-			{
-				ar[i] = this.List[i];
-			}
-			return ar;
-		}
+
+        public object[] ToArray()
+        {
+            object[] ar = new object[this.List.Count];
+            for (int i = 0; i < this.List.Count; i++)
+            {
+                ar[i] = this.List[i];
+            }
+            return ar;
+        }
 
 		internal void RebuildIndex()
 		{
@@ -118,6 +117,6 @@ namespace agsXMPP.Xml.Dom
 				Element e = (Element) List[i];
 				e.m_Index = i;
 			}			
-		}
-	}
+		}       
+    }
 }

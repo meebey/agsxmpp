@@ -23,7 +23,7 @@
     <FileUpgradeFlags>40</FileUpgradeFlags>
     <FormFactorID>
     </FormFactorID>
-    <UpgradeBackupLocation>C:\Dokumente und Einstellungen\gnauck\Eigene Dateien\Visual Studio 2005\Projects\agsxmpp_Net2.0\agsxmpp\Backup1\</UpgradeBackupLocation>
+    <UpgradeBackupLocation>C:\Dokumente und Einstellungen\gnauck\Eigene Dateien\Visual Studio 2005\Projects\SharpIM\Backup\agsXMPP_PPC\</UpgradeBackupLocation>
     <OSVersion>4.20</OSVersion>
     <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>

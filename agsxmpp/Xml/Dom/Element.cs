@@ -27,6 +27,9 @@ using System.Text;
 using System.IO;
 using System.Xml;
 
+//using System.Linq;
+//using System.Linq.Expressions;
+
 namespace agsXMPP.Xml.Dom
 {	
 
@@ -933,6 +936,27 @@ namespace agsXMPP.Xml.Dom
             return this._SelectElement(this, TagName, ns, traverseChildren);
         }
 
+#if NET_2
+        public T SelectSingleElement<T>() where T : Element
+        {
+            return (T)this._SelectElement(this, typeof(T));
+        }
+
+        public T SelectSingleElement<T>(bool traverseChildren) where T : Element
+        {
+            return (T)this._SelectElement(this, typeof(T), traverseChildren);
+        }        
+#endif
+        //public Element Element(string name)
+        //{
+        //    return SelectSingleElement(name);
+        //}
+
+        //public T Element<T>() where T : Element
+        //{
+        //    return (T)this._SelectElement(this, typeof(T));
+        //}
+
 		/// <summary>
 		/// Returns all childNodes with the given Tagname,
 		/// this function doesn't traverse the whole tree!!!
@@ -945,6 +969,13 @@ namespace agsXMPP.Xml.Dom
 			//return this._SelectElements(this, TagName, es);
 			return this._SelectElements(this, TagName, es, false);
 		}
+
+        public ElementList SelectElements(string TagName, bool traverseChildren)
+        {
+            ElementList es = new ElementList();
+            //return this._SelectElements(this, TagName, es);
+            return this._SelectElements(this, TagName, es, traverseChildren);
+        }
 
         public ElementList SelectElements(System.Type type)
 		{
@@ -1163,6 +1194,5 @@ namespace agsXMPP.Xml.Dom
 		}
 
 		#endregion
-
 	}
 }

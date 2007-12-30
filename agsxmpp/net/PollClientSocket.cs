@@ -388,12 +388,12 @@ namespace agsXMPP.net
 						}
 					}
 				}
-#if CF
-				// There a weird problem with webrequests on the CF
-				// When we dont abort then only 2 requests  in a row work,
-				// and the 3rd request fails with timeout.
-				req.Abort();					
-#endif
+
+                // cleanup webrequest resources
+                ms.Close();
+                rs.Close();
+                resp.Close();
+
 				if (recv.Length > 0)
 				{
 					//Console.WriteLine("RECV: " + Encoding.UTF8.GetString(recv));
@@ -408,8 +408,7 @@ namespace agsXMPP.net
 					{							
 						m_WaitUntil = DateTime.Now.AddMilliseconds(m_Interval);
 						while (m_SendQueue.Count == 0 && DateTime.Compare(m_WaitUntil, DateTime.Now) > 0)
-						{
-							//Console.WriteLine(DateTime.Now.ToString() + " | " + m_WaitUntil.ToString());
+						{							
 							Thread.Sleep(100);
 						}
 					}					

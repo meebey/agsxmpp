@@ -28,7 +28,7 @@ namespace agsXMPP.protocol.iq.disco
 {
     public class DiscoManager
     {
-        private XmppClientConnection	m_connection	= null;
+        private XmppClientConnection	xmppConnection	= null;
 
         /// <summary>
         /// Constructor
@@ -36,7 +36,41 @@ namespace agsXMPP.protocol.iq.disco
         /// <param name="con"></param>
         public DiscoManager(XmppClientConnection con)
         {
-            m_connection = con;
+            xmppConnection = con;
+            xmppConnection.OnIq += new IqHandler(OnIq);
+        }
+
+        #region << Proprties >>
+        private bool m_AutoAnswerDiscoInfoRequests = true;  
+
+        /// <summary>
+        /// Automatically answer DiscoInfo requests.
+        /// Set disco information (identties and features) in the DiscoInfo property object.        
+        /// </summary>
+        public bool AutoAnswerDiscoInfoRequests
+        {
+            get { return m_AutoAnswerDiscoInfoRequests; }
+            set { m_AutoAnswerDiscoInfoRequests = value; }
+        }
+        #endregion
+
+        private void OnIq(object sender, IQ iq)
+        {
+            // DiscoInfo
+            if (m_AutoAnswerDiscoInfoRequests && iq.Query is DiscoInfo && iq.Type == IqType.get)
+                ProcessDiscoInfo(iq);
+        }
+
+        private void ProcessDiscoInfo(IQ iq)
+        {            
+            IQ diiq = new IQ();
+            diiq.To = iq.From;
+            diiq.Id = iq.Id;
+            diiq.Type = IqType.result;
+
+            diiq.Query = xmppConnection.DiscoInfo;
+
+            xmppConnection.Send(diiq);        
         }
 
         #region << Discover Info >>
@@ -132,7 +166,7 @@ namespace agsXMPP.protocol.iq.disco
             if (node != null && node.Length > 0)
                 discoIq.Query.Node = node;
             
-            m_connection.IqGrabber.SendIq(discoIq, cb, cbArgs);
+            xmppConnection.IqGrabber.SendIq(discoIq, cb, cbArgs);
         }
         #endregion
 
@@ -203,8 +237,9 @@ namespace agsXMPP.protocol.iq.disco
             if (node != null && node.Length > 0)
                 discoIq.Query.Node = node;
 
-            m_connection.IqGrabber.SendIq(discoIq, cb, cbArgs);
+            xmppConnection.IqGrabber.SendIq(discoIq, cb, cbArgs);
         }
         #endregion
+                        
     }
 }

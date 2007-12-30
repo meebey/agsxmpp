@@ -67,6 +67,12 @@ namespace agsXMPP.protocol.iq.disco
             Category    = category;
         }
 
+        public DiscoIdentity(string type, string category) : this()
+        {
+            Type = type;
+            Category = category;
+        }
+
 		public string Type
 		{
 			get { return GetAttribute("type"); }

@@ -35,7 +35,7 @@ using agsXMPP.protocol;
 using agsXMPP.protocol.iq;
 using agsXMPP.protocol.iq.auth;
 using agsXMPP.protocol.iq.agent;
-//using agsXMPP.protocol.iq.disco;
+using agsXMPP.protocol.iq.disco;
 using agsXMPP.protocol.iq.roster;
 using agsXMPP.protocol.iq.register;
 using agsXMPP.protocol.iq.version;
@@ -98,7 +98,7 @@ namespace agsXMPP
 		private		bool					m_AutoRoster		= true;
 		private		bool					m_AutoAgents		= true;
         private     bool                    m_AutoPresence      = true;
-        
+           
 		private		bool					m_UseSSL			= false;
 #if (CF || CF_2)
         private     bool                    m_UseStartTLS       = false;
@@ -120,6 +120,9 @@ namespace agsXMPP
         private     Capabilities            m_Capabilities          = new Capabilities();
         private     string                  m_ClientVersion         = "1.0";
         private     bool                    m_EnableCapabilities    = false;
+
+        private     DiscoInfo               m_DiscoInfo             = new DiscoInfo();
+                     
 
         /// <summary>
         /// The prefered Client Language Attribute
@@ -266,6 +269,8 @@ namespace agsXMPP
             set { m_AutoPresence = value; }
         }
 
+   
+
 		/// <summary>
         /// If set to true then the Agents are requested automatically after sucessful login. 
         /// Set this property to false if you don't use agents at all, or if you request them manual.
@@ -385,17 +390,26 @@ namespace agsXMPP
         public string ClientVersion
         {
             get { return m_ClientVersion; }
-            set
-            {
-                m_ClientVersion         = value;
-                m_Capabilities.Version  = value;
-            }
+            set { m_ClientVersion = value; }
         }
 
         public Capabilities Capabilities
         {
             get { return m_Capabilities; }
             set { m_Capabilities = value; }
+        }
+
+        /// <summary>
+        /// The DiscoInfo object is used to respond to DiscoInfo request if AutoDiscoInfo == true,
+        /// it's also used to build the Caps version when EnableCapabilities is set to true.
+        /// <remarks>
+        /// When EnableCapailities == true call UpdateCapsVersion after each update of the DiscoInfo object
+        /// </remarks>
+        /// </summary>
+        public DiscoInfo DiscoInfo
+        {
+            get { return m_DiscoInfo; }
+            set { m_DiscoInfo = value; }
         }
 		#endregion
 		
@@ -881,10 +895,24 @@ namespace agsXMPP
 
             // Add client caps when enabled
             if (m_EnableCapabilities)
+            {
+                if (m_Capabilities.Version == null)
+                    UpdateCapsVersion();
+
                 pres.AddChild(m_Capabilities);
+            }
 
             this.Send(pres);
 		}
+
+        /// <summary>
+        /// Sets the caps version automatically from the DiscoInfo object.
+        /// Call this member after each change of the DiscoInfo object
+        /// </summary>
+        public void UpdateCapsVersion()
+        {
+            m_Capabilities.SetVersion(m_DiscoInfo);
+        }
 
 		internal void RequestLoginInfo()
 		{			
@@ -1303,7 +1331,7 @@ namespace agsXMPP
 				{
 					// Roster
                     if (iq.Query is Roster)
-                        OnRosterIQ(iq);                              
+                        OnRosterIQ(iq);                   
 				}	
 			}
 			else if ( e.GetType() == typeof(Message) )
@@ -1390,10 +1418,12 @@ namespace agsXMPP
 		}                
         #endregion
 
+       
+
         public override void Send(Element e)
         {
-            //if (!(ClientSocket is BoshClientSocket))
-            //{
+            if (!(ClientSocket is BoshClientSocket))
+            {
                 // this is a hack to not send the xmlns="jabber:client" with all packets
                 Element dummyEl = new Element("a");
                 dummyEl.Namespace = Uri.CLIENT;
@@ -1402,9 +1432,9 @@ namespace agsXMPP
                 string toSend = dummyEl.ToString();
 
                 Send(toSend.Substring(25, toSend.Length - 25 - 4));
-            //}
-            //else
-            //    base.Send(e);
+            }
+            else
+                base.Send(e);
         }
 		
 		/// <summary>
@@ -1441,7 +1471,10 @@ namespace agsXMPP
 		}
 
 		internal void Reset()
-		{            
+		{
+            // tell also the socket that we need to reset the stream, this is needed for BOSH
+            ClientSocket.Reset();
+
             StreamParser.Reset();
             SendStreamHeader(false);        
 		}

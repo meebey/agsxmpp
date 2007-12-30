@@ -31,7 +31,7 @@ namespace agsXMPP.net
 	/// <summary>
 	/// Base Socket class
 	/// </summary>
-	public abstract class BaseSocket : IDisposable
+	public abstract class BaseSocket
 	{
 		public delegate void OnSocketDataHandler(object sender, byte[] data, int count);
 
@@ -200,6 +200,14 @@ namespace agsXMPP.net
         }
 
         /// <summary>
+        /// Added for Bosh because we have to tell the BoshClientSocket when to reset the stream
+        /// </summary>
+        public virtual void Reset()
+        {
+
+        }
+
+        /// <summary>
 		/// 
 		/// </summary>
 		/// <param name="data"></param>
@@ -215,15 +223,6 @@ namespace agsXMPP.net
 		{		
 			
 		}
-		#endregion
-
-        #region IDisposable Members
-
-        public virtual void Dispose()
-        {
-            //throw new Exception("The method or operation is not implemented.");
-        }
-
-        #endregion
+		#endregion       
     }
 }

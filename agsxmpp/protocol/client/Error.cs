@@ -176,7 +176,7 @@ namespace agsXMPP.protocol.client
 		/// <summary>
 		/// Remote server timeout
 		/// </summary>
-		RemoteServerTimeou		= 504,
+		RemoteServerTimeout		= 504,
 		/// <summary>
 		/// Disconnected
 		/// </summary>

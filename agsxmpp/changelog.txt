@@ -13,6 +13,11 @@ version 0.9x
 - did some refactoring on Element.cs
 - added some members to Element
 - added Console Client example
+- fixed typos in DiscoManager.cs
+- updated caps to teh latest xep version, can create the new ver attrib automatically.
+- published first BOSH version. Interoperability only tested with ejabberd2 beta 1
+- optimized Polling code
+- updated caps to the latest version of teh XEP where caps versioning was changed.
 
 version 0.95
 ============

@@ -75,7 +75,7 @@ namespace agsXMPP.Xml.Dom
 		#region << Load functions >>		
 		public void LoadXml(string xml)
 		{
-			if (xml != "")
+			if (xml != "" && xml != null)
 			{
 				DomLoader l = new DomLoader(xml, this);
 			}

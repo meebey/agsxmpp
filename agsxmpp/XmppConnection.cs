@@ -325,18 +325,17 @@ namespace agsXMPP
 
 		private void InitSocket()
 		{
-            if (m_ClientSocket != null)
-                //m_ClientSocket.Dispose();
+            //if (m_ClientSocket != null)
+            //    //m_ClientSocket.Dispose();
 			m_ClientSocket = null;
 
 			// Socket Stuff
 			if (m_SocketConnectionType == agsXMPP.net.SocketConnectionType.HttpPolling)
-				m_ClientSocket	= new PollClientSocket();
-            // TODO, most Bosh implemtation are not ready for production, so delay this task
-            //else if (m_SocketConnectionType == agsXMPP.net.SocketConnectionType.Bosh)
-            //    m_ClientSocket = new BoshClientSocket(this);
+				m_ClientSocket	= new PollClientSocket();            
+            else if (m_SocketConnectionType == agsXMPP.net.SocketConnectionType.Bosh)
+                m_ClientSocket = new BoshClientSocket(this);
             else
-               m_ClientSocket = new ClientSocket();
+                m_ClientSocket = new ClientSocket();
 		
 			m_ClientSocket.OnConnect	+= new ObjectHandler(SocketOnConnect);
 			m_ClientSocket.OnDisconnect	+= new ObjectHandler(SocketOnDisconnect);
