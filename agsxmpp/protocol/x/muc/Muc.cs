@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2007 by AG-Software 											 *
+ * Copyright (c) 2003-2008 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -52,5 +52,23 @@ namespace agsXMPP.protocol.x.muc
 			get { return GetTag("password"); }
 		}
 
+        /// <summary>
+        /// The History object
+        /// </summary>
+        public History History
+        {
+            get
+            {
+                return SelectSingleElement(typeof(History)) as History;
+            }
+            set
+            {
+                if (HasTag(typeof(History)))
+                    RemoveTag(typeof(History));
+
+                if (value != null)
+                    this.AddChild(value);
+            }
+        }
     }
 }  

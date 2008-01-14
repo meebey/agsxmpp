@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2007 by AG-Software 											 *
+ * Copyright (c) 2003-2008 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -208,18 +208,52 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="nickname">nickname to use in the room</param>
         public void JoinRoom(Jid room, string nickname)
         {
-            JoinRoom(room, nickname, null);            
+            JoinRoom(room, nickname, null, false);            
+        }
+
+        /// <summary>
+        /// Join a chatroom
+        /// </summary>
+        /// <param name="room">jid of the room to join</param>
+        /// <param name="nickname">nickname to use in the room</param>
+        /// <param name="disableHistory">true for joining without chat room history</param>
+        public void JoinRoom(Jid room, string nickname, bool disableHistory)
+        {
+            JoinRoom(room, nickname, null, disableHistory);
         }
 
         public void JoinRoom(Jid room, string nickname, string password)
         {
-            //<presence
-            //    from='hag66@shakespeare.lit/pda'
-            //    to='darkcave@macbeth.shakespeare.lit/thirdwitch'>
-            //  <x xmlns='http://jabber.org/protocol/muc'>
-            //    <password>cauldron</password>
-            //  </x>
-            //</presence>
+            JoinRoom(room, nickname, password, false);
+        }
+
+        /// <summary>
+        /// Join a chatroom
+        /// </summary>
+        /// <param name="room">jid of the room to join</param>
+        /// <param name="nickname">nickname to use in the room</param>
+        /// <param name="password">password for password protected chat rooms</param>
+        /// <param name="disableHistory">true for joining without chat room history</param>
+        public void JoinRoom(Jid room, string nickname, string password, bool disableHistory)
+        {
+            /*
+            <presence
+                from='hag66@shakespeare.lit/pda'
+                to='darkcave@macbeth.shakespeare.lit/thirdwitch'>
+              <x xmlns='http://jabber.org/protocol/muc'>
+                <password>cauldron</password>
+              </x>
+            </presence>
+
+            join room and request no history
+            <presence
+                from='hag66@shakespeare.lit/pda'
+                to='darkcave@macbeth.shakespeare.lit/thirdwitch'>
+              <x xmlns='http://jabber.org/protocol/muc'>
+                <history maxchars='0'/>
+              </x>
+            </presence>
+            */
             
             Jid to = new Jid(room.ToString());
             to.Resource = nickname;           
@@ -229,12 +263,20 @@ namespace agsXMPP.protocol.x.muc
             Muc x = new Muc();
             if (password != null)
                 x.Password = password;
+
+            if (disableHistory)
+            {
+                History hist = new History();
+                hist.MaxCharacters = 0;
+                x.History = hist;
+            }
             
             pres.AddChild(x);
 
             m_connection.Send(pres);
         }
 
+        
         /// <summary>
         /// Leave a conference room
         /// </summary>

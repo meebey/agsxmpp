@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2007 by AG-Software 											 *
+ * Copyright (c) 2003-2008 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -29,7 +29,7 @@ namespace agsXMPP.protocol.x.muc
     /// A base class vor Decline and Invite
     /// We need From, To and SwitchDirection here. This is why we inherit from XmppPacket Base
     /// </summary>
-    public abstract class Invitation : Base.XmppPacket
+    public abstract class Invitation : Base.Stanza
     {
         public Invitation()
         {

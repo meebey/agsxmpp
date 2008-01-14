@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2007 by AG-Software 											 *
+ * Copyright (c) 2003-2008 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -119,6 +119,17 @@ namespace agsXMPP.protocol.x.muc
         {
             get { return util.Time.ISO_8601Date(GetAttribute("since")); }
             set { SetAttribute("since", util.Time.ISO_8601Date(value)); }
+        }
+
+        /// <summary>
+        /// Limit the total number of characters in the history to "X" 
+        /// (where the character count is the characters of the complete XML stanzas, 
+        /// not only their XML character data).
+        /// </summary>
+        public int MaxCharacters
+        {
+            get { return GetAttributeInt("maxchars"); }
+            set { SetAttribute("maxchars", value); }
         }
     }
 
