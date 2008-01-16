@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2007 by AG-Software 											 *
+ * Copyright (c) 2003-2008 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -243,6 +243,12 @@ namespace agsXMPP
         /// <para>http://jabber.org/protocol/ibb</para>
         /// </summary>
         public const string IBB                 = "http://jabber.org/protocol/ibb";
+
+        /// <summary>
+        /// <para></para>
+        /// <para>http://jabber.org/protocol/amp</para>
+        /// </summary>
+        public const string AMP                 = "http://jabber.org/protocol/amp";
 
         /// <summary>
         /// <para>XEP-0153: vCard-Based Avatars</para>

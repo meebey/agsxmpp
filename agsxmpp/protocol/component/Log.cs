@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2007 by AG-Software 											 *
+ * Copyright (c) 2003-2008 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -41,7 +41,7 @@ namespace agsXMPP.protocol.component
 	/// <summary>
 	/// Zusammenfassung für Log.
 	/// </summary>
-	public class Log : XmppPacket
+	public class Log : Stanza
 	{
 		public Log()
 		{

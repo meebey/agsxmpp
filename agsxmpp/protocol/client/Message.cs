@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2007 by AG-Software 											 *
+ * Copyright (c) 2003-2008 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -32,7 +32,7 @@ namespace agsXMPP.protocol.client
 	/// <summary>
 	/// This class represents a XMPP message.
 	/// </summary>
-	public class Message : Base.XmppPacket
+	public class Message : Base.Stanza
 	{
 		#region << Constructors >>
 		public Message()

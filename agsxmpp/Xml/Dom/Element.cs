@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2007 by AG-Software 											 *
+ * Copyright (c) 2003-2008 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -21,6 +21,9 @@
 
 using System;
 using System.Collections;
+#if NET_2
+using System.Collections.Generic;
+#endif
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Text;
@@ -945,7 +948,8 @@ namespace agsXMPP.Xml.Dom
         public T SelectSingleElement<T>(bool traverseChildren) where T : Element
         {
             return (T)this._SelectElement(this, typeof(T), traverseChildren);
-        }        
+        } 
+        
 #endif
         //public Element Element(string name)
         //{
@@ -1064,6 +1068,7 @@ namespace agsXMPP.Xml.Dom
 						
 			return rElement;
 		}
+
 
 		private Element _SelectElement(Node se, System.Type type)
 		{
@@ -1191,8 +1196,41 @@ namespace agsXMPP.Xml.Dom
 				}
 			}
 			return es;
-		}
+        }
 
-		#endregion
-	}
+#if NET_2
+        public List<T> SelectElements<T>() where T : Element
+        {
+            return SelectElements<T>(false);
+        }
+
+        public List<T> SelectElements<T>(bool traverseChildren) where T : Element
+        {
+            List<T> list = new List<T>();
+            return this._SelectElements<T>(this, list, traverseChildren);
+        }
+
+        private List<T> _SelectElements<T>(Element e, List<T> list, bool traverseChildren) where T : Element
+        {
+            if (e.ChildNodes.Count > 0)
+            {
+                foreach (Node n in e.ChildNodes)
+                {
+                    if (n.NodeType == NodeType.Element)
+                    {
+                        if (n.GetType() == typeof(T))
+                        {
+                            list.Add(n as T);
+                        }
+                        if (traverseChildren)
+                            _SelectElements((Element)n, list, true);
+                    }
+                }
+            }
+            return list;
+        }
+#endif
+
+        #endregion
+    }
 }

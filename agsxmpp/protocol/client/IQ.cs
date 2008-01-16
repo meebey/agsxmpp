@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2007 by AG-Software 											 *
+ * Copyright (c) 2003-2008 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -44,7 +44,7 @@ namespace agsXMPP.protocol.client
 	/// <summary>
 	/// Iq Stanza.
 	/// </summary>
-	public class IQ : Base.XmppPacket
+	public class IQ : Base.Stanza
 	{        
         #region << Constructors >>
         public IQ()

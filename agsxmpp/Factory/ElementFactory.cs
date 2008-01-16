@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2007 by AG-Software 											 *
+ * Copyright (c) 2003-2008 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -295,7 +295,11 @@ namespace agsXMPP.Factory
             AddElementType("close",             Uri.IBB,                    typeof(agsXMPP.protocol.extensions.ibb.Close));
                     
             // XEP-0153: vCard-Based Avatars
-           AddElementType("x",                  Uri.VCARD_UPDATE,           typeof(agsXMPP.protocol.x.vcard_update.VcardUpdate));
+            AddElementType("x",                 Uri.VCARD_UPDATE,           typeof(agsXMPP.protocol.x.vcard_update.VcardUpdate));
+
+            // AMP
+            AddElementType("amp",               Uri.AMP,                    typeof(agsXMPP.protocol.extensions.amp.Amp));
+            AddElementType("rule",              Uri.AMP,                    typeof(agsXMPP.protocol.extensions.amp.Rule));
 
 		}		
 		

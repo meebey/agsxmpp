@@ -153,12 +153,18 @@
     <Compile Include="MessageGrabber.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="protocol\Base\DirectionalElement.cs" />
+    <Compile Include="protocol\Base\Stanza.cs" />
     <Compile Include="protocol\client\Handler.cs" />
     <Compile Include="protocol\component\Error.cs" />
     <Compile Include="protocol\component\Handler.cs" />
     <Compile Include="protocol\component\IQ.cs" />
     <Compile Include="protocol\component\Message.cs" />
     <Compile Include="protocol\component\Presence.cs" />
+    <Compile Include="protocol\extensions\amp\Action.cs" />
+    <Compile Include="protocol\extensions\amp\Amp.cs" />
+    <Compile Include="protocol\extensions\amp\Condition.cs" />
+    <Compile Include="protocol\extensions\amp\Rule.cs" />
     <Compile Include="protocol\extensions\bookmarks\BookmarkManager.cs" />
     <Compile Include="protocol\extensions\bookmarks\Conference.cs" />
     <Compile Include="protocol\extensions\bookmarks\Storage.cs" />
@@ -248,9 +254,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="protocol\Base\Stream.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="protocol\Base\XmppPacket.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="protocol\client\Error.cs">
@@ -716,10 +719,6 @@
     <Content Include="changelog.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd">
-      <SubType>
-      </SubType>
-    </None>
     <None Include="key.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

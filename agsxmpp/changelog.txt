@@ -18,6 +18,8 @@ version 0.9x
 - published first BOSH version. Interoperability only tested with ejabberd2 beta 1
 - optimized Polling code
 - updated caps to the latest version of teh XEP where caps versioning was changed.
+- added AMP
+- refactored and extended base classes
 
 version 0.95
 ============
