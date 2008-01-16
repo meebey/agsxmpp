@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2007 by AG-Software 											 *
+ * Copyright (c) 2003-2008 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -31,62 +31,25 @@ namespace agsXMPP.protocol.Base
 	/// Base XMPP Element
 	/// This must ne used to build all other new packets
 	/// </summary>
-	public abstract class XmppPacket : Element
+	public abstract class Stanza : DirectionalElement
 	{
-		public XmppPacket() : base()
+		public Stanza() : base()
 		{
 		}
 
-		public XmppPacket(string tag) : base(tag)
+		public Stanza(string tag) : base(tag)
 		{			
 		}
 
-		public XmppPacket(string tag, string ns) : base(tag)
+		public Stanza(string tag, string ns) : base(tag)
 		{			
 			this.Namespace = ns;
 		}
 
-		public XmppPacket(string tag, string text, string ns) : base(tag, text)
+		public Stanza(string tag, string text, string ns) : base(tag, text)
 		{
 			this.Namespace = ns;
 		}
-
-		public Jid From
-		{
-			get 
-			{ 
-				if (HasAttribute("from"))
-					return new Jid(this.GetAttribute("from")); 
-				else
-					return null;
-			}
-			set 
-			{
-                if (value != null)
-                    this.SetAttribute("from", value.ToString());
-                else
-                    RemoveAttribute("from");
-			}
-		}
-
-		public Jid To
-		{
-			get 
-			{ 
-				if (HasAttribute("to"))
-					return new Jid(this.GetAttribute("to"));
-				else
-					return null;
-			}
-			set 
-			{
-                if (value != null)
-                    this.SetAttribute("to", value.ToString());
-                else
-                    RemoveAttribute("to");
-			}
-		}
-	
 
 		public string Id
 		{
@@ -109,28 +72,6 @@ namespace agsXMPP.protocol.Base
 		{
 			string sId = agsXMPP.Id.GetNextId();
 			this.Id = sId;			
-		}
-
-		/// <summary>
-		/// Switches the from and to attributes when existing
-		/// </summary>
-		public void SwitchDirection()
-		{
-			Jid from	= From;
-			Jid to		= To;
-			
-			// Remove from and to now
-			RemoveAttribute("from");
-			RemoveAttribute("to");
-			
-			Jid helper	= null;
-
-			helper	= from;
-			from	= to;
-			to		= helper;
-
-			From	= from;
-			To		= to;
 		}
 
         /// <summary>        

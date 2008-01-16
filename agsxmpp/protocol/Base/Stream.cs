@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2007 by AG-Software 											 *
+ * Copyright (c) 2003-2008 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -26,7 +26,7 @@ namespace agsXMPP.protocol.Base
 	/// <summary>
 	/// Summary description for Stream.
 	/// </summary>
-	public class Stream : XmppPacket
+	public class Stream : Stanza
 	{
 		public Stream()
 		{
