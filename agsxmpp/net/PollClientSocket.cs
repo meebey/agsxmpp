@@ -129,7 +129,7 @@ namespace agsXMPP.net
 
 		public override void Disconnect()
 		{
-			base.Disconnect ();
+			base.Disconnect();
 
 			FireOnDisconnect();
 
@@ -292,8 +292,18 @@ namespace agsXMPP.net
 				req.ContentType     = CONTENT_TYPE;
 				req.ContentLength	= bytes.Length;
 				req.Timeout         = 5000;
-				
-				Stream outputStream = req.GetRequestStream();
+
+                Stream outputStream;
+                try
+                {
+                    outputStream = req.GetRequestStream();
+                }
+                catch (Exception ex)
+                {
+                    base.FireOnError(ex);
+                    Disconnect();
+                    return;
+                }
 				
 
 				outputStream.Write (bytes, 0, bytes.Length);
