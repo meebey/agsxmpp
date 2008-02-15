@@ -93,7 +93,7 @@ namespace agsXMPP.protocol.iq.privacy
                 if (HasTag(typeof(Default)))
                     RemoveTag(typeof(Default));
 
-                this.AddChild(Default);
+                this.AddChild(value);
             }
         }
     }
