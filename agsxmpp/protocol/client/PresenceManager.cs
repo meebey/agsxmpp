@@ -26,7 +26,7 @@ using agsXMPP.protocol.client;
 namespace agsXMPP.protocol.client
 {
 	/// <summary>
-	/// Helper class for managing presence and subscription
+	/// Helper class for managing presence and subscriptions
 	/// </summary>
 	public class PresenceManager
 	{
@@ -38,7 +38,7 @@ namespace agsXMPP.protocol.client
 		}
 				
 		/// <summary>
-		/// Subscribe 
+        /// Subscribe to a contact
 		/// </summary>
 		/// <param name="to">Bare Jid of the rosteritem we want to subscribe</param>
 		public void Subcribe(Jid to)
@@ -51,10 +51,12 @@ namespace agsXMPP.protocol.client
 			m_connection.Send(pres);
 		}
 
-        /// <summary>
-        /// Subscribe with message for the reason
-        /// </summary>
+        
+        /// <summary>        
+        /// Subscribe to a contact
+        /// </summary>        
         /// <param name="to">Bare Jid of the rosteritem we want to subscribe</param>
+        /// <param name="message">a message which normally contains the reason why we want to subscibe to this contact</param>
         public void Subcribe(Jid to, string message)
         {
             Presence pres = new Presence();
@@ -66,6 +68,10 @@ namespace agsXMPP.protocol.client
         }
 
 
+        /// <summary>
+        /// Unsubscribe from a contact
+        /// </summary>
+        /// <param name="to">Bare Jid of the rosteritem we want to unsubscribe</param>
 		public void Unsubcribe(Jid to)
 		{
 			// <presence to='contact@example.org' type='subscribe'/>
@@ -78,7 +84,12 @@ namespace agsXMPP.protocol.client
 
 		//Example: Approving a subscription request:
 		//<presence to='romeo@example.net' type='subscribed'/>
-		public void ApproveSubscriptionRequest(Jid to)
+		
+        /// <summary>
+        /// Approve a subscription request
+        /// </summary>
+        /// <param name="to">Bare Jid to approve</param>
+        public void ApproveSubscriptionRequest(Jid to)
 		{
 			// <presence to='contact@example.org' type='subscribe'/>
 			Presence pres = new Presence();
@@ -90,7 +101,12 @@ namespace agsXMPP.protocol.client
 
 		//Example: Refusing a presence subscription request:
 		//<presence to='romeo@example.net' type='unsubscribed'/>
-		public void RefuseSubscriptionRequest(Jid to)
+		
+        /// <summary>
+        /// Refuse  subscription request
+        /// </summary>
+        /// <param name="to">Bare Jid to approve</param>
+        public void RefuseSubscriptionRequest(Jid to)
 		{
 			// <presence to='contact@example.org' type='subscribe'/>
 			Presence pres = new Presence();

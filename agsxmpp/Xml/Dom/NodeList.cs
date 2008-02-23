@@ -112,10 +112,11 @@ namespace agsXMPP.Xml.Dom
 
 		internal void RebuildIndex(int start)
 		{
-			for (int i=start; i<Count; i++)
+			for (int i = start; i < Count; i++)
 			{
-				Element e = (Element) List[i];
-				e.m_Index = i;
+				//Element e = (Element) List[i];
+                Node node = (Node) List[i];
+				node.m_Index = i;
 			}			
 		}       
     }

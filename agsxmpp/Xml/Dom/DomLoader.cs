@@ -43,10 +43,10 @@ namespace agsXMPP.Xml.Dom
 			sp.OnStreamStart	+= new StreamHandler(sp_OnStreamStart);
 			sp.OnStreamElement	+= new StreamHandler(sp_OnStreamElement);
 			sp.OnStreamEnd		+= new StreamHandler(sp_OnStreamEnd);
-					
+            
 			byte[] b = System.Text.Encoding.UTF8.GetBytes(xml);
 			sp.Push(b, 0, b.Length);
-		}
+		}        
 
 		public DomLoader(StreamReader sr, Document d) : this(sr.ReadToEnd(), d)
 		{

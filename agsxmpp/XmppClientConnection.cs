@@ -360,7 +360,7 @@ namespace agsXMPP
 			get { return m_IqGrabber; }
 		}
 
-		public MessageGrabber MesagageGrabber
+        public MessageGrabber MessageGrabber
 		{
 			get { return m_MessageGrabber; }
 		}
@@ -696,7 +696,7 @@ namespace agsXMPP
             //if (m_KeepAlive)
             //    CreateKeepAliveTimer();
             
-            if (AutoResolveConnectServer)
+            if (SocketConnectionType == SocketConnectionType.Direct && AutoResolveConnectServer)
                 ResolveSrv();
 
             OpenSocket();          

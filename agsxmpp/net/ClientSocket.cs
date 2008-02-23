@@ -93,9 +93,7 @@ namespace agsXMPP.net
         private Inflater inflater           = null;
         
         private Timer connectTimeoutTimer;
-        //private System.Timers.Timer connectTimeoutTimer;
-
-        
+               
 
         #region << Constructor >>
         public ClientSocket()
@@ -181,7 +179,7 @@ namespace agsXMPP.net
 
             Connect();
         }
-
+                
         public override void Connect()
 		{
 			base.Connect();

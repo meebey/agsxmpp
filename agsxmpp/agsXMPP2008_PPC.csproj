@@ -112,11 +112,12 @@
     <Compile Include="PresenceGrabber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="protocol\Base\Avatar.cs" />
+    <Compile Include="protocol\Base\DirectionalElement.cs" />
     <Compile Include="protocol\Base\Group.cs" />
     <Compile Include="protocol\Base\Item.cs" />
     <Compile Include="protocol\Base\RosterItem.cs" />
+    <Compile Include="protocol\Base\Stanza.cs" />
     <Compile Include="protocol\Base\Stream.cs" />
-    <Compile Include="protocol\Base\XmppPacket.cs" />
     <Compile Include="protocol\client\Error.cs" />
     <Compile Include="protocol\client\Handler.cs" />
     <Compile Include="protocol\client\IQ.cs" />
@@ -135,6 +136,10 @@
     <Compile Include="protocol\component\Presence.cs" />
     <Compile Include="protocol\component\Route.cs" />
     <Compile Include="protocol\Error.cs" />
+    <Compile Include="protocol\extensions\amp\Action.cs" />
+    <Compile Include="protocol\extensions\amp\Amp.cs" />
+    <Compile Include="protocol\extensions\amp\Condition.cs" />
+    <Compile Include="protocol\extensions\amp\Rule.cs" />
     <Compile Include="protocol\extensions\bookmarks\BookmarkManager.cs" />
     <Compile Include="protocol\extensions\bookmarks\Conference.cs" />
     <Compile Include="protocol\extensions\bookmarks\Storage.cs" />

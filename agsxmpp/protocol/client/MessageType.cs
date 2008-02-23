@@ -48,7 +48,8 @@ namespace agsXMPP.protocol.client
 		/// </summary>
 		/// 
 		groupchat,
-		/// <summary>
+		
+        /// <summary>
 		/// Think of this as a news broadcast, or RRS Feed, the message will normally have a URL and Description Associated with it.
 		/// </summary>
 		headline

@@ -66,8 +66,7 @@ namespace agsXMPP.Xml
 		private static System.Text.Encoding utf = System.Text.Encoding.UTF8;
 		private Encoding        m_enc   = new UTF8Encoding();
 		private BufferAggregate m_buf   = new BufferAggregate();
-		private NS              m_ns    = new NS();
-		
+		private NS              m_ns    = new NS();        
 		private bool            m_cdata = false;
 
 		public StreamParser()
@@ -194,8 +193,8 @@ namespace agsXMPP.Xml
 					    throw new util.NotImplementedException("Token type not implemented: " + tok);
 #else
                         throw new System.NotImplementedException("Token type not implemented: " + tok);
-#endif
-                    }
+#endif                            
+                    }                    
                     off = ct.TokenEnd;
                 }
             }
@@ -440,7 +439,8 @@ namespace agsXMPP.Xml
 			if (text == "")
 				return;
 
-			// Console.WriteLine("AddText:" + text);
+            //Console.WriteLine("AddText:" + text);
+            //Console.WriteLine(lastTOK);
 
 			if (current != null)
 			{		

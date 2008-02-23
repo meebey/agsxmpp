@@ -23,6 +23,7 @@ using System;
 using System.Text;
 using System.Collections;
 
+using agsXMPP.exceptions;
 using agsXMPP.Collections;
 #if STRINGPREP
 using agsXMPP.Idn;
@@ -146,6 +147,19 @@ namespace agsXMPP
 
                 int atPos = m_Jid.IndexOf('@');
                 int slashPos = m_Jid.IndexOf('/');
+
+                // some more validations
+                // @... or /...
+                if (atPos == 0 || slashPos == 0)
+                    return false;
+
+                // nodename@
+                if (atPos + 1 == fullJid.Length)
+                    return false;
+
+                // @/ at followed by resource separator
+                if (atPos + 1 == slashPos)
+                    return false;
 
                 if (atPos == -1)
                 {
