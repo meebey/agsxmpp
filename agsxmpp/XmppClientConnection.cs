@@ -1222,12 +1222,11 @@ namespace agsXMPP
 				}
 			}
 
-            if (iq.Type == IqType.result && OnRosterEnd != null)
-            {
+            if (iq.Type == IqType.result && OnRosterEnd != null)            
                 OnRosterEnd(this);
-                if (m_AutoPresence)
-                    SendMyPresence();
-            }
+            
+            if (m_AutoPresence && iq.Type == IqType.result)
+                SendMyPresence();
 		}
 		#endregion       
 
