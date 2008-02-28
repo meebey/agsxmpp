@@ -70,10 +70,14 @@ namespace agsXMPP
         m_Server    ==> nameprep
         m_Resource  ==> resourceprep
         */
-        private string m_Jid      = null;
-		private string m_User     = null;
-		private string m_Server   = null;
-		private string m_Resource = null;
+        
+        // !!! 
+        // use this internal variables only if you know what you are doing
+        // !!!
+        internal string m_Jid      = null;
+		internal string m_User     = null;
+		internal string m_Server   = null;
+		internal string m_Resource = null;
 
 		/// <summary>
 		/// Create a new JID object from a string. The input string must be a valid jabberId and already prepared with stringprep.
@@ -122,7 +126,7 @@ namespace agsXMPP
             if (resource != null)
                 m_Resource = Stringprep.ResourcePrep(resource);
 #endif
-            m_Jid = buildJid(m_User, m_Server, m_Resource);
+            BuildJid();            
         }
                 
         /// <summary>
@@ -208,8 +212,13 @@ namespace agsXMPP
                 return false;
             }
 		}               
+        
+        internal void BuildJid()
+        {
+            m_Jid = BuildJid(m_User, m_Server, m_Resource);
+        }
 
-		private string buildJid(string user, string server, string resource)
+        private string BuildJid(string user, string server, string resource)
 		{			
 			StringBuilder sb = new StringBuilder();
 			if (user != null)
@@ -255,7 +264,7 @@ namespace agsXMPP
                 else
                     m_User = null;
 #endif
-				m_Jid = buildJid(m_User, m_Server, m_Resource);
+                BuildJid();				
 			}
 		}
 
@@ -281,7 +290,7 @@ namespace agsXMPP
                 else
                     m_Server = null;
 #endif
-                m_Jid = buildJid(m_User, m_Server, m_Resource);
+                BuildJid();                
 			}
 		}
 
@@ -308,7 +317,7 @@ namespace agsXMPP
                 else
                     m_Resource = null;
 #endif
-				m_Jid = buildJid(m_User, m_Server, m_Resource);
+                BuildJid();				
 			}
 		}
 
@@ -319,7 +328,7 @@ namespace agsXMPP
 		{
 			get
 			{				
-				return buildJid(m_User, m_Server, null);
+				return BuildJid(m_User, m_Server, null);
 			}
         }
 

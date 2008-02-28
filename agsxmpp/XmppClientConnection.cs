@@ -1157,7 +1157,15 @@ namespace agsXMPP
 		/// </summary>
 		private Jid BuildMyJid()
 		{
-			return new Jid(m_Username, base.Server, m_Resource);
+            Jid jid = new Jid(null);
+            
+            jid.m_User = m_Username;
+            jid.m_Server = Server;
+            jid.m_Resource = m_Resource;
+            
+            jid.BuildJid();
+
+            return jid;			
 		}
 
 		#region << RequestAgents >>
