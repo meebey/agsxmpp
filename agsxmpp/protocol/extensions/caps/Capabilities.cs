@@ -190,7 +190,11 @@ namespace agsXMPP.protocol.extensions.caps
 
             byte[] sha1 = util.Hash.Sha1HashBytes(S.ToString());
 
+#if CF
+            return Convert.ToBase64String(sha1, 0, sha1.Length);
+#else
             return Convert.ToBase64String(sha1);
+#endif
         }
 
         #region << Extension Helpers >>

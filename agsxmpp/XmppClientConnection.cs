@@ -378,8 +378,7 @@ namespace agsXMPP
 		public PresenceManager PresenceManager
 		{
 			get { return m_PresenceManager; }
-		}
-        
+		}       
        
         public bool EnableCapabilities
         {
@@ -400,7 +399,7 @@ namespace agsXMPP
         }
 
         /// <summary>
-        /// The DiscoInfo object is used to respond to DiscoInfo request if AutoDiscoInfo == true,
+        /// The DiscoInfo object is used to respond to DiscoInfo request if AutoAnswerDiscoInfoRequests == true in DisoManager objects,
         /// it's also used to build the Caps version when EnableCapabilities is set to true.
         /// <remarks>
         /// When EnableCapailities == true call UpdateCapsVersion after each update of the DiscoInfo object

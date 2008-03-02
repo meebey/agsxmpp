@@ -7,23 +7,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agsXMPP.ui.2003", "..\agsxm
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Component", "..\samples\VS2003\Component\Component.csproj", "{256D6B55-E66C-4812-8E7B-F701A298533F}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniClient", "..\samples\VS2003\MiniClient\MiniClient.csproj", "{86AFC6BE-E45F-415D-8785-50D937A88071}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MiniClientVB", "..\samples\VS2003\MiniClientVB\MiniClientVB.vbproj", "{E918133C-69DC-4E7B-B955-30ED80411117}"
 	ProjectSection(ProjectDependencies) = postProject
-		{DC39021C-FA24-4E34-AB4A-3260BB5314AF} = {DC39021C-FA24-4E34-AB4A-3260BB5314AF}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "..\samples\VS2003\server\server.csproj", "{1C05730C-F517-46D2-843A-156288B39A25}"
 	ProjectSection(ProjectDependencies) = postProject
-		{DC39021C-FA24-4E34-AB4A-3260BB5314AF} = {DC39021C-FA24-4E34-AB4A-3260BB5314AF}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Component", "..\samples\VS2003\Component\Component.csproj", "{256D6B55-E66C-4812-8E7B-F701A298533F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DC39021C-FA24-4E34-AB4A-3260BB5314AF} = {DC39021C-FA24-4E34-AB4A-3260BB5314AF}
 	EndProjectSection
 EndProject
 Global
@@ -40,6 +37,10 @@ Global
 		{93F68E40-C0FC-4B7F-8331-8EEB95A5E3DF}.Debug.Build.0 = Debug|.NET
 		{93F68E40-C0FC-4B7F-8331-8EEB95A5E3DF}.Release.ActiveCfg = Release|.NET
 		{93F68E40-C0FC-4B7F-8331-8EEB95A5E3DF}.Release.Build.0 = Release|.NET
+		{256D6B55-E66C-4812-8E7B-F701A298533F}.Debug.ActiveCfg = Debug|.NET
+		{256D6B55-E66C-4812-8E7B-F701A298533F}.Debug.Build.0 = Debug|.NET
+		{256D6B55-E66C-4812-8E7B-F701A298533F}.Release.ActiveCfg = Release|.NET
+		{256D6B55-E66C-4812-8E7B-F701A298533F}.Release.Build.0 = Release|.NET
 		{86AFC6BE-E45F-415D-8785-50D937A88071}.Debug.ActiveCfg = Debug|.NET
 		{86AFC6BE-E45F-415D-8785-50D937A88071}.Debug.Build.0 = Debug|.NET
 		{86AFC6BE-E45F-415D-8785-50D937A88071}.Release.ActiveCfg = Release|.NET
@@ -52,10 +53,6 @@ Global
 		{1C05730C-F517-46D2-843A-156288B39A25}.Debug.Build.0 = Debug|.NET
 		{1C05730C-F517-46D2-843A-156288B39A25}.Release.ActiveCfg = Release|.NET
 		{1C05730C-F517-46D2-843A-156288B39A25}.Release.Build.0 = Release|.NET
-		{256D6B55-E66C-4812-8E7B-F701A298533F}.Debug.ActiveCfg = Debug|.NET
-		{256D6B55-E66C-4812-8E7B-F701A298533F}.Debug.Build.0 = Debug|.NET
-		{256D6B55-E66C-4812-8E7B-F701A298533F}.Release.ActiveCfg = Release|.NET
-		{256D6B55-E66C-4812-8E7B-F701A298533F}.Release.Build.0 = Release|.NET
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

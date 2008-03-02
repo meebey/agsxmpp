@@ -389,6 +389,11 @@ namespace agsXMPP.Xml.Dom
             SetTag(argTagname, val == true ? "true" : "false");
         }
 
+        public void SetTag(string argTagname, int val)
+        {
+            SetTag(argTagname, val.ToString());
+        }
+
         public void SetTag(string argTagname, Jid jid)
         {
             SetTag(argTagname, jid.ToString());

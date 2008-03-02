@@ -40,7 +40,7 @@ namespace agsXMPP.protocol.iq.disco
             xmppConnection.OnIq += new IqHandler(OnIq);
         }
 
-        #region << Proprties >>
+        #region << Properties >>
         private bool m_AutoAnswerDiscoInfoRequests = true;  
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>8.0.50727</ProductVersion>
@@ -20,18 +20,18 @@
     <RootNamespace>agsXMPP</RootNamespace>
     <StartupObject>
     </StartupObject>
-    <FileUpgradeFlags>40</FileUpgradeFlags>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
     <FormFactorID>
     </FormFactorID>
-    <UpgradeBackupLocation>C:\Dokumente und Einstellungen\gnauck\Eigene Dateien\Visual Studio 2005\Projects\SharpIM\Backup\agsXMPP_PPC\</UpgradeBackupLocation>
-    <OSVersion>4.20</OSVersion>
-    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
   </PropertyGroup>
   <PropertyGroup>
     <PlatformID>3C41C503-53EF-4c2a-8DD4-A8217CAD115E</PlatformID>
     <PlatformFamilyName>PocketPC</PlatformFamilyName>
     <DeployDirSuffix>$(AssemblyName)</DeployDirSuffix>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\PPC\Debug\</OutputPath>
@@ -153,6 +153,7 @@
     <Compile Include="net\BaseSocket.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="net\BoshClientSocket.cs" />
     <Compile Include="net\ClientSocket.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -185,6 +186,7 @@
     <Compile Include="protocol\Base\Avatar.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="protocol\Base\DirectionalElement.cs" />
     <Compile Include="protocol\Base\Group.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -194,10 +196,8 @@
     <Compile Include="protocol\Base\RosterItem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="protocol\Base\Stanza.cs" />
     <Compile Include="protocol\Base\Stream.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="protocol\Base\XmppPacket.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="protocol\client\Error.cs">
@@ -232,6 +232,10 @@
     <Compile Include="protocol\component\Presence.cs" />
     <Compile Include="protocol\component\Route.cs" />
     <Compile Include="protocol\Error.cs" />
+    <Compile Include="protocol\extensions\amp\Action.cs" />
+    <Compile Include="protocol\extensions\amp\Amp.cs" />
+    <Compile Include="protocol\extensions\amp\Condition.cs" />
+    <Compile Include="protocol\extensions\amp\Rule.cs" />
     <Compile Include="protocol\extensions\bookmarks\BookmarkManager.cs" />
     <Compile Include="protocol\extensions\bookmarks\Conference.cs" />
     <Compile Include="protocol\extensions\bookmarks\Storage.cs" />
@@ -240,6 +244,7 @@
     <Compile Include="protocol\extensions\bosh\Body.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="protocol\extensions\bosh\BoshType.cs" />
     <Compile Include="protocol\extensions\bytestreams\Activate.cs" />
     <Compile Include="protocol\extensions\bytestreams\ByteStream.cs" />
     <Compile Include="protocol\extensions\bytestreams\ByteStreamIq.cs" />
@@ -280,6 +285,7 @@
     <Compile Include="protocol\extensions\geoloc\GeoLocIq.cs" />
     <Compile Include="protocol\extensions\html\Body.cs" />
     <Compile Include="protocol\extensions\html\Html.cs" />
+    <Compile Include="protocol\extensions\ibb\Base.cs" />
     <Compile Include="protocol\extensions\ibb\Close.cs" />
     <Compile Include="protocol\extensions\ibb\Data.cs" />
     <Compile Include="protocol\extensions\ibb\Open.cs" />
@@ -515,6 +521,7 @@
     <Compile Include="protocol\sasl\Failure.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="protocol\sasl\FailureCondition.cs" />
     <Compile Include="protocol\sasl\Mechanism.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -733,5 +740,4 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Import Condition="'$(TargetFrameworkVersion)' == 'v3.5'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
 </Project>

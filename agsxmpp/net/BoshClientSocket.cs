@@ -291,7 +291,11 @@ namespace agsXMPP.net
         {
             int m_lenght = 10;
 
+#if CF
+            util.RandomNumberGenerator rng = util.RandomNumberGenerator.Create();
+#else
             RandomNumberGenerator rng = RandomNumberGenerator.Create();
+#endif
             byte[] buf = new byte[m_lenght];
             rng.GetBytes(buf);
 

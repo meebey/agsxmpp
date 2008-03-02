@@ -333,6 +333,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "net\BoshClientSocket.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "net\ClientSocket.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -433,6 +438,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "protocol\Base\DirectionalElement.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "protocol\Base\Group.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -448,12 +458,12 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "protocol\Base\Stream.cs"
+                    RelPath = "protocol\Base\Stanza.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "protocol\Base\XmppPacket.cs"
+                    RelPath = "protocol\Base\Stream.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -543,6 +553,26 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "protocol\extensions\amp\Action.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\amp\Amp.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\amp\Condition.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\amp\Rule.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "protocol\extensions\bookmarks\BookmarkManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -569,6 +599,11 @@
                 />
                 <File
                     RelPath = "protocol\extensions\bosh\Body.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\bosh\BoshType.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -729,6 +764,11 @@
                 />
                 <File
                     RelPath = "protocol\extensions\html\Html.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\extensions\ibb\Base.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -1354,6 +1394,11 @@
                 />
                 <File
                     RelPath = "protocol\sasl\Failure.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "protocol\sasl\FailureCondition.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
