@@ -15,16 +15,16 @@ namespace CodeSnippets
     {
         static void Main(string[] args)
         {
+            Dom dom = new Dom();
             Disco disco = new Disco();
-            
             Shim shim = new Shim();
-
             Presence pres = new Presence();
-
             XmppPing ping = new XmppPing();
+            Privacy p = new Privacy();
+            Message message = new Message();
 
             Console.WriteLine("Press enter key to close this program!");
-            Console.ReadLine();
+            Console.ReadLine();            
         }
 
         internal static void Print(Element el)
@@ -34,3 +34,8 @@ namespace CodeSnippets
         }
     }
 }
+
+
+
+
+

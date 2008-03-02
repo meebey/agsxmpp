@@ -28,7 +28,7 @@ namespace CodeSnippets
             */
 
             // Create the message aboute which includes the shim header urgency
-            Message msg = new Message();
+            agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
             msg.From = new Jid("romeo@shakespeare.lit/orchard");
             msg.To = new Jid("juliet@capulet.com");
             msg.Type = MessageType.chat;

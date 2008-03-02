@@ -19,28 +19,18 @@ using agsXMPP.protocol.extensions.featureneg;
 using agsXMPP.protocol.extensions.bytestreams;
 using agsXMPP.protocol.x.data;
 
-
 using agsXMPP.Xml;
-
-using ibb = agsXMPP.protocol.extensions.ibb;
 
 namespace MiniClient
 {
     public partial class frmFileTransfer : Form
     {
-        private enum eMode
-        {
-            ByteStreams,
-            IBB
-        }
-
-        private eMode transferMode;
-
         // Add here your file transfer proxy, or disover it with service discovery
-        // DONT USE THIS PROXY FOT PRODUCTION. THIS PROXY IS FOR RESTING ONLY
+        // DONT USE THIS PROXY FOR PRODUCTION. THIS PROXY IS FOR RESTING ONLY. THIS PROXY IS ALSO NOT RUNNING ALL THE TIME
+        // Install your own server with bytestream proxy or the external proxy65 module
         const string PROXY = "proxy.ag-software.de";
         //const string PROXY = "proxy.netlab.cz";
-        
+        //const string PROXY = "proxy.jabber.org";        
 
         /// <summary>
         /// SID of the filetransfer
@@ -61,8 +51,6 @@ namespace MiniClient
         private     long                    m_bytesTransmitted      = 0;
         private     FileStream              m_FileStream;
         private     DateTime                m_lastProgressUpdate;
-
-        private long m_Blocksize = 0;
 
 
         agsXMPP.protocol.extensions.filetransfer.File file;
@@ -94,31 +82,6 @@ namespace MiniClient
                 this.txtDescription.Visible = false;
             }
 
-            if (SupportsSocks5())
-            {
-                radioSOCKS5.Enabled = true;
-                radioSOCKS5.Checked = true;
-            }
-            else
-            {
-                radioSOCKS5.Enabled = false;
-                radioSOCKS5.Checked = false;
-            }
-
-            if (SupportsIBB())
-            {
-                radioSOCKS5.Enabled = true;
-                if (!SupportsSocks5())
-                    radioSOCKS5.Checked = true;
-            }
-            else
-            {
-                radioSOCKS5.Enabled = false;
-                radioSOCKS5.Checked = false;
-            }
-
-
-
             m_XmppCon = XmppCon;
                        
                         
@@ -128,10 +91,7 @@ namespace MiniClient
             //this.tbFileSize.Text = FileTransferUtils.ConvertToByteString(m_lFileLength);
 
             XmppCon.OnIq += new IqHandler(XmppCon_OnIq);
-            XmppCon.OnMessage += new MessageHandler(XmppCon_OnMessage);
         }
-
-        
 
         /// <summary>
         /// this constructor is used for outgoing file transfers
@@ -319,10 +279,10 @@ namespace MiniClient
             for (int i = 0; i < iphe.AddressList.Length; i++)
             {
                 Console.WriteLine("IP address: {0}", iphe.AddressList[i].ToString());
-                bsIq.Query.AddStreamHost(m_XmppCon.MyJID, iphe.AddressList[i].ToString(), 1000);
+                //bsIq.Query.AddStreamHost(m_XmppCon.MyJID, iphe.AddressList[i].ToString(), 1000);
             } 
             
-            //bsIq.Query.AddStreamHost(new Jid(PROXY), PROXY, 7777);
+            bsIq.Query.AddStreamHost(new Jid(PROXY), PROXY, 7777);
             
             _p2pSocks5Socket = new JEP65Socket();
             _p2pSocks5Socket.Initiator = m_XmppCon.MyJID;
@@ -510,74 +470,9 @@ namespace MiniClient
                     t.Start();                 
                 }
                 
-            }
-
-            if (iq.HasTag(typeof(ibb.Open)))
-            {
-                ibb.Open open = (ibb.Open) iq.SelectSingleElement(typeof(ibb.Open));
-                m_Blocksize = open.BlockSize;
-                m_Sid = open.Sid;
-
-                string path = Util.AppPath + @"\Received Files";
-                System.IO.Directory.CreateDirectory(path);
-
-                m_FileStream = new FileStream(Path.Combine(path, file.Name), FileMode.Create);
-
-                IQ resIq = new IQ();
-
-                resIq.To = iq.From;
-                resIq.Type = IqType.result;
-                resIq.Id = iq.Id;
-                
-                m_XmppCon.Send(resIq);
-            }
-            else if (iq.HasTag(typeof(ibb.Close)))
-            {
-                ibb.Close close = (ibb.Close)iq.SelectSingleElement(typeof(ibb.Close));
-
-                m_FileStream.Close();
-                m_FileStream.Dispose();
-
-                if (m_bytesTransmitted == m_lFileLength)
-                {
-                    // completed
-                    tslTransmitted.Text = "completed";
-                    // Update Progress when complete
-                    BeginInvoke(new ObjectHandler(UpdateProgress), new object[] { sender });
-                }
-                else
-                {
-                    // not complete, some error occured or somebody canceled the transfer
-
-                }
-            }
+            }            
         }
-
-        private void XmppCon_OnMessage(object sender, agsXMPP.protocol.client.Message msg)
-        {
-            if (msg.HasTag(typeof(ibb.Data)))
-            {
-                ibb.Data data = (ibb.Data)msg.SelectSingleElement(typeof(ibb.Data));
-                if (data.Sid == m_Sid)
-                {
-                    byte[] bytes = Convert.FromBase64String(data.Value);
-
-                    m_FileStream.Write(bytes, 0, bytes.Length);
-
-                    m_bytesTransmitted += bytes.Length;
-
-
-                    // Windows Forms are not Thread Safe, we need to invoke this :(
-                    // We're not in the UI thread, so we need to call BeginInvoke
-                    // to udate the progress bar	
-                    TimeSpan ts = DateTime.Now - m_lastProgressUpdate;
-                    if (ts.Seconds >= 1)
-                    {
-                        BeginInvoke(new ObjectHandler(UpdateProgress), new object[] { sender });
-                    }
-                }
-            }
-        }            
+            
 
         private void HandleStreamHost(ByteStream bs, IQ iq)
         //private void HandleStreamHost(object obj)
@@ -711,41 +606,13 @@ namespace MiniClient
                             string val = o.GetValue();
                             methods.Add(val, val);
                         }
-                        
-                        //if (methods.ContainsKey(agsXMPP.Uri.IBB))
-                        if (radioIBB.Checked)
+                        if (methods.ContainsKey(agsXMPP.Uri.BYTESTREAMS))
                         {
-                            transferMode = eMode.IBB;
-
                             // supports bytestream, so choose this option
                             agsXMPP.protocol.extensions.si.SIIq sIq = new agsXMPP.protocol.extensions.si.SIIq();
-                            sIq.Id = siIq.Id;
-                            sIq.To = siIq.From;
-                            sIq.Type = IqType.result;
-
-                            sIq.SI.Id = si.Id;
-                            sIq.SI.FeatureNeg = new agsXMPP.protocol.extensions.featureneg.FeatureNeg();
-
-                            Data xdata = new Data();
-                            xdata.Type = XDataFormType.submit;
-                            Field f = new Field();
-                            //f.Type = FieldType.List_Single;
-                            f.Var = "stream-method";
-                            f.AddValue(agsXMPP.Uri.IBB);
-                            xdata.AddField(f);
-                            sIq.SI.FeatureNeg.Data = xdata;
-
-                            m_XmppCon.Send(sIq);
-                        }
-                        else if (radioSOCKS5.Checked)
-                        //if (methods.ContainsKey(agsXMPP.Uri.BYTESTREAMS))
-                        {
-                            transferMode = eMode.ByteStreams;
-                            // supports bytestream, so choose this option
-                            agsXMPP.protocol.extensions.si.SIIq sIq = new agsXMPP.protocol.extensions.si.SIIq();
-                            sIq.Id = siIq.Id;
-                            sIq.To = siIq.From;
-                            sIq.Type = IqType.result;
+                            sIq.Id      = siIq.Id;
+                            sIq.To      = siIq.From;
+                            sIq.Type    = IqType.result;
 
                             sIq.SI.Id = si.Id;
                             sIq.SI.FeatureNeg = new agsXMPP.protocol.extensions.featureneg.FeatureNeg();
@@ -757,7 +624,7 @@ namespace MiniClient
                             f.Var = "stream-method";
                             f.AddValue(agsXMPP.Uri.BYTESTREAMS);
                             xdata.AddField(f);
-                            sIq.SI.FeatureNeg.Data = xdata;
+                            sIq.SI.FeatureNeg.Data = xdata;                            
 
                             m_XmppCon.Send(sIq);
                         }
@@ -766,62 +633,6 @@ namespace MiniClient
             }
         }
 
-        private bool SupportsSocks5()
-        {
-            agsXMPP.protocol.extensions.featureneg.FeatureNeg fNeg = si.FeatureNeg;
-            if (fNeg != null)
-            {
-                agsXMPP.protocol.x.data.Data data = fNeg.Data;
-                if (data != null)
-                {
-                    agsXMPP.protocol.x.data.Field[] field = data.GetFields();
-                    if (field.Length == 1)
-                    {
-                        Dictionary<string, string> methods = new Dictionary<string, string>();
-                        foreach (agsXMPP.protocol.x.data.Option o in field[0].GetOptions())
-                        {
-                            string val = o.GetValue();
-                            methods.Add(val, val);
-                        }                        
-                        
-                        if (methods.ContainsKey(agsXMPP.Uri.BYTESTREAMS))
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-
-        private bool SupportsIBB()
-        {
-            agsXMPP.protocol.extensions.featureneg.FeatureNeg fNeg = si.FeatureNeg;
-            if (fNeg != null)
-            {
-                agsXMPP.protocol.x.data.Data data = fNeg.Data;
-                if (data != null)
-                {
-                    agsXMPP.protocol.x.data.Field[] field = data.GetFields();
-                    if (field.Length == 1)
-                    {
-                        Dictionary<string, string> methods = new Dictionary<string, string>();
-                        foreach (agsXMPP.protocol.x.data.Option o in field[0].GetOptions())
-                        {
-                            string val = o.GetValue();
-                            methods.Add(val, val);
-                        }
-
-                        if (methods.ContainsKey(agsXMPP.Uri.IBB))
-                        {
-                            return true;
-                        }                        
-                    }
-                }
-            }
-
-            return false;
-        }
        
         private bool IsForm(FeatureNeg fn)
         {

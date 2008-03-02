@@ -108,7 +108,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
-    <Content Include="xmppsrv.xml" />
     <None Include="Resources\package.png" />
     <None Include="Resources\user_delete.png" />
     <None Include="Resources\vcard.png" />
@@ -125,7 +124,6 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DiscoHelper.cs" />
     <Compile Include="frmAddRoster.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,9 +235,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\agsxmpp\agsXMPP2005.csproj">
+    <ProjectReference Include="..\..\..\agsxmpp\agsXMPP2008.csproj">
       <Project>{DC39021C-FA24-4E34-AB4A-3260BB5314AF}</Project>
-      <Name>agsXMPP2005</Name>
+      <Name>agsXMPP2008</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\backups\agsxmpp.ui\agsXMPP.ui.2008.csproj">
       <Project>{93F68E40-C0FC-4B7F-8331-8EEB95A5E3DF}</Project>

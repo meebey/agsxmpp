@@ -67,12 +67,7 @@ namespace MiniClient
 
             // Use this property if the connection host is different the the server part in the Jid
             // e.g. GTalk is doing this
-            //_connection.ConnectServer = "talk.google.com";
-
-            //_connection.SocketConnectionType = agsXMPP.net.SocketConnectionType.Bosh;
-            //_connection.ConnectServer = "http://vm-2k:5280/http-bind";
-            //_connection.ConnectServer = "http://192.168.1.102:5280/http-bind";
-                                       
+            //_connection.ConnectServer = "talk.google.com";                                                  
 
 			_connection.RegisterAccount = chkRegister.Checked;
 

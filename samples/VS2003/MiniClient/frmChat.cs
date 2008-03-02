@@ -42,32 +42,11 @@ namespace MiniClient
 			
 			this.Text = "Chat with " + nickname;
 			
-			Util.ChatForms.Add(m_Jid.Bare.ToLower(), this);
+			Util.Forms.Add(m_Jid.Bare.ToLower(), this);
 
 			// Setup new Message Callback
-            con.MessageGrabber.Add(jid, new BareJidComparer(), new MessageCB(MessageCallback), null);
+			con.MessageGrabber.Add(jid, new BareJidComparer(), new MessageCB(MessageCallback), null);
 		}
-
-        public frmChat(Jid jid, XmppClientConnection con, string nickname, bool privateChat)
-        {
-            m_Jid = jid;
-            _connection = con;
-            _nickname = nickname;
-
-
-
-            InitializeComponent();
-
-            this.Text = "Chat with " + nickname;
-
-            Util.ChatForms.Add(m_Jid.Bare.ToLower(), this);
-
-            // Setup new Message Callback
-            if (privateChat)
-                con.MessageGrabber.Add(jid, new BareJidComparer(), new MessageCB(MessageCallback), null);
-            else
-                con.MessageGrabber.Add(jid, new FullJidComparer(), new MessageCB(MessageCallback), null);
-        }
 
 		public Jid Jid
 		{
@@ -88,8 +67,8 @@ namespace MiniClient
 			}
 			base.Dispose( disposing );
 			
-			Util.ChatForms.Remove(m_Jid.Bare.ToLower());
-            _connection.MessageGrabber.Remove(m_Jid);
+			Util.Forms.Remove(m_Jid.Bare.ToLower());
+			_connection.MessageGrabber.Remove(m_Jid);
 			_connection = null;
 		}
 
@@ -209,16 +188,10 @@ namespace MiniClient
 
 		private void MessageCallback(object sender, agsXMPP.protocol.client.Message msg, object data)
 		{
-            if (InvokeRequired)
-            {
-                // Windows Forms are not Thread Safe, we need to invoke this :(
-                // We're not in the UI thread, so we need to call BeginInvoke				
-                BeginInvoke(new MessageCB(MessageCallback), new object[] { sender, msg, data });
-                return;
-            }
-            
-            if (msg.Body != null)
-			    IncomingMessage(msg);
+			if (msg.Body == null)
+				return;
+
+			IncomingMessage(msg);
 		}
 
 		

@@ -38,7 +38,7 @@ namespace MiniClient
 			Util.Forms.Add(m_Jid.Bare.ToLower(), this);
 
 			// Setup new Message Callback
-			con.MesagageGrabber.Add(jid, new BareJidComparer(), new MessageCB(XmppCon_OnMessage), null);
+			con.MessageGrabber.Add(jid, new BareJidComparer(), new MessageCB(XmppCon_OnMessage), null);
 		}
 
 		public Jid Jid
@@ -96,7 +96,7 @@ namespace MiniClient
         private void frmChat_Closing(object sender, CancelEventArgs e)
         {
             Util.Forms.Remove(m_Jid.Bare.ToLower());
-            _connection.MesagageGrabber.Remove(m_Jid);
+            _connection.MessageGrabber.Remove(m_Jid);
             _connection = null;
         }
 	}

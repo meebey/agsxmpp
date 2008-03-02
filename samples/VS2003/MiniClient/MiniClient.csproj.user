@@ -1,0 +1,48 @@
+<VisualStudioProject>
+    <CSHARP LastOpenVersion = "7.10.3077" >
+        <Build>
+            <Settings ReferencePath = "D:\Dokumente und Einstellungen\gnauck\Eigene Dateien\Programmierung\dotNet 2003\agsxmpp\agsxmpp\;E:\gnauck\Visual Studio Projects\agsXMPP_Testing\Mono.Security\bin\Release\;E:\gnauck\Visual Studio Projects\Mono.Security\bin\Release\;E:\gnauck\Visual Studio Projects\agsXMPP_Testing\;E:\gnauck\Visual Studio Projects\agsXMPP\;d:\Dokumente und Einstellungen\gnauck\Eigene Dateien\Programmierung\dotNet 2003\agsXMPP\;d:\Dokumente und Einstellungen\gnauck\Eigene Dateien\Programmierung\dotNet 2003\agsXMPP\Mono.Security\bin\Release\;d:\Dokumente und Einstellungen\gnauck\Eigene Dateien\Programmierung\dotNet 2003\Kopie von agsXMPP\Mono.Security\bin\Release\;C:\Dokumente und Einstellungen\gnauck\Eigene Dateien\Visual Studio Projects\RELEASE_agsxmpp_Net2.0\agsxmpp.ui\bin\2003\Release\;E:\Visual Studio 2005\Projects\agsxmpp_Net2.0\agsxmpp.ui\bin\2003\Release\;C:\Dokumente und Einstellungen\gnauck\Eigene Dateien\Visual Studio 2005\Projects\agsxmpp_Net2.0\agsxmpp.ui\bin\2003\Release\" >
+                <Config
+                    Name = "Debug"
+                    EnableASPDebugging = "false"
+                    EnableASPXDebugging = "false"
+                    EnableUnmanagedDebugging = "false"
+                    EnableSQLServerDebugging = "false"
+                    RemoteDebugEnabled = "false"
+                    RemoteDebugMachine = ""
+                    StartAction = "Project"
+                    StartArguments = ""
+                    StartPage = ""
+                    StartProgram = ""
+                    StartURL = ""
+                    StartWorkingDirectory = ""
+                    StartWithIE = "true"
+                />
+                <Config
+                    Name = "Release"
+                    EnableASPDebugging = "false"
+                    EnableASPXDebugging = "false"
+                    EnableUnmanagedDebugging = "false"
+                    EnableSQLServerDebugging = "false"
+                    RemoteDebugEnabled = "false"
+                    RemoteDebugMachine = ""
+                    StartAction = "Project"
+                    StartArguments = ""
+                    StartPage = ""
+                    StartProgram = ""
+                    StartURL = ""
+                    StartWorkingDirectory = ""
+                    StartWithIE = "true"
+                />
+            </Settings>
+        </Build>
+        <OtherProjectSettings
+            CopyProjectDestinationFolder = ""
+            CopyProjectUncPath = ""
+            CopyProjectOption = "0"
+            ProjectView = "ProjectFiles"
+            ProjectTrust = "0"
+        />
+    </CSHARP>
+</VisualStudioProject>
+

@@ -22,7 +22,7 @@ namespace MiniClient
             Util.GroupChatForms.Remove(m_RoomJid.Bare.ToLower());
             
             // Remove the Message Callback in the MessageGrabber
-            m_XmppCon.MesagageGrabber.Remove(m_RoomJid);
+            m_XmppCon.MessageGrabber.Remove(m_RoomJid);
 
             // Remove the Presence Callback in the MessageGrabber
             m_XmppCon.PresenceGrabber.Remove(m_RoomJid);

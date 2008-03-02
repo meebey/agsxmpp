@@ -84,9 +84,10 @@ namespace MiniClient
         const int IMAGE_CHATROOM = 4;
         private RosterControl rosterControl;
         const int IMAGE_SERVER      = 5;
-        
+
         private XmppClientConnection XmppCon;
-        private DiscoHelper discoHelper;
+        //private DiscoHelper discoHelper;
+        DiscoManager discoManager;
 
 		public frmMain()
 		{			
@@ -136,11 +137,8 @@ namespace MiniClient
 						
 			XmppCon.OnXmppConnectionStateChanged		+= new XmppConnectionStateHandler(XmppCon_OnXmppConnectionStateChanged);
             XmppCon.OnSaslStart                         += new SaslEventHandler(XmppCon_OnSaslStart);
-            
-            // DiscoHelper
-            discoHelper = new DiscoHelper(XmppCon);
-            discoHelper.ClientName = "MiniClient";
-            discoHelper.ClientFeatures.Add(agsXMPP.Uri.BYTESTREAMS);
+
+            discoManager = new DiscoManager(XmppCon);
 
             agsXMPP.Factory.ElementFactory.AddElementType("Login", null, typeof(Settings.Login));
             LoadChatServers();            
@@ -547,7 +545,6 @@ namespace MiniClient
             this.cboStatus.Name = "cboStatus";
             this.cboStatus.Size = new System.Drawing.Size(339, 21);
             this.cboStatus.TabIndex = 10;
-            this.cboStatus.SelectedValueChanged += new System.EventHandler(this.cboStatus_SelectedValueChanged);
             // 
             // tabControl1
             // 
@@ -666,11 +663,15 @@ namespace MiniClient
 			// enable redraw again
             rosterControl.EndUpdate();
             rosterControl.ExpandAll();
+
             
             //// Send our Online Presence now, this is done in the cboStatus SelectionChanges event
             //// after the next line
             //cboStatus.SelectedIndex = 5;
 			// since 0.97 we don't need this anymore ==> AutoPresence property
+            
+            cboStatus.Text = "online";
+            this.cboStatus.SelectedValueChanged += new System.EventHandler(this.cboStatus_SelectedValueChanged);
 		}
 		
 		private void XmppCon_OnRosterItem(object sender, agsXMPP.protocol.iq.roster.RosterItem item)
@@ -928,14 +929,15 @@ namespace MiniClient
                 BeginInvoke(new ObjectHandler(XmppCon_OnClose), new object[] {sender});
                 return;
             }
-
-			Console.WriteLine("OnClose");
+            			
 			connectToolStripMenuItem.Enabled	= true;
 			disconnectToolStripMenuItem.Enabled	= false;
+            cboStatus.SelectedValueChanged -= new System.EventHandler(this.cboStatus_SelectedValueChanged);
 
 			cboStatus.Text = "offline";
             statusBar1.Text = "OffLine";
             rosterControl.Clear();
+
 		}
 		
 		private void XmppCon_OnError(object sender, Exception ex)
@@ -1290,9 +1292,8 @@ namespace MiniClient
         // Sending Disco request to the server we are connected to for discovering
         // the services runing on our server
         private void DiscoServer()
-        {             
-            DiscoManager dm = new DiscoManager(XmppCon);
-            dm.DiscoverItems(new Jid(XmppCon.Server), new IqCB(OnDiscoServerResult), null);            
+        {           
+            discoManager.DiscoverItems(new Jid(XmppCon.Server), new IqCB(OnDiscoServerResult), null);            
         }
 
         /// <summary>
@@ -1311,12 +1312,10 @@ namespace MiniClient
                     DiscoItems items = query as DiscoItems;
                     DiscoItem[] itms = items.GetDiscoItems();
                     
-                    DiscoManager dm = new DiscoManager(XmppCon);
-
                     foreach (DiscoItem itm in itms)
                     {
                         if (itm.Jid != null)
-                            dm.DiscoverInformation(itm.Jid, new IqCB(OnDiscoInfoResult), itm);
+                            discoManager.DiscoverInformation(itm.Jid, new IqCB(OnDiscoInfoResult), itm);
                     }
                 }
             }
@@ -1357,7 +1356,8 @@ namespace MiniClient
         {
             frmSearch fSearch = new frmSearch(this.XmppCon);
             fSearch.Show();
-        }       
+        }
 
+       
     }
 }

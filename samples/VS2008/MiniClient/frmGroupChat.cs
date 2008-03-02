@@ -27,7 +27,7 @@ namespace MiniClient
             Util.GroupChatForms.Add(roomJid.Bare.ToLower(), this);
             
             // Setup new Message Callback
-            m_XmppCon.MesagageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
+            m_XmppCon.MessageGrabber.Add(roomJid, new BareJidComparer(), new MessageCB(MessageCallback), null);
             
             // Setup new Presence Callback
             m_XmppCon.PresenceGrabber.Add(roomJid, new BareJidComparer(), new PresenceCB(PresenceCallback), null);

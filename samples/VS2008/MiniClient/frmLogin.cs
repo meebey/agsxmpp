@@ -8,6 +8,8 @@ using agsXMPP;
 using agsXMPP.Xml;
 using agsXMPP.Xml.Dom;
 
+using agsXMPP.protocol.iq.disco;
+
 
 namespace MiniClient
 {
@@ -24,10 +26,7 @@ namespace MiniClient
 		private System.Windows.Forms.TextBox txtPassword;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Label label5;
-		/// <summary>
-		/// 
-		/// </summary>
+		private System.Windows.Forms.Label label5;		
 		private System.ComponentModel.Container components = null;
 		private System.Windows.Forms.TextBox txtResource;
 		private System.Windows.Forms.NumericUpDown numPriority;
@@ -274,35 +273,35 @@ namespace MiniClient
 			_connection.Port			            = int.Parse(txtPort.Text);
 			_connection.UseSSL			            = chkSSL.Checked;
             _connection.AutoResolveConnectServer    = true;
-						
-			_connection.ConnectServer			= null;
-			//_connection.SocketConnectionType	= agsXMPP.net.SocketConnectionType.Bosh;
-            _connection.SocketConnectionType    = agsXMPP.net.SocketConnectionType.Direct;
-           
-			_connection.UseStartTLS	= true;
+            _connection.UseCompression              = false;
 
+            _connection.SocketConnectionType    = agsXMPP.net.SocketConnectionType.Direct;           
+			
             if (chkRegister.Checked)                
                 _connection.RegisterAccount = true;            
             else
                 _connection.RegisterAccount = false;
 
 
+            // Caps
+            _connection.EnableCapabilities = true;
+            _connection.ClientVersion = "1.0";
+            _connection.Capabilities.Node = "http://www.ag-software.de/miniclient/caps";
+            
+
             // overwrite some settings for debugging
             //_connection.UseStartTLS     = false;
             //_connection.UseSSL          = false;
 
             // overwrite some settings for Polling Test
-            //_connection.SocketConnectionType	    = agsXMPP.net.SocketConnectionType.HttpPolling;
+            //_connection.SocketConnectionType	      = agsXMPP.net.SocketConnectionType.HttpPolling;
             //_connection.UseCompression              = false;
-            //_connection.UseStartTLS	                = false;
+            //_connection.UseStartTLS	              = false;
             //_connection.UseSSL                      = false;
             //_connection.AutoResolveConnectServer    = false;
             //_connection.ConnectServer               = "http://vm-2000:5280/http-poll";
-
-            //_connection.ConnectServer                   = "http://vm-2k:5280";
-            //_connection.ConnectServer = "http://vm-2k:8080/http-bind/"; // Openfire
             
-            //_connection.AutoResolveConnectServer = false;
+            SetDiscoInfo();
             
 			this.DialogResult = DialogResult.OK;
 			
@@ -311,14 +310,25 @@ namespace MiniClient
 			this.Close();
 		}
 
+        private void SetDiscoInfo()
+        {
+            _connection.DiscoInfo.AddIdentity(new DiscoIdentity("pc", "MiniClient", "client"));
+
+            _connection.DiscoInfo.AddFeature(new DiscoFeature(agsXMPP.Uri.DISCO_INFO));
+            _connection.DiscoInfo.AddFeature(new DiscoFeature(agsXMPP.Uri.DISCO_ITEMS));
+            _connection.DiscoInfo.AddFeature(new DiscoFeature(agsXMPP.Uri.MUC));
+            //_connection.DiscoInfo.AddFeature(new DiscoFeature("abc")); 
+        }
+
 		private string SettingsFilename
 		{
 			get
 			{
 				string path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-				return path + @"\Settings.xml";			
+				return path + @"\Settings.xml";
 			}
 		}
+
 		private void LoadSettings()
 		{
 			if (System.IO.File.Exists(SettingsFilename))

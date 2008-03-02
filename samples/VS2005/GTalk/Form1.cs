@@ -26,15 +26,15 @@ namespace GTalk
             listEvents.Items.Clear();
 
             // Subscribe to Events
-            xmppCon.OnLogin += new ObjectHandler(xmppCon_OnLogin);
-            xmppCon.OnRosterStart += new ObjectHandler(xmppCon_OnRosterStart);
-            xmppCon.OnRosterEnd += new ObjectHandler(xmppCon_OnRosterEnd);
-            xmppCon.OnRosterItem += new XmppClientConnection.RosterHandler(xmppCon_OnRosterItem);
-            xmppCon.OnPresence += new agsXMPP.protocol.client.PresenceHandler(xmppCon_OnPresence);
-            xmppCon.OnAuthError += new XmppElementHandler(xmppCon_OnAuthError);
-            xmppCon.OnError += new ErrorHandler(xmppCon_OnError);
-            xmppCon.OnClose += new ObjectHandler(xmppCon_OnClose);
-            xmppCon.OnMessage += new agsXMPP.protocol.client.MessageHandler(xmppCon_OnMessage);
+            xmppCon.OnLogin         += new ObjectHandler(xmppCon_OnLogin);
+            xmppCon.OnRosterStart   += new ObjectHandler(xmppCon_OnRosterStart);
+            xmppCon.OnRosterEnd     += new ObjectHandler(xmppCon_OnRosterEnd);
+            xmppCon.OnRosterItem    += new XmppClientConnection.RosterHandler(xmppCon_OnRosterItem);
+            xmppCon.OnPresence      += new agsXMPP.protocol.client.PresenceHandler(xmppCon_OnPresence);
+            xmppCon.OnAuthError     += new XmppElementHandler(xmppCon_OnAuthError);
+            xmppCon.OnError         += new ErrorHandler(xmppCon_OnError);
+            xmppCon.OnClose         += new ObjectHandler(xmppCon_OnClose);
+            xmppCon.OnMessage       += new agsXMPP.protocol.client.MessageHandler(xmppCon_OnMessage);
         }
 
         void xmppCon_OnMessage(object sender, agsXMPP.protocol.client.Message msg)

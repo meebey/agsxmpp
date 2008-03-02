@@ -55,15 +55,13 @@ namespace MiniClient
             this.tslRemaining = new System.Windows.Forms.ToolStripStatusLabel();
             this.cmdSend = new System.Windows.Forms.Button();
             this.txtDescription = new System.Windows.Forms.TextBox();
-            this.radioSOCKS5 = new System.Windows.Forms.RadioButton();
-            this.radioIBB = new System.Windows.Forms.RadioButton();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmdAccept
             // 
             this.cmdAccept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdAccept.Location = new System.Drawing.Point(8, 215);
+            this.cmdAccept.Location = new System.Drawing.Point(8, 149);
             this.cmdAccept.Name = "cmdAccept";
             this.cmdAccept.Size = new System.Drawing.Size(75, 23);
             this.cmdAccept.TabIndex = 0;
@@ -108,7 +106,7 @@ namespace MiniClient
             // cmdRefuse
             // 
             this.cmdRefuse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmdRefuse.Location = new System.Drawing.Point(89, 215);
+            this.cmdRefuse.Location = new System.Drawing.Point(89, 149);
             this.cmdRefuse.Name = "cmdRefuse";
             this.cmdRefuse.Size = new System.Drawing.Size(80, 23);
             this.cmdRefuse.TabIndex = 9;
@@ -140,7 +138,7 @@ namespace MiniClient
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.progress.Location = new System.Drawing.Point(12, 12);
             this.progress.Name = "progress";
-            this.progress.Size = new System.Drawing.Size(366, 22);
+            this.progress.Size = new System.Drawing.Size(300, 22);
             this.progress.TabIndex = 12;
             // 
             // lblDescription
@@ -149,7 +147,7 @@ namespace MiniClient
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDescription.Location = new System.Drawing.Point(94, 96);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(291, 37);
+            this.lblDescription.Size = new System.Drawing.Size(225, 37);
             this.lblDescription.TabIndex = 21;
             this.lblDescription.Text = "Description";
             // 
@@ -162,9 +160,9 @@ namespace MiniClient
             this.tslRate,
             this.toolStripStatusLabel5,
             this.tslRemaining});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 241);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 175);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(392, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(326, 22);
             this.statusStrip1.TabIndex = 22;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -211,7 +209,7 @@ namespace MiniClient
             // 
             this.cmdSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cmdSend.Enabled = false;
-            this.cmdSend.Location = new System.Drawing.Point(175, 215);
+            this.cmdSend.Location = new System.Drawing.Point(175, 149);
             this.cmdSend.Name = "cmdSend";
             this.cmdSend.Size = new System.Drawing.Size(86, 22);
             this.cmdSend.TabIndex = 23;
@@ -227,40 +225,16 @@ namespace MiniClient
             this.txtDescription.Location = new System.Drawing.Point(92, 96);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(286, 81);
+            this.txtDescription.Size = new System.Drawing.Size(220, 47);
             this.txtDescription.TabIndex = 24;
             this.txtDescription.Text = "Enter Description here";
             this.txtDescription.TextChanged += new System.EventHandler(this.txtDescription_TextChanged);
-            // 
-            // radioSOCKS5
-            // 
-            this.radioSOCKS5.AutoSize = true;
-            this.radioSOCKS5.Checked = true;
-            this.radioSOCKS5.Location = new System.Drawing.Point(15, 192);
-            this.radioSOCKS5.Name = "radioSOCKS5";
-            this.radioSOCKS5.Size = new System.Drawing.Size(70, 17);
-            this.radioSOCKS5.TabIndex = 25;
-            this.radioSOCKS5.TabStop = true;
-            this.radioSOCKS5.Text = "SOCKS 5";
-            this.radioSOCKS5.UseVisualStyleBackColor = true;
-            // 
-            // radioIBB
-            // 
-            this.radioIBB.AutoSize = true;
-            this.radioIBB.Location = new System.Drawing.Point(106, 192);
-            this.radioIBB.Name = "radioIBB";
-            this.radioIBB.Size = new System.Drawing.Size(42, 17);
-            this.radioIBB.TabIndex = 26;
-            this.radioIBB.Text = "IBB";
-            this.radioIBB.UseVisualStyleBackColor = true;
             // 
             // frmFileTransfer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 263);
-            this.Controls.Add(this.radioIBB);
-            this.Controls.Add(this.radioSOCKS5);
+            this.ClientSize = new System.Drawing.Size(326, 197);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.cmdSend);
             this.Controls.Add(this.statusStrip1);
@@ -307,8 +281,6 @@ namespace MiniClient
         private System.Windows.Forms.ToolStripStatusLabel tslRemaining;
         private System.Windows.Forms.Button cmdSend;
         private System.Windows.Forms.TextBox txtDescription;
-        private System.Windows.Forms.RadioButton radioSOCKS5;
-        private System.Windows.Forms.RadioButton radioIBB;
 
     }
 }
