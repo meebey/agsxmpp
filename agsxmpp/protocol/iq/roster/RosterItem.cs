@@ -28,12 +28,12 @@ using agsXMPP.Xml.Dom;
 namespace agsXMPP.protocol.iq.roster
 {
 	// jabber:iq:roster
-	// <iq from="gnauck@myjabber.net/Office" id="doroster_1" type="result">
+	// <iq from="user@server.com/Office" id="doroster_1" type="result">
 	//		<query xmlns="jabber:iq:roster">
-	//			<item subscription="both" name="Nachtkrapp" jid="50198521@icq.myjabber.net"><group>ICQ</group></item>
-	//			<item subscription="both" name="czerkasov" jid="62764180@icq.myjabber.net"><group>ICQ</group></item>
-	//			<item subscription="both" name="Poacher" jid="92179686@icq.myjabber.net"><group>ICQ</group></item>
-	//			<item subscription="both" name="Diabolo" jid="102840558@icq.myjabber.net"><group>ICQ</group></item>
+	//			<item subscription="both" name="juiliet" jid="11111@icq.myjabber.net"><group>ICQ</group></item>
+	//			<item subscription="both" name="roman" jid="22222@icq.myjabber.net"><group>ICQ</group></item>
+	//			<item subscription="both" name="angie" jid="33333@icq.myjabber.net"><group>ICQ</group></item>
+	//			<item subscription="both" name="bob" jid="44444@icq.myjabber.net"><group>ICQ</group></item>
 	//		</query>
 	// </iq> 
 

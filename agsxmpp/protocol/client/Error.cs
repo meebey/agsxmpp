@@ -256,7 +256,7 @@ namespace agsXMPP.protocol.client
 				SetAttribute("code", (int) value);
 			}
 		}
-
+       
 		public ErrorType Type
 		{
 			get

@@ -73,7 +73,7 @@ namespace agsXMPP.protocol.x.data
 
 		#region << Properties >>
 		/// <summary>
-		/// Label of the oprion
+		/// Label of the option
 		/// </summary>
 		public string Label
 		{
@@ -81,6 +81,7 @@ namespace agsXMPP.protocol.x.data
 			set { SetAttribute("label", value); }
 		}	
 		#endregion
+
 
 		/// <summary>
 		/// Value of the Option

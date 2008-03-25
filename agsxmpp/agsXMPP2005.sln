@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agsXMPP.ui.2005", "..\agsxm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniClientWM5", "..\samples\VS2005\MiniClientWM5\MiniClientWM5.csproj", "{A25AA758-756E-4522-9EDD-5F9A5225BDFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agsXMPP2008", "agsXMPP2008.csproj", "{91EA0D0B-D3BA-497F-AFEB-2CAD59DEBA0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,16 @@ Global
 		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{A25AA758-756E-4522-9EDD-5F9A5225BDFC}.Release|Win32.ActiveCfg = Release|Any CPU
+		{91EA0D0B-D3BA-497F-AFEB-2CAD59DEBA0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91EA0D0B-D3BA-497F-AFEB-2CAD59DEBA0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91EA0D0B-D3BA-497F-AFEB-2CAD59DEBA0E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{91EA0D0B-D3BA-497F-AFEB-2CAD59DEBA0E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{91EA0D0B-D3BA-497F-AFEB-2CAD59DEBA0E}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{91EA0D0B-D3BA-497F-AFEB-2CAD59DEBA0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91EA0D0B-D3BA-497F-AFEB-2CAD59DEBA0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91EA0D0B-D3BA-497F-AFEB-2CAD59DEBA0E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{91EA0D0B-D3BA-497F-AFEB-2CAD59DEBA0E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{91EA0D0B-D3BA-497F-AFEB-2CAD59DEBA0E}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

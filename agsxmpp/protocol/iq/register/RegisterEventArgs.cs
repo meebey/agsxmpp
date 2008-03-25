@@ -42,7 +42,7 @@ namespace agsXMPP.protocol.iq.register
 
         /// <summary>
         /// Set Auto to true if the library should register automatically
-        /// Set it to false if you want to fill out the eegistration fields manual
+        /// Set it to false if you want to fill out the registration fields manual
         /// </summary>
         public bool Auto
         {

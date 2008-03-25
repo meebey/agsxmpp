@@ -177,7 +177,6 @@ namespace agsXMPP.net
             set { m_ConnectTimeout = value; }
         }
 
-
 		#region << Methods >>
 		public virtual void Connect()
 		{

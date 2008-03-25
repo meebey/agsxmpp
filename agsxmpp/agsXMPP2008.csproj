@@ -156,6 +156,7 @@
     <Compile Include="protocol\Base\DirectionalElement.cs" />
     <Compile Include="protocol\Base\Stanza.cs" />
     <Compile Include="protocol\client\Handler.cs" />
+    <Compile Include="protocol\client\ShowType.cs" />
     <Compile Include="protocol\component\Error.cs" />
     <Compile Include="protocol\component\Handler.cs" />
     <Compile Include="protocol\component\IQ.cs" />
@@ -272,9 +273,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="protocol\client\PresenceType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="protocol\client\ShowType.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="protocol\Stream.cs">
@@ -720,6 +718,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="key.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

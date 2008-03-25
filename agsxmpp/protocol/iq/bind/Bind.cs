@@ -34,7 +34,7 @@ namespace agsXMPP.protocol.iq.bind
 		//			<bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><resource>Exodus</resource></bind>
 		//		 </iq>
 		// RECV: <iq id='jcl_1' type='result'>
-		//			<bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><jid>gnauck@jabber.ru/Exodus</jid></bind>
+		//			<bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><jid>user@server.org/agsxmpp</jid></bind>
 		//		 </iq>
 		public Bind()
 		{
@@ -66,7 +66,7 @@ namespace agsXMPP.protocol.iq.bind
 		/// </summary>
 		public Jid Jid
 		{
-			get { return new Jid(GetTag("jid")); }
+			get { return GetTagJid("jid"); }
 			set { SetTag("jid", value.ToString()); }
 		}
 	}

@@ -1,4 +1,4 @@
-version 0.9x
+version 1.0
 ============
 - added XEP-0153: vCard-Based Avatars
 - added bookmark storage XEP-0048
@@ -17,7 +17,7 @@ version 0.9x
 - updated caps to teh latest xep version, can create the new ver attrib automatically.
 - published first BOSH version. Interoperability only tested with ejabberd2 beta 1
 - optimized Polling code
-- updated caps to the latest version of teh XEP where caps versioning was changed.
+- updated caps to the latest version of the XEP where caps versioning was changed.
 - added AMP
 - refactored and extended base classes
 

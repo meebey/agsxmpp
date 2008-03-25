@@ -41,7 +41,7 @@ namespace agsXMPP.protocol.client
         /// Subscribe to a contact
 		/// </summary>
 		/// <param name="to">Bare Jid of the rosteritem we want to subscribe</param>
-		public void Subcribe(Jid to)
+		public void Subscribe(Jid to)
 		{
 			// <presence to='contact@example.org' type='subscribe'/>
 			Presence pres = new Presence();
@@ -57,7 +57,7 @@ namespace agsXMPP.protocol.client
         /// </summary>        
         /// <param name="to">Bare Jid of the rosteritem we want to subscribe</param>
         /// <param name="message">a message which normally contains the reason why we want to subscibe to this contact</param>
-        public void Subcribe(Jid to, string message)
+        public void Subscribe(Jid to, string message)
         {
             Presence pres = new Presence();
             pres.Type = PresenceType.subscribe;
@@ -72,7 +72,7 @@ namespace agsXMPP.protocol.client
         /// Unsubscribe from a contact
         /// </summary>
         /// <param name="to">Bare Jid of the rosteritem we want to unsubscribe</param>
-		public void Unsubcribe(Jid to)
+		public void Unsubscribe(Jid to)
 		{
 			// <presence to='contact@example.org' type='subscribe'/>
 			Presence pres = new Presence();
@@ -115,6 +115,5 @@ namespace agsXMPP.protocol.client
 
 			m_connection.Send(pres);
 		}
-
 	}
 }

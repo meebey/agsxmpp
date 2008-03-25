@@ -325,13 +325,11 @@ namespace agsXMPP
 
 		private void InitSocket()
 		{
-            //if (m_ClientSocket != null)
-            //    //m_ClientSocket.Dispose();
 			m_ClientSocket = null;
 
 			// Socket Stuff
 			if (m_SocketConnectionType == agsXMPP.net.SocketConnectionType.HttpPolling)
-				m_ClientSocket	= new PollClientSocket();            
+				m_ClientSocket= new PollClientSocket();            
             else if (m_SocketConnectionType == agsXMPP.net.SocketConnectionType.Bosh)
                 m_ClientSocket = new BoshClientSocket(this);
             else

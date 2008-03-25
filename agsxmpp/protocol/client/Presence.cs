@@ -51,14 +51,23 @@ namespace agsXMPP.protocol.client
         #endregion
 
         /// <summary>
-		/// Presence status
-		/// </summary>
+        /// The OPTIONAL statuc contains a natural-language description of availability status. 
+        /// It is normally used in conjunction with the show element to provide a detailed description of an availability state 
+        /// (e.g., "In a meeting").
+        /// </summary>
 		public string Status
 		{
 			get { return GetTag("status"); }
 			set { SetTag("status", value); }
 		}
 
+        /// <summary>
+        /// The type of a presence stanza is OPTIONAL. 
+        /// A presence stanza that does not possess a type attribute is used to signal to the server that the sender is online and available 
+        /// for communication. If included, the type attribute specifies a lack of availability, a request to manage a subscription 
+        /// to another entity's presence, a request for another entity's current presence, or an error related to a previously-sent 
+        /// presence stanza.
+        /// </summary>
 		public PresenceType Type
 		{
 			get	
@@ -96,6 +105,10 @@ namespace agsXMPP.protocol.client
             }
         }
 
+        /// <summary>
+        /// The OPTIONAL show element contains non-human-readable XML character data that specifies the particular availability
+        /// status of an entity or specific resource.
+        /// </summary>
 		public ShowType Show
 		{
 			get { return (ShowType) GetTagEnum("show", typeof(ShowType)); }
@@ -107,18 +120,16 @@ namespace agsXMPP.protocol.client
                     RemoveAttribute("show");
 			}
 		}
-
 		
 		/// <summary>
-        // The OPTIONAL <priority/> element contains non-human-readable XML character data 
-        // that specifies the priority level of the resource. The value MUST be an 
-        // integer between -128 and +127. A presence stanza MUST NOT contain more than 
-        // one <priority/> element. The <priority/> element MUST NOT possess any attributes.
-        // If no priority is provided, a server SHOULD consider the priority to be zero. 
-        // For information regarding the semantics of priority values in stanza routing 
-        // within instant messaging and presence applications, refer to Server Rules 
-        // for Handling XML StanzasServer Rules for Handling XML Stanzas.
+        /// The priority level of the resource. The value MUST be an integer between -128 and +127. 
+        /// If no priority is provided, a server SHOULD consider the priority to be zero.         
 		/// </summary>
+        /// <remarks>
+        /// For information regarding the semantics of priority values in stanza routing 
+        /// within instant messaging and presence applications, refer to Server Rules 
+        /// for Handling XML StanzasServer Rules for Handling XML Stanzas.
+        /// </remarks>
 		public int Priority
 		{
 			get 
