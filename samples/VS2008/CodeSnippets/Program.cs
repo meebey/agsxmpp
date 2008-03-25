@@ -15,7 +15,6 @@ namespace CodeSnippets
     {
         static void Main(string[] args)
         {
-            Dom dom = new Dom();
             Disco disco = new Disco();
             Shim shim = new Shim();
             Presence pres = new Presence();

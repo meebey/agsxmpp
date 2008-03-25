@@ -161,7 +161,7 @@ namespace MiniClient
 				_connection.RosterManager.AddRosterItem(jid);
 
 			// Ask for subscription now
-			_connection.PresenceManager.Subcribe(jid);
+			_connection.PresenceManager.Subscribe(jid);
 						
 			this.Close();
 		}

@@ -8,7 +8,7 @@ using namespace agsXMPP::protocol::client;
 
 
 int main(array<System::String ^> ^args)
-{		
+{	
 	// create new XmppConnection
 	XmppClientConnection ^ xmpp = gcnew  XmppClientConnection();
 	
@@ -41,10 +41,6 @@ int main(array<System::String ^> ^args)
 	xmpp->Close();
 
 	Threading::Thread::Sleep(5000);
-
-    return 0;
+    
+	return 0;
 }
-
-
-
-

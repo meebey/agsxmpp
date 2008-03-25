@@ -275,7 +275,8 @@ namespace MiniClient
             _connection.AutoResolveConnectServer    = true;
             _connection.UseCompression              = false;
 
-            _connection.SocketConnectionType    = agsXMPP.net.SocketConnectionType.Direct;           
+            //_connection.SocketConnectionType    = agsXMPP.net.SocketConnectionType.Bosh;
+            //_connection.ConnectServer = "http://vm-2k:8080/http-bind/";
 			
             if (chkRegister.Checked)                
                 _connection.RegisterAccount = true;            
@@ -300,6 +301,7 @@ namespace MiniClient
             //_connection.UseSSL                      = false;
             //_connection.AutoResolveConnectServer    = false;
             //_connection.ConnectServer               = "http://vm-2000:5280/http-poll";
+
             
             SetDiscoInfo();
             
@@ -317,7 +319,9 @@ namespace MiniClient
             _connection.DiscoInfo.AddFeature(new DiscoFeature(agsXMPP.Uri.DISCO_INFO));
             _connection.DiscoInfo.AddFeature(new DiscoFeature(agsXMPP.Uri.DISCO_ITEMS));
             _connection.DiscoInfo.AddFeature(new DiscoFeature(agsXMPP.Uri.MUC));
-            //_connection.DiscoInfo.AddFeature(new DiscoFeature("abc")); 
+            
+            // for testing to bypass disco caches
+            //_connection.DiscoInfo.AddFeature(new DiscoFeature(Guid.NewGuid().ToString())); 
         }
 
 		private string SettingsFilename
