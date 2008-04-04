@@ -473,7 +473,7 @@ namespace agsXMPP.net
 
             inflater = new Inflater();
             deflater = new Deflater();
-
+            
             // Set the compressed flag to true when we init compression
             m_Compressed = true;
         }
@@ -556,13 +556,13 @@ namespace agsXMPP.net
                         { 
                             m_NetworkStream.BeginWrite(bData, 0, bData.Length, new AsyncCallback(EndSend), null);
                         }
-                        catch(Exception ex)
+                        catch(Exception)
                         {
                             Disconnect();
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     
                 }
@@ -637,7 +637,7 @@ namespace agsXMPP.net
                         m_PendingSend = false;                        
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {                    
                     Disconnect();
                 }

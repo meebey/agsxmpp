@@ -440,7 +440,7 @@ namespace agsXMPP
 		public event ObjectHandler				OnPasswordChanged;
 
 		/// <summary>
-		/// This event occurs on registration errors
+		/// This event occurs on xmpp errors
 		/// </summary>
 		public event XmppElementHandler			OnXmppError;
 		
@@ -448,6 +448,11 @@ namespace agsXMPP
 		/// Event that occurs on registration errors
 		/// </summary>
 		public event XmppElementHandler			OnRegisterError;
+
+        /// <summary>
+        /// Event occurs on Xmpp Stream error elements
+        /// </summary>
+        public event XmppElementHandler         OnStreamError;
                 		
 		/// <summary>
 		/// Event that occurs on authentication errors
@@ -1405,6 +1410,11 @@ namespace agsXMPP
 
                 DoChangeXmppConnectionState(XmppConnectionState.Compressed);
 			}
+            else if (e is agsXMPP.protocol.Error)
+            {
+                if (OnStreamError != null)
+                    OnStreamError(this, e as Element);
+            }
 
 		}
 
