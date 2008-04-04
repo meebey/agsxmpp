@@ -439,11 +439,11 @@ namespace agsXMPP
 		/// </summary>
 		public event ObjectHandler				OnPasswordChanged;
 
-		/// <summary>
-		/// This event occurs on xmpp errors
-		/// </summary>
+		/*
+        was never used, comment ot until we need it
 		public event XmppElementHandler			OnXmppError;
-		
+		*/
+         
 		/// <summary>
 		/// Event that occurs on registration errors
 		/// </summary>
