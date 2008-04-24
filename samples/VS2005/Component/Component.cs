@@ -13,7 +13,7 @@ namespace Component
 		private static XmppComponentConnection comp = null;
 
         private const int       PORT        = 5275;
-        private const string    SECRET      = "nongim";
+        private const string    SECRET      = "secret";
         //private const string HOST = "localhost";
         private const string    HOST        = "vm-2k";
         private const string    JID         = "weather.vm-2k";
