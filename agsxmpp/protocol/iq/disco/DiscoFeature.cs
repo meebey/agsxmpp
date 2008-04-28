@@ -56,7 +56,7 @@ namespace agsXMPP.protocol.iq.disco
         </query>
         </iq>
         */
-        #region << constructors >>
+        #region << Constructors >>
         public DiscoFeature()
 		{
 			this.TagName	= "feature";
