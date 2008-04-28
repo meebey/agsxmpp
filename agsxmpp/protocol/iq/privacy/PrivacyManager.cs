@@ -22,6 +22,7 @@
 using System;
 
 using agsXMPP;
+using agsXMPP.protocol.client;
 using agsXMPP.protocol.iq.privacy;
 
 namespace agsXMPP.protocol.iq.privacy

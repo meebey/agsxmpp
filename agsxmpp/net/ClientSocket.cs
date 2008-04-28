@@ -506,7 +506,6 @@ namespace agsXMPP.net
 			
 			FireOnDisconnect();			
 		}
-
 		
 		/// <summary>
 		/// 
@@ -516,7 +515,6 @@ namespace agsXMPP.net
 		{			    
 			Send(Encoding.UTF8.GetBytes(data));				
 		}
-
         
 		/// <summary>
 		/// Send data to the server.

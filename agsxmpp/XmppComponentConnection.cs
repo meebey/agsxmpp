@@ -41,7 +41,7 @@ namespace agsXMPP
 	{
         // This route stuff is old undocumented jabberd(2) stuff. hopefully we can get rid of this one day
         // or somebody writes up and XEP
-		public delegate void RouteHandler	(object sender, Route r);        
+		public delegate void RouteHandler	(object sender, Route r);
 
 		private bool						m_CleanUpDone;
         private bool						m_StreamStarted;
@@ -52,6 +52,7 @@ namespace agsXMPP
 		/// </summary>
 		public XmppComponentConnection()
 		{
+            m_IqGrabber = new IqGrabber(this);
 		}
 
 		/// <summary>
@@ -82,6 +83,7 @@ namespace agsXMPP
 		private		string			m_Password			= null;		
 		private		bool			m_Authenticated		= false;		
 		private		Jid				m_ComponentJid		= null;
+        private     IqGrabber       m_IqGrabber         = null;        
 				
 		public string Password
 		{
@@ -102,13 +104,18 @@ namespace agsXMPP
 		/// <para>
 		/// eg: <c>jabber.ag-software.de</c>
 		/// </para>
-		/// </summary>
-		
+		/// </summary>		
 		public Jid ComponentJid
 		{
 			get { return m_ComponentJid; }
 			set { m_ComponentJid = value; }
 		}
+
+        public IqGrabber IqGrabber
+        {
+            get { return m_IqGrabber; }
+            set { m_IqGrabber = value; }
+        }
 		#endregion
 
 		#region << Events >>
@@ -345,6 +352,8 @@ namespace agsXMPP
             DestroyKeepAliveTimer();			
 			m_CleanUpDone = true;
 			StreamParser.Reset();
+
+            m_IqGrabber.Clear();
             
 			if (OnClose!=null)
 				OnClose(this);

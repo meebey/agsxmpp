@@ -672,7 +672,6 @@ namespace agsXMPP
             }
             else
             {
-
                 // Fires the socket error
                 if (OnSocketError != null)
                     OnSocketError(this, ex);
@@ -681,9 +680,8 @@ namespace agsXMPP
                 // if teh stream gets closed because of a socket error we have to raise both errors fo course
                 if (m_StreamStarted && !m_CleanUpDone)
                     CleanupSession();                
-            }            
-        }
-		
+            }
+        }		
 		#endregion
                
 		private void _Open()
@@ -1429,8 +1427,8 @@ namespace agsXMPP
 			
 			FireOnError(this, ex);
 
-			if (OnClose!=null)
-				OnClose(this);
+            if (!m_CleanUpDone)
+                CleanupSession();           
 		}                
         #endregion
 

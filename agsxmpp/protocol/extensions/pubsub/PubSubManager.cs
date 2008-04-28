@@ -599,9 +599,19 @@ namespace agsXMPP.protocol.extensions.pubsub
             Unsubscribe(to, null, unsubscribe, node, null, null);
         }
 
+        public void Unsubscribe(Jid to, Jid unsubscribe, string node, string subid)
+        {
+            Unsubscribe(to, null, unsubscribe, node, subid, null, null);
+        }
+
         public void Unsubscribe(Jid to, Jid unsubscribe, string node, IqCB cb)
         {
             Unsubscribe(to, null, unsubscribe, node, cb, null);
+        }
+
+        public void Unsubscribe(Jid to, Jid unsubscribe, string node, string subid, IqCB cb)
+        {
+            Unsubscribe(to, null, unsubscribe, node, subid, cb, null);
         }
 
         public void Unsubscribe(Jid to, Jid unsubscribe, string node, IqCB cb, object cbArgs)
@@ -609,9 +619,19 @@ namespace agsXMPP.protocol.extensions.pubsub
             Unsubscribe(to, null, unsubscribe, node, cb, cbArgs);
         }
 
+        public void Unsubscribe(Jid to, Jid unsubscribe, string node, string subid, IqCB cb, object cbArgs)
+        {
+            Unsubscribe(to, null, unsubscribe, node, subid, cb, cbArgs);
+        }
+
         public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node)
         {
             Unsubscribe(to, from, unsubscribe, node, null, null);
+        }
+
+        public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node, string subid)
+        {
+            Unsubscribe(to, from, unsubscribe, node, subid, null, null);
         }
 
         public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node, IqCB cb)
@@ -619,14 +639,28 @@ namespace agsXMPP.protocol.extensions.pubsub
             Unsubscribe(to, from, unsubscribe, node, cb, null);
         }
 
+        public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node, string subid, IqCB cb)
+        {
+            Unsubscribe(to, from, unsubscribe, node, subid, cb, null);
+        }
+
         public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node, IqCB cb, object cbArgs)
+        {
+            Unsubscribe(to, from, unsubscribe, node, null, cb, cbArgs);
+        }
+
+        public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node, string subid, IqCB cb, object cbArgs)
         {
             PubSubIq pubsubIq = new PubSubIq(IqType.set, to);
 
             if (from != null)
                 pubsubIq.From = from;
 
-            pubsubIq.PubSub.Unsubscribe = new Unsubscribe(node, unsubscribe);
+            Unsubscribe unsub = new Unsubscribe(node, unsubscribe);
+            if (subid != null)
+                unsub.SubId = subid;
+
+            pubsubIq.PubSub.Unsubscribe = unsub;
 
             if (cb == null)
                 m_connection.Send(pubsubIq);

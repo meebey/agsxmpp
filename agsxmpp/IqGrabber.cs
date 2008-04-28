@@ -25,11 +25,13 @@ using System.Threading;
 
 using agsXMPP.protocol.client;
 
+//using agsXMPP.protocol.component;
+
 using agsXMPP.Xml;
 
 namespace agsXMPP
-{	
-	public delegate void IqCB(object sender, IQ iq, object data);
+{
+    public delegate void IqCB(object sender, IQ iq, object data);
 	
 	public class IqGrabber : PacketGrabber
 	{
@@ -40,8 +42,15 @@ namespace agsXMPP
 		public IqGrabber(XmppClientConnection conn)
 		{
 			m_connection		= conn;
-			m_connection.OnIq	+= new IqHandler(OnIq);
+			conn.OnIq	+= new IqHandler(OnIq);
 		}
+
+        public IqGrabber(XmppComponentConnection conn)
+        {
+            m_connection = conn;
+            conn.OnIq += new agsXMPP.protocol.component.IqHandler(OnIq);
+        }        
+        
 #if !CF
         private IQ  synchronousResponse     = null;
 
@@ -56,17 +65,7 @@ namespace agsXMPP
             set { m_SynchronousTimeout = value; }
         }
 #endif 
-		/// <summary>
-		/// Pending request can be removed.
-		/// This is useful when a ressource for the callback is destroyed and
-		/// we are not interested anymore at the result.
-		/// </summary>
-		/// <param name="id">ID of the Iq we are not interested anymore</param>
-		public void Remove(string id)
-		{
-			if(m_grabbing.ContainsKey(id))
-				m_grabbing.Remove(id);
-		}
+		
 
 		/// <summary>
 		/// An IQ Element is received. Now check if its one we are looking for and
@@ -74,7 +73,7 @@ namespace agsXMPP
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		public void OnIq(object sender, IQ iq)
+		public void OnIq(object sender, agsXMPP.protocol.client.IQ iq)
 		{			
 			if (iq == null)
 				return;
@@ -99,7 +98,16 @@ namespace agsXMPP
             td.cb(this, iq, td.data);           
 		}
 
-	
+        /// <summary>
+        /// Send an IQ Request and store the object with callback in the Hashtable
+        /// </summary>
+        /// <param name="iq">The iq to send</param>
+        /// <param name="cb">the callback function which gets raised for the response</param>
+        public void SendIq(IQ iq, IqCB cb)
+        {
+            SendIq(iq, cb, null);
+        }
+
         /// <summary>
         /// Send an IQ Request and store the object with callback in the Hashtable
         /// </summary>
@@ -127,7 +135,7 @@ namespace agsXMPP
         /// <param name="iq">The IQ to send</param>
         /// <param name="timeout"></param>
         /// <returns>The response IQ or null on timeout</returns>
-        public IQ SendIq(IQ iq, int timeout)
+        public IQ SendIq(agsXMPP.protocol.client.IQ iq, int timeout)
         {
             synchronousResponse = null;
             AutoResetEvent are = new AutoResetEvent(false);

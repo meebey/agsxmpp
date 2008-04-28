@@ -39,7 +39,7 @@ namespace agsXMPP
 		public MessageGrabber(XmppClientConnection conn)
 		{
 			m_connection		= conn;
-			m_connection.OnMessage += new MessageHandler(m_connection_OnMessage);			
+			conn.OnMessage += new MessageHandler(m_connection_OnMessage);			
 		}
         
 		public void Add(Jid jid, MessageCB cb, object cbArg)

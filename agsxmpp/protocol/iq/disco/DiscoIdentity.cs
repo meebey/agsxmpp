@@ -73,18 +73,27 @@ namespace agsXMPP.protocol.iq.disco
             Category = category;
         }
 
+        /// <summary>
+        /// type name for the entity
+        /// </summary>
 		public string Type
 		{
 			get { return GetAttribute("type"); }
 			set { SetAttribute("type", value); }
 		}
 
+        /// <summary>
+        /// natural-language name for the entity
+        /// </summary>
 		public string Name
 		{
 			get { return GetAttribute("name"); }
 			set { SetAttribute("name", value); }
 		}
 		
+        /// <summary>
+        /// category name for the entity
+        /// </summary>
 		public string Category
 		{
 			get { return GetAttribute("category"); }

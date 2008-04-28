@@ -56,6 +56,12 @@ namespace agsXMPP.protocol.extensions.pubsub
             this.Node   = node;
             this.Jid    = jid;
         }
+
+        public Unsubscribe(string node, Jid jid, string subid)
+            : this(node, jid)
+        {
+            SubId = subid;
+        }
         #endregion
 
         public string SubId

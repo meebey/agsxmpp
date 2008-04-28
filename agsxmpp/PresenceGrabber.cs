@@ -39,7 +39,7 @@ namespace agsXMPP
 		public PresenceGrabber(XmppClientConnection conn)
 		{
 			m_connection		= conn;			
-			m_connection.OnPresence += new PresenceHandler(m_connection_OnPresence);
+			conn.OnPresence += new PresenceHandler(m_connection_OnPresence);
 		}
         
 		public void Add(Jid jid, PresenceCB cb, object cbArg)
