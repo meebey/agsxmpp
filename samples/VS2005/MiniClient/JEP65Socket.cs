@@ -1,15 +1,3 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *																					 *
- * Copyright (c) 2003-2006 by AG-Software											 *
- * All Rights Reserved.																 *
- *																					 *
- * You should have received a copy of the AG-Software Shared Source License			 *
- * along with this library; if not, email gnauck@ag-software.de to request a copy.   *
- *																					 *
- * For general enquiries, email gnauck@ag-software.de or visit our website at:		 *
- * http://www.ag-software.de														 *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 using System;
 using System.Net;
 using System.Net.Sockets;
