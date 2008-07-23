@@ -330,20 +330,20 @@ namespace agsXMPP.net
             {
                 m_SSLStream.AuthenticateAsClient(base.Address, null, protocol, true);
                 // Display the properties and settings for the authenticated stream.
-                DisplaySecurityLevel(m_SSLStream);
-                DisplaySecurityServices(m_SSLStream);
-                DisplayCertificateInformation(m_SSLStream);
-                DisplayStreamProperties(m_SSLStream);
+                //DisplaySecurityLevel(m_SSLStream);
+                //DisplaySecurityServices(m_SSLStream);
+                //DisplayCertificateInformation(m_SSLStream);
+                //DisplayStreamProperties(m_SSLStream);
 
             } 
             catch (AuthenticationException e)
             {
-                Console.WriteLine("Exception: {0}", e.Message);
+                //Console.WriteLine("Exception: {0}", e.Message);
                 if (e.InnerException != null)
                 {
-                    Console.WriteLine("Inner exception: {0}", e.InnerException.Message);
+                    //Console.WriteLine("Inner exception: {0}", e.InnerException.Message);
                 }
-                Console.WriteLine ("Authentication failed - closing the connection.");
+                //Console.WriteLine ("Authentication failed - closing the connection.");
                 //client.Close();
                 return;
             }
@@ -378,7 +378,7 @@ namespace agsXMPP.net
 
         private void DisplayCertificateInformation(SslStream stream)
         {
-            Console.WriteLine("Certificate revocation list checked: {0}", stream.CheckCertRevocationStatus);
+            //Console.WriteLine("Certificate revocation list checked: {0}", stream.CheckCertRevocationStatus);
             // Display the properties of the client's certificate.
             X509Certificate remoteCertificate = stream.RemoteCertificate;
             if (stream.RemoteCertificate != null)
