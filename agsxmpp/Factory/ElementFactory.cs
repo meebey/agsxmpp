@@ -256,7 +256,7 @@ namespace agsXMPP.Factory
             AddElementType("delete",            Uri.PUBSUB_EVENT,           typeof(agsXMPP.protocol.extensions.pubsub.@event.Delete));
             AddElementType("event",             Uri.PUBSUB_EVENT,           typeof(agsXMPP.protocol.extensions.pubsub.@event.Event));
             AddElementType("item",              Uri.PUBSUB_EVENT,           typeof(agsXMPP.protocol.extensions.pubsub.@event.Item));
-            AddElementType("items",             Uri.PUBSUB_EVENT,           typeof(agsXMPP.protocol.extensions.pubsub.@event.Item));
+            AddElementType("items",             Uri.PUBSUB_EVENT,           typeof(agsXMPP.protocol.extensions.pubsub.@event.Items));
             AddElementType("purge",             Uri.PUBSUB_EVENT,           typeof(agsXMPP.protocol.extensions.pubsub.@event.Purge));
 
             // Main Pubsub namespace
