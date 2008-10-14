@@ -62,6 +62,10 @@ namespace agsXMPP.net
 #if SSL
         public event RemoteCertificateValidationCallback    OnValidateCertificate;
 #endif
+#if BCCRYPTO
+        public delegate bool CertificateValidationCallback(Org.BouncyCastle.Asn1.X509.X509CertificateStructure[] certs);
+        public event CertificateValidationCallback OnValidateCertificate;
+#endif
 		public event OnSocketDataHandler			        OnReceive;
 		public event OnSocketDataHandler			        OnSend;
 		public event ObjectHandler					        OnConnect;
@@ -159,6 +163,16 @@ namespace agsXMPP.net
             // {
             //	ShowCertificateError (error);
             // }
+        }
+#endif
+#if BCCRYPTO
+        protected bool FireOnValidateCertificate(Org.BouncyCastle.Asn1.X509.X509CertificateStructure[] certs)
+        {
+            if (OnValidateCertificate != null)
+                return OnValidateCertificate(certs);
+            else
+                return true;
+
         }
 #endif
 		public virtual bool Connected

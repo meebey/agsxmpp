@@ -40,6 +40,10 @@ using System.Security.Cryptography.X509Certificates;
 using Mono.Security.Protocol.Tls;
 #endif
 
+#if BCCRYPTO
+using Org.BouncyCastle.Crypto.Tls;
+#endif
+
 using agsXMPP.IO.Compression;
 
 using agsXMPP;
@@ -454,6 +458,33 @@ namespace agsXMPP.net
 		{
 			return base.FireOnValidateCertificate(certificate, certificateErrors);
 		}
+#endif
+#if BCCRYPTO
+        /// <summary>
+        /// Starts TLS on a "normal" connection
+        /// </summary>
+        public override void StartTls()
+        {
+            base.StartTls();
+
+            //TlsProtocolHandler protocolHandler = new TlsProtocolHandler(m_NetworkStream, m_NetworkStream);
+            //Stream st = new NetworkStream(_socket, false);
+            TlsProtocolHandler protocolHandler = new TlsProtocolHandler(m_Stream, m_Stream);
+            //TlsProtocolHandler protocolHandler = new TlsProtocolHandler(st, st);
+
+            CertificateVerifier certVerify = new CertificateVerifier();
+            certVerify.OnVerifyCertificate += new CertificateValidationCallback(certVerify_OnVerifyCertificate);
+
+            protocolHandler.Connect(certVerify);
+
+            m_NetworkStream = new SslStream(protocolHandler.InputStream, protocolHandler.OutputStream);
+            m_SSL = true;
+        }
+
+        internal bool certVerify_OnVerifyCertificate(Org.BouncyCastle.Asn1.X509.X509CertificateStructure[] certs)
+        {
+            return base.FireOnValidateCertificate(certs);
+        }
 #endif
 
         /// <summary>

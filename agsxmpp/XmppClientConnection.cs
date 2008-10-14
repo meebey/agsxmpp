@@ -100,7 +100,7 @@ namespace agsXMPP
         private     bool                    m_AutoPresence      = true;
            
 		private		bool					m_UseSSL			= false;
-#if (CF || CF_2)
+#if (CF || CF_2) && !BCCRYPTO
         private     bool                    m_UseStartTLS       = false;
 #else
         private		bool					m_UseStartTLS		= true;
@@ -308,7 +308,7 @@ namespace agsXMPP
 		{
 			get { return m_UseStartTLS; }
 
-#if SSL || MONOSSL
+#if SSL || MONOSSL || BCCRYPTO
 			set
 			{
                 // Only one of both can be true
@@ -1368,7 +1368,7 @@ namespace agsXMPP
                     DoChangeXmppConnectionState(XmppConnectionState.StartCompression);
                     this.Send(new Compress(CompressionMethod.zlib));                    
                 }
-#if SSL || MONOSSL
+#if SSL || MONOSSL || BCCRYPTO
 				else if (f.SupportsStartTls && m_UseStartTLS)
 				{
 					DoChangeXmppConnectionState(XmppConnectionState.Securing);
@@ -1389,7 +1389,7 @@ namespace agsXMPP
                     }
                 }
             }
-#if SSL || MONOSSL
+#if SSL || MONOSSL || BCCRYPTO
             else if ( e.GetType() == typeof (Proceed) )
 			{	
 				StreamParser.Reset();			

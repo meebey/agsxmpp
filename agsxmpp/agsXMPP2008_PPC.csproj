@@ -31,7 +31,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\PPC_20\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CF_2;STRINGPREP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CF_2;STRINGPREP;BCCRYPTO</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -43,7 +43,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\PPC_20\Release\</OutputPath>
-    <DefineConstants>TRACE;CF_2;STRINGPREP</DefineConstants>
+    <DefineConstants>TRACE;CF_2;STRINGPREP;BCCRYPTO</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -92,6 +92,7 @@
     <Compile Include="MessageGrabber.cs" />
     <Compile Include="net\BaseSocket.cs" />
     <Compile Include="net\BoshClientSocket.cs" />
+    <Compile Include="net\CertificateVerifier.cs" />
     <Compile Include="net\ClientSocket.cs" />
     <Compile Include="net\dns\Enums.cs" />
     <Compile Include="net\dns\InvalidResponseException.cs" />
@@ -108,6 +109,8 @@
     <Compile Include="net\PollClientSocket.cs" />
     <Compile Include="net\PollingSocketException.cs" />
     <Compile Include="net\SocketConnectionType.cs" />
+    <Compile Include="net\SslStream.cs" />
+    <Compile Include="net\SynchronousAsyncResult.cs" />
     <Compile Include="PacketGrabber.cs" />
     <Compile Include="PresenceGrabber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -403,6 +406,10 @@
     <None Include="key.snk" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="crypto, Version=1.4.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\crypto.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
