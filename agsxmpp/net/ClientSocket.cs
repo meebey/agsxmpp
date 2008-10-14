@@ -518,6 +518,7 @@ namespace agsXMPP.net
 
             lock (this)
             {
+                // TODO maybe we should notify the user which packets were not sent.
                 m_PendingSend = false;
                 m_SendQueue.Clear();
             }
