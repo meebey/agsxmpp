@@ -516,6 +516,12 @@ namespace agsXMPP.net
 		{
 			base.Disconnect();
 
+            lock (this)
+            {
+                m_PendingSend = false;
+                m_SendQueue.Clear();
+            }
+
 			// return right away if have not created socket
 			if (_socket == null)
 				return;
