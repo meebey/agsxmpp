@@ -216,12 +216,12 @@ namespace agsXMPP.net
                 // IPV6 Support for .NET 2.0
                 if (Socket.OSSupportsIPv6 && (endPoint.AddressFamily == AddressFamily.InterNetworkV6))
                 {
-                    Debug.WriteLine("IPV6");
+                    //Debug.WriteLine("IPV6");
                     _socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);                   
                 }
                 else
                 {
-                    Debug.WriteLine("IPV4");
+                    //Debug.WriteLine("IPV4");
                     _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 }
 #elif NET_11     
@@ -249,8 +249,8 @@ namespace agsXMPP.net
             }			
 		}
 
-		private void EndConnect(IAsyncResult ar)
-		{
+        private void EndConnect(IAsyncResult ar)
+        {
             if (m_ConnectTimedOut)
             {
                 base.FireOnError(new ConnectTimeoutException("Attempt to connect timed out"));
@@ -258,31 +258,33 @@ namespace agsXMPP.net
             else
             {
                 try
-                {
+                { 
                     // stop the timeout timer
                     connectTimeoutTimer.Dispose();
 
                     // pass connection status with event
                     _socket.EndConnect(ar);
-                    
+                                        
                     m_Stream = new NetworkStream(_socket, false);
 
-                    m_NetworkStream = m_Stream;
+                    m_NetworkStream = m_Stream;                        
+                    
 #if SSL || MONOSSL
                     if (m_SSL)
                         InitSSL();
 #endif
+
                     FireOnConnect();
 
                     // Setup Receive Callback
                     this.Receive();
                 }
                 catch (Exception ex)
-                {                   
+                {
                     base.FireOnError(ex);
                 }
             }
-		}
+        }		
 
         /// <summary>
         /// Connect Timeout Timer Callback
@@ -303,8 +305,7 @@ namespace agsXMPP.net
 		public override void StartTls()
 		{
 			base.StartTls();
-
-			//Mono.Security.Protocol.Tls.SecurityProtocolType protocol = Mono.Security.Protocol.Tls.SecurityProtocolType.Tls;
+			
             SslProtocols protocol = SslProtocols.Tls;
 			InitSSL(protocol);
 		}           
@@ -320,8 +321,7 @@ namespace agsXMPP.net
         /// <summary>
 		/// 
 		/// </summary>
-		/// <param name="protocol"></param>
-		//private void InitSSL(Mono.Security.Protocol.Tls.SecurityProtocolType protocol)
+		/// <param name="protocol"></param>		
         private void InitSSL(SslProtocols protocol)
 		{            
 			m_SSLStream = new SslStream(
@@ -558,7 +558,7 @@ namespace agsXMPP.net
 		/// Send data to the server.
 		/// </summary>
 		public override void Send(byte[] bData)
-		{
+		{            
             lock (this)
             {
                 try
@@ -583,26 +583,27 @@ namespace agsXMPP.net
                     // http://forums.microsoft.com/MSDN/ShowPost.aspx?PostID=124213&SiteID=1
                     if (m_PendingSend)
                     {
-                        m_SendQueue.Enqueue(bData);                        
+                        m_SendQueue.Enqueue(bData);
                     }
                     else
                     {
-                        m_PendingSend = true;                        
+                        m_PendingSend = true;
                         try
-                        { 
-                            m_NetworkStream.BeginWrite(bData, 0, bData.Length, new AsyncCallback(EndSend), null);
-                        }
-                        catch(Exception)
-                        {
+                        {                                                        
+                            m_NetworkStream.BeginWrite(bData, 0, bData.Length, new AsyncCallback(EndSend), null);                            
+                        }                        
+                        catch (Exception)
+                        {                            
                             Disconnect();
                         }
                     }
                 }
                 catch (Exception)
                 {
-                    
+
                 }
             }
+            
 		}
 
 		/// <summary>
@@ -610,12 +611,12 @@ namespace agsXMPP.net
 		/// </summary>
 		private void Receive()
 		{			
-			m_NetworkStream.BeginRead(m_ReadBuffer, 0, BUFFERSIZE, new AsyncCallback(EndReceive), null);
+            m_NetworkStream.BeginRead(m_ReadBuffer, 0, BUFFERSIZE, new AsyncCallback(EndReceive), null);
 		}
 
 		private void EndReceive(IAsyncResult ar)
 		{
-			try
+            try
 			{
 				int nBytes;
 				nBytes = m_NetworkStream.EndRead(ar);

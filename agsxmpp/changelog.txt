@@ -1,3 +1,9 @@
+version 1.1
+============
+- added TLS for Compact Framework
+- bugfix in clientsocket.cs which caused reconnect problems in some cases
+- some minor bugfixes
+
 version 1.0
 ============
 - added XEP-0153: vCard-Based Avatars

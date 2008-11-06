@@ -724,6 +724,12 @@ namespace agsXMPP
                 // get the machine's default DNS servers
                 string[] dnsServers = IPConfigurationInformation.DnsServers;
 
+                if (dnsServers[0] == "")
+                {
+                    FireOnError(this, new Exception("No DNS Servers found"));
+                    return;
+                }
+
                 // Take the 1st DNS Server for our query
                 IPAddress dnsServer = IPAddress.Parse(dnsServers[0]);
 

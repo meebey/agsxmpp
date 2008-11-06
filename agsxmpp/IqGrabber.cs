@@ -48,7 +48,11 @@ namespace agsXMPP
         public IqGrabber(XmppComponentConnection conn)
         {
             m_connection = conn;
-            conn.OnIq += new agsXMPP.protocol.component.IqHandler(OnIq);
+#if MONOSSL
+            conn.OnIq += new agsXMPP.protocol.component.IqHandler(OnIqComponent);
+#else
+			conn.OnIq += new agsXMPP.protocol.component.IqHandler(OnIq);
+#endif
         }        
         
 #if !CF
@@ -66,6 +70,12 @@ namespace agsXMPP
         }
 #endif 
 		
+#if MONOSSL
+		private void OnIqComponent(object sender, agsXMPP.protocol.component.IQ iq)
+		{
+			OnIq(sender, iq);
+		}
+#endif
 
 		/// <summary>
 		/// An IQ Element is received. Now check if its one we are looking for and
