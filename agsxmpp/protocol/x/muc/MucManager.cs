@@ -1559,7 +1559,7 @@ namespace agsXMPP.protocol.x.muc
             iq.Type = IqType.set;
             iq.To = room;
 
-            Destroy destroy = new Destroy();
+            owner.Destroy destroy = new owner.Destroy();
 
             if (reason != null)
                 destroy.Reason = reason;

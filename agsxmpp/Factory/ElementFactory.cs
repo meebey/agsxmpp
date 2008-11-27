@@ -202,7 +202,8 @@ namespace agsXMPP.Factory
             AddElementType("query",             Uri.MUC_ADMIN,              typeof(agsXMPP.protocol.x.muc.iq.admin.Admin));
             AddElementType("item",              Uri.MUC_ADMIN,              typeof(agsXMPP.protocol.x.muc.iq.admin.Item));
             AddElementType("query",             Uri.MUC_OWNER,              typeof(agsXMPP.protocol.x.muc.iq.owner.Owner));
-            AddElementType("destroy",           Uri.MUC_OWNER,              typeof(agsXMPP.protocol.x.muc.Destroy));
+            AddElementType("destroy",           Uri.MUC_OWNER,              typeof(agsXMPP.protocol.x.muc.owner.Destroy));
+            AddElementType("destroy",           Uri.MUC_USER,               typeof(agsXMPP.protocol.x.muc.user.Destroy));
             
 
             //Jabber RPC JEP 0009            
