@@ -104,8 +104,8 @@ namespace agsXMPP.protocol.extensions.bookmarks
         /// </summary>
         public string Nickname
         {
-            get { return GetTag("nickname"); }
-            set { SetTag("nickname", value); }
+            get { return GetTag("nick"); }
+            set { SetTag("nick", value); }
         }
 
         /// <summary>
