@@ -1,3 +1,9 @@
+version 1.2
+- added agsXMPP.protocol.x.muc.user.Destroy (see: http://forum.ag-software.de/forum.php?req=thread&postid=3663&nocount=1)
+- fixed a bug in clientsocket which can cause reconnect problems under some conditions
+- fixed Nickname bug in agsXMPP.protocol.extensions.bookmarks.Conference
+- added  new constructor to XmppClientConnenction
+
 version 1.1
 ============
 - added TLS for Compact Framework

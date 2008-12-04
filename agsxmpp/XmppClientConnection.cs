@@ -556,11 +556,34 @@ namespace agsXMPP
 			base.SocketConnectionType = type;
 		}
 
+        /// <summary>
+        /// create a new XmppClientConnection with the Given JabberId and password
+        /// </summary>
+        /// <param name="jid">JabbeId (user@example.com)</param>
+        /// <param name="pass">password</param>
+        public XmppClientConnection(Jid jid, string pass)
+            : this()
+        {
+            base.Server     = jid.Server;
+            this.Username   = jid.User;
+            this.Password   = pass;
+        }
+
+        /// <summary>
+        /// create a new XmppClientConnection with the given server
+        /// Username and Password gets set later
+        /// </summary>
+        /// <param name="server"></param>
 		public XmppClientConnection(string server) : this()
 		{
 			base.Server = server;
 		}
 
+        /// <summary>
+        /// create a new XmppClientConnection with the given server and port number
+        /// Username and Password gets set later
+        /// </summary>
+        /// <param name="server"></param>
 		public XmppClientConnection(string server, int port) : this(server)
 		{
 			base.Port = port;
