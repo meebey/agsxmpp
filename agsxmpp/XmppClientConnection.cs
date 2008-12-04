@@ -557,9 +557,9 @@ namespace agsXMPP
 		}
 
         /// <summary>
-        /// create a new XmppClientConnection with the Given JabberId and password
+        /// create a new XmppClientConnection with the given JabberId and password
         /// </summary>
-        /// <param name="jid">JabbeId (user@example.com)</param>
+        /// <param name="jid">JabberId (user@example.com)</param>
         /// <param name="pass">password</param>
         public XmppClientConnection(Jid jid, string pass)
             : this()

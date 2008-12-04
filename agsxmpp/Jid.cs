@@ -364,8 +364,20 @@ namespace agsXMPP
 			if (comparer.Compare(other, this) == 0) 
 				return true;
 			else
-				return false;           
-		}
+				return false;
+        }
+
+        #region << implicit operators >>
+        static public implicit operator Jid(string value)
+        {
+            return new Jid(value);
+        }
+
+        static public implicit operator string(Jid jid)
+        {
+            return jid.ToString();
+        }
+        #endregion
 
         #region IComparable Members
         public int CompareTo(object obj)
