@@ -108,7 +108,7 @@ namespace agsXMPP.net
         private const int       OFFSET_WAIT         = 5000; 
         
         private string[]        Keys;                                   // Array of keys
-        private int             waitingRequests = 0;                    // currently active (waiting) WebRequests
+        private int             activeRequests = 0;                    // currently active (waiting) WebRequests
         private int             CurrentKeyIdx;                          // index of the currect key
         private Queue           m_SendQueue     = new Queue();          // Queue for stanzas to send
         private bool            streamStarted   = false;                // is the stream started? received stream header?
@@ -122,6 +122,7 @@ namespace agsXMPP.net
         private long            rid;
         private bool            restart         = false;                // stream state, are we currently restarting the stream?
         private string          sid;
+        private bool            requestIsTerminating = false;
 
         private int webRequestId = 1;
         
@@ -380,7 +381,7 @@ namespace agsXMPP.net
 
             body.SetAttribute("xmpp:xmlns", "urn:xmpp:xbosh");            
 
-            waitingRequests++;
+            activeRequests++;
 
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(Address);
             
@@ -475,9 +476,9 @@ namespace agsXMPP.net
                 rs.Close();
                 resp.Close();
 
-                waitingRequests--;
+                activeRequests--;
 
-                if (waitingRequests == 0)
+                if (activeRequests == 0)
                     StartWebRequest();                
             }
         }
@@ -576,12 +577,27 @@ namespace agsXMPP.net
                 m_SendQueue.Enqueue(data);
             }
 
-            if (waitingRequests <= 1)
-            {                
-                StartWebRequest();
-            }
+            CheckDoRequest();
+            return;
         }
         #endregion
+
+        private void CheckDoRequest()
+        {
+            /*
+             * requestIsTerminating is true when a webrequest is ending
+             * when the requests ends a new request gets started immedialtely,
+             * so we don't have to create another request in the case
+             */
+            if (!requestIsTerminating)
+                Request();
+        }
+
+        private void Request()
+        {
+            if (activeRequests < 2)
+                StartWebRequest();
+        }
 
         private string BuildPostData()
         {
@@ -649,7 +665,7 @@ namespace agsXMPP.net
                 webRequestId++;
             }           
                       
-            waitingRequests++;
+            activeRequests++;
 
             lastSend = DateTime.Now;
             
@@ -718,7 +734,7 @@ namespace agsXMPP.net
 
                 if (state.Aborted)
                 {
-                    waitingRequests--;
+                    activeRequests--;
                     StartWebRequest(true, state.Output);
                 }
                 else
@@ -738,7 +754,7 @@ namespace agsXMPP.net
             catch (Exception ex)
             {
                 //Console.WriteLine(ex.Message);
-                waitingRequests--;
+                activeRequests--;
 
                 WebRequestState state = ar.AsyncState as WebRequestState;
                 StartWebRequest(true, state.Output);
@@ -777,6 +793,7 @@ namespace agsXMPP.net
         {
             try
             {
+                requestIsTerminating = true;
                 // grab the custom state object
                 WebRequestState state = (WebRequestState)ar.AsyncState;
                 
@@ -808,7 +825,8 @@ namespace agsXMPP.net
                     }
                     catch (WebException ex)
                     {
-                        waitingRequests--;
+                        activeRequests--;
+                        requestIsTerminating = false;
                         if (ex.Response == null)
                         {
                             StartWebRequest();
@@ -832,7 +850,8 @@ namespace agsXMPP.net
                     // sending any session errors as specially-formatted identifiers.
                     if (resp.StatusCode != HttpStatusCode.OK)
                     {
-                        waitingRequests--;
+                        activeRequests--;
+                        requestIsTerminating = false;
                         if (resp.StatusCode == HttpStatusCode.NotFound)
                         {
                             //Console.WriteLine("Not Found");
@@ -888,10 +907,13 @@ namespace agsXMPP.net
                 rs.Close();
                 resp.Close();
 
-                waitingRequests--;
+                activeRequests--;
+                requestIsTerminating = false;
 
-                if (waitingRequests == 0 && !terminated)
-                {
+                //if (activeRequests == 0 && !terminated)
+                if ( (activeRequests == 0 && !terminated)
+                    || (activeRequests == 1 && m_SendQueue.Count > 0) )
+                {                    
                     StartWebRequest();
                 }
             }

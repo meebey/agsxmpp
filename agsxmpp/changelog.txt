@@ -4,6 +4,7 @@ version 1.2
 - fixed Nickname bug in agsXMPP.protocol.extensions.bookmarks.Conference
 - added  new constructor to XmppClientConnenction
 - added implicit operators to Jid class
+- fixed a race condition in Bosh
 
 version 1.1
 ============
