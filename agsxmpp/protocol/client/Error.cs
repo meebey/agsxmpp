@@ -336,25 +336,23 @@ namespace agsXMPP.protocol.client
 		{
             this.Namespace  = Uri.CLIENT;
 			this.TagName    = "error";
-		}
+        }
 
-
+        #region << Obsolete Constructors >>
+        [Obsolete("Please don't use old Jabber style errors. Use XMPP ErrorCondition instead")]
 		public Error(int code) : this()
 		{			
 			this.SetAttribute("code", code.ToString());
 		}
 
-		public Error(ErrorCode code) : this()
-		{			
-			this.SetAttribute("code", (int) code);
-		}
+        [Obsolete("Please don't use old Jabber style errors. Use XMPP ErrorCondition instead")]
+        public Error(ErrorCode code) : this()
+        {
+            this.SetAttribute("code", (int)code);
+        }
+        #endregion
 
-		public Error(ErrorType type) : this()
-		{
-			Type = type;
-		}
-
-		/// <summary>
+        /// <summary>
 		/// Creates an error Element according the the condition
 		/// The type attrib as added automatically as decribed in the XMPP specs
 		/// This is the prefered way to create error Elements
@@ -368,6 +366,12 @@ namespace agsXMPP.protocol.client
         public Error(ErrorCondition condition, string text) : this(condition)
         {
             ErrorText = text;
+        }
+
+        public Error(ErrorType type)
+            : this()
+        {
+            Type = type;
         }
 
         public Error(ErrorType type, ErrorCondition condition) : this(type)
