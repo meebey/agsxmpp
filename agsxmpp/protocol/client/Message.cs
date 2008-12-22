@@ -252,6 +252,9 @@ namespace agsXMPP.protocol.client
             }
             set
             {
+                // set type automatically to error
+                Type = MessageType.error;
+
                 if (HasTag(typeof(agsXMPP.protocol.client.Error)))
                     RemoveTag(typeof(agsXMPP.protocol.client.Error));
 

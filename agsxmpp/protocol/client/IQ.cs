@@ -114,6 +114,9 @@ namespace agsXMPP.protocol.client
             }
             set
             {
+                // set type automatically to error
+                Type = IqType.error;
+
                 if (HasTag(typeof(agsXMPP.protocol.client.Error)))
                     RemoveTag(typeof(agsXMPP.protocol.client.Error));
 

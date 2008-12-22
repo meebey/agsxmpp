@@ -324,6 +324,7 @@ namespace agsXMPP.sasl.DigestMD5
 		/// <returns></returns>
 		private string AddQuotes(string s)
 		{
+             s = s.Replace(@"\", @"\\");
 			string quote = "\"";
 			return quote + s + quote;
 		}
