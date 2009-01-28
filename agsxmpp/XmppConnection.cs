@@ -104,7 +104,7 @@ namespace agsXMPP
 		private		BaseSocket				m_ClientSocket			    = null;
 		private		StreamParser			m_StreamParser			    = null;
 		private		SocketConnectionType	m_SocketConnectionType	    = SocketConnectionType.Direct;
-        private     bool                    m_AutoResolveConnectServer  = false;
+        private     bool                    m_AutoResolveConnectServer  = true;
         private     int                     m_KeepAliveInterval         = 120;
         private     bool                    m_KeepAlive                 = true;
 		/// <summary>

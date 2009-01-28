@@ -118,7 +118,7 @@ namespace agsXMPP.net
         private DateTime        lastSend        = DateTime.MinValue;    // DateTime of the last activity/response
              
         private bool            m_KeepAlive     = true;
-        
+                
         private long            rid;
         private bool            restart         = false;                // stream state, are we currently restarting the stream?
         private string          sid;
@@ -367,6 +367,9 @@ namespace agsXMPP.net
              *  xmpp:xmlns='urn:xmpp:xbosh' 
              *  xmpp:version='1.0'/>
              */
+            //window='5' content='text/xml; charset=utf-8'
+            //body.SetAttribute("window", "5");
+            //body.SetAttribute("content", "text/xml; charset=utf-8");
 
             body.Version        = BOSH_VERSION;
             body.XmppVersion    = "1.0";
@@ -527,7 +530,7 @@ namespace agsXMPP.net
             Init();
             FireOnConnect();
 
-            RequestBoshSession();
+            RequestBoshSession();            
         }
 
         public override void Disconnect()

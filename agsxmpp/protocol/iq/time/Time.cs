@@ -26,20 +26,29 @@ using agsXMPP.Xml.Dom;
 namespace agsXMPP.protocol.iq.time
 {
 
-	// Send:<iq type='get' id='MX_7' to='jfrankel@coversant.net/SoapBox'>
-	//			<query xmlns='jabber:iq:time'></query>
-	//		</iq>
-	//
-	// Recv:<iq from="jfrankel@coversant.net/SoapBox" id="MX_7" to="gnauck@myjabber.net/Office" type="result">
-	//			<query xmlns="jabber:iq:time">
-	//				<utc>20050125T00:06:15</utc>
-	//				<display>Tuesday, January 25, 2005 12:06:15 AM</display>	
-	//				<tz>W. Europe Standard Time</tz>
-	//			</query>
-	//		</iq> 
+	/*
+     <iq type='get'
+        from='romeo@montague.net/orchard'
+        to='juliet@capulet.com/balcony'
+        id='time_1'>
+      <query xmlns='jabber:iq:time'/>
+     </iq>
 
+	 <iq type='result'
+        from='juliet@capulet.com/balcony'
+        to='romeo@montague.net/orchard'
+        id='time_1'>
+      <query xmlns='jabber:iq:time'>
+        <utc>20020910T17:58:35</utc>
+        <tz>MDT</tz>
+        <display>Tue Sep 10 12:58:35 2002</display>
+      </query>
+     </iq>
+     */
+    
+     
 	/// <summary>
-	/// Zusammenfassung für Time.
+    /// XEP-0090: Entity Time
 	/// </summary>
 	public class Time : Element
 	{
@@ -64,8 +73,7 @@ namespace agsXMPP.protocol.iq.time
 
 		/// <summary>
 		/// Timezone
-		/// </summary>
-		//TODO: return System.TimeZone?
+		/// </summary>		
 		public string Tz
 		{			
 			get 

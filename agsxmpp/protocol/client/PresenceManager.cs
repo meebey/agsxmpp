@@ -36,7 +36,7 @@ namespace agsXMPP.protocol.client
 		{
             m_connection = con;			
 		}
-				
+		        
 		/// <summary>
         /// Subscribe to a contact
 		/// </summary>
@@ -50,7 +50,6 @@ namespace agsXMPP.protocol.client
 
 			m_connection.Send(pres);
 		}
-
         
         /// <summary>        
         /// Subscribe to a contact
@@ -66,8 +65,7 @@ namespace agsXMPP.protocol.client
 
             m_connection.Send(pres);
         }
-
-
+        
         /// <summary>
         /// Unsubscribe from a contact
         /// </summary>

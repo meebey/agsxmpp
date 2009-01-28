@@ -9,6 +9,8 @@ version 1.2
 - added Errortext property to Error class
 - set type automatically to error when an error child gets added
 - fixed sasl DIGESTMD5 error with escaped jids
+- added some more generic functions to Element
+- AutoResolveConnectServer is true by default now
 
 version 1.1
 ============

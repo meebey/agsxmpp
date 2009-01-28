@@ -23,6 +23,7 @@ using System;
 
 using agsXMPP.protocol.extensions.primary;
 using agsXMPP.protocol.extensions.nickname;
+using agsXMPP.protocol.extensions.caps;
 
 namespace agsXMPP.protocol.client
 {
@@ -211,5 +212,22 @@ namespace agsXMPP.protocol.client
                     this.AddChild(value);
             }
         }
+
+#if NET_2
+        public Capabilities Capabilities
+        {
+            get
+            {
+                return SelectSingleElement<Capabilities>();
+            }
+            set
+            {
+                RemoveTag<Capabilities>();
+
+                if (value != null)
+                    this.AddChild(value);
+            }
+        }
+#endif
 	}
 }

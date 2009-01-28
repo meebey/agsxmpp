@@ -534,6 +534,18 @@ namespace agsXMPP.Xml.Dom
 				return false;
 		}
 
+#if NET_2
+        public bool HasTag<T>() where T : Element
+        {
+            return SelectSingleElement<T>() != null;
+        }
+
+        public bool HasTagt<T>(bool traverseChildren) where T : Element
+        {
+            return this.SelectSingleElement<T>(traverseChildren) != null;
+        }
+#endif
+
 		public bool HasTag(System.Type type, bool traverseChildren)
 		{
 			Element tag = this._SelectElement(this, type, traverseChildren);
@@ -600,6 +612,20 @@ namespace agsXMPP.Xml.Dom
 			else
 				return false;
 		}
+
+#if NET_2
+        public bool RemoveTag<T>() where T : Element
+        {
+            Element tag = SelectSingleElement<T>();
+            if (tag != null)
+            {
+                tag.Remove();
+                return true;
+            }
+            else
+                return false;
+        }
+#endif
 
         /// <summary>
         /// Removes all Tags of the given type. Doesnt traverse the tree
