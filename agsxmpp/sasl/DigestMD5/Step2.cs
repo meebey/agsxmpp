@@ -324,8 +324,11 @@ namespace agsXMPP.sasl.DigestMD5
 		/// <returns></returns>
 		private string AddQuotes(string s)
 		{
-             s = s.Replace(@"\", @"\\");
-			string quote = "\"";
+            // fixed, s can be null (eg. for realm in ejabberd)
+            if (s != null && s.Length > 0)
+                s = s.Replace(@"\", @"\\");
+			
+            string quote = "\"";
 			return quote + s + quote;
 		}
 	}

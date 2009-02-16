@@ -157,8 +157,8 @@ namespace agsXMPP.Factory
             AddElementType("error",             Uri.ACCEPT,                 typeof(agsXMPP.protocol.component.Error));
 
 			//Extensions (JEPS)
-			AddElementType("headers",			Uri.SHIM,					typeof(agsXMPP.protocol.extensions.shim.Header));
-			AddElementType("header",			Uri.SHIM,					typeof(agsXMPP.protocol.extensions.shim.Headers));
+			AddElementType("header",			Uri.SHIM,					typeof(agsXMPP.protocol.extensions.shim.Header));
+			AddElementType("headers",			Uri.SHIM,					typeof(agsXMPP.protocol.extensions.shim.Headers));
 			AddElementType("roster",			Uri.ROSTER_DELIMITER,		typeof(agsXMPP.protocol.iq.roster.Delimiter));
 			AddElementType("p",					Uri.PRIMARY,				typeof(agsXMPP.protocol.extensions.primary.Primary));
             AddElementType("nick",              Uri.NICK,                   typeof(agsXMPP.protocol.extensions.nickname.Nickname));
