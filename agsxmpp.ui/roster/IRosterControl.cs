@@ -1,6 +1,6 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *																					 *
- * Copyright (c) 2005 by AG-Software												 *
+ * Copyright (c) 2005-2009 by AG-Software												 *
  * All Rights Reserved.																 *
  *																					 *
  * You should have received a copy of the AG-Software Shared Source License			 *
