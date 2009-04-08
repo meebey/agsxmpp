@@ -50,6 +50,7 @@
     <FileAlignment>512</FileAlignment>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <DocumentationFile>bin\CF2\Release\agsXMPP.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Collections\BareJidComparer.cs" />
