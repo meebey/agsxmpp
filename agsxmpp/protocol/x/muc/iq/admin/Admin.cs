@@ -55,9 +55,9 @@ namespace agsXMPP.protocol.x.muc.iq.admin
         }
 
         /// <summary>
-        /// 
+        /// Adds the items.
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="items">The items.</param>
         public void AddItems(Item[] items)
         {
             foreach (Item itm in items)

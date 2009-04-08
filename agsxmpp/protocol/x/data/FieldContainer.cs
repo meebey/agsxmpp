@@ -31,6 +31,9 @@ namespace agsXMPP.protocol.x.data
     /// </summary>
     public abstract class FieldContainer : Element
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldContainer"/> class.
+        /// </summary>
         public FieldContainer()
         {
         }

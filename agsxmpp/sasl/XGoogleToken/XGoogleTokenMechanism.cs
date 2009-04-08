@@ -85,12 +85,12 @@ namespace agsXMPP.sasl.XGoogleToken
                         
             request.Method          = METHOD;
             request.ContentType     = CONTENT_TYPE;
-/*            
+
 #if CF || CF_2
             //required for bug workaround
             request.AllowWriteStreamBuffering = true; 
 #endif
-*/
+
             request.BeginGetRequestStream(new AsyncCallback(OnGetClientAuthRequestStream), request);
         }
 

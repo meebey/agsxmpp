@@ -75,6 +75,7 @@ namespace agsXMPP.protocol.x.muc
         /// </summary>
         /// <param name="to">The Jid of the contact to invite</param>
         /// <param name="room">The Jid of the chatroom</param>
+        /// <param name="reason">The reason.</param>
         public void Invite(Jid to, Jid room, string reason)
         {
             Invite(new Jid[] { to }, room, reason);
@@ -410,7 +411,7 @@ namespace agsXMPP.protocol.x.muc
          */
 
         /// <summary>
-        /// Kick a accupant
+        /// Kick a occupant
         /// A moderator has permissions kick a visitor or participant from a room.
         /// The kick is normally performed based on the occupant's room nickname (though it MAY be based on the full JID)
         /// and is completed by setting the role of a participant or visitor to a value of "none".
@@ -423,7 +424,7 @@ namespace agsXMPP.protocol.x.muc
         }
 
         /// <summary>
-        /// Kick a accupant
+        /// Kick a occupant
         /// A moderator has permissions kick a visitor or participant from a room.
         /// The kick is normally performed based on the occupant's room nickname (though it MAY be based on the full JID)
         /// and is completed by setting the role of a participant or visitor to a value of "none".
@@ -438,7 +439,7 @@ namespace agsXMPP.protocol.x.muc
 
 
         /// <summary>
-        /// Kick a accupant
+        /// Kick a occupant
         /// A moderator has permissions kick a visitor or participant from a room.
         /// The kick is normally performed based on the occupant's room nickname (though it MAY be based on the full JID)
         /// and is completed by setting the role of a participant or visitor to a value of "none".
@@ -453,7 +454,7 @@ namespace agsXMPP.protocol.x.muc
         }
 
         /// <summary>
-        /// Kick a accupant
+        /// Kick a occupant
         /// A moderator has permissions kick a visitor or participant from a room.
         /// The kick is normally performed based on the occupant's room nickname (though it MAY be based on the full JID)
         /// and is completed by setting the role of a participant or visitor to a value of "none".
@@ -1394,16 +1395,31 @@ namespace agsXMPP.protocol.x.muc
                 
         */
 
+        /// <summary>
+        /// Requests the moderator list.
+        /// </summary>
+        /// <param name="room">The room.</param>
         public void RequestModeratorList(Jid room)
         {
             RequestModeratorList(room, null, null);
         }
 
+        /// <summary>
+        /// Requests the moderator list.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <param name="cb">The cb.</param>
         public void RequestModeratorList(Jid room, IqCB cb)
         {
             RequestModeratorList(room, cb, null);
         }
 
+        /// <summary>
+        /// Requests the moderator list.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <param name="cb">The cb.</param>
+        /// <param name="cbArg">The cb arg.</param>
         public void RequestModeratorList(Jid room, IqCB cb, object cbArg)
         {
             RequestList(Role.moderator, room, cb, cbArg);
@@ -1658,7 +1674,7 @@ namespace agsXMPP.protocol.x.muc
 
         private void ChangeAffiliation(Affiliation affiliation, Jid room, Jid user, string nickname, string reason, IqCB cb, object cbArg)
         {
-            AdminIq aIq = new AdminIq();
+            var aIq = new AdminIq();
             aIq.To = room;
             aIq.Type = IqType.set;
 
