@@ -154,6 +154,7 @@ namespace agsXMPP.net
 #endif
         private int             m_Hold          = 1;    // should be 1
         private int             m_MaxPause      = 0;
+        private WebProxy        m_Proxy         = null;
                 
         public Jid To
         {
@@ -224,6 +225,12 @@ namespace agsXMPP.net
         public bool SupportsSessionPausing
         {
             get { return !(m_MaxPause == 0); }
+        }
+
+        public WebProxy Proxy
+        {
+            get { return m_Proxy; }
+            set { m_Proxy = value; }
         }
         #endregion
 
@@ -386,7 +393,7 @@ namespace agsXMPP.net
 
             activeRequests++;
 
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(Address);
+            HttpWebRequest req = (HttpWebRequest) CreateWebrequest(Address);
             
             WebRequestState state = new WebRequestState(req);
             state.Started           = DateTime.Now;
@@ -397,7 +404,7 @@ namespace agsXMPP.net
             req.ContentType     = CONTENT_TYPE;
             req.Timeout         = m_Wait * 1000;
             req.KeepAlive       = m_KeepAlive;
-            req.ContentLength   = state.Output.Length;
+            req.ContentLength   = Encoding.UTF8.GetBytes(state.Output).Length; // state.Output.Length;
 
             try
             {
@@ -671,8 +678,8 @@ namespace agsXMPP.net
             activeRequests++;
 
             lastSend = DateTime.Now;
-            
-            HttpWebRequest req = (HttpWebRequest) WebRequest.Create(Address);
+
+            HttpWebRequest req = (HttpWebRequest) CreateWebrequest(Address);;
 
             WebRequestState state = new WebRequestState(req);
             state.Started = DateTime.Now;
@@ -926,6 +933,22 @@ namespace agsXMPP.net
                 //Console.WriteLine(ex.Message);
             }
         }
+
+        private WebRequest CreateWebrequest(string address)
+        {
+            WebRequest webReq = WebRequest.Create(address);
+#if !CF_2
+            if (m_Proxy != null)
+                webReq.Proxy = m_Proxy;
+            else
+            {
+                if (webReq.Proxy != null)
+                    webReq.Proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
+            }
+            
+#endif
+            return webReq;
+        } 
 
         private void TerminateBoshSession()
         {
