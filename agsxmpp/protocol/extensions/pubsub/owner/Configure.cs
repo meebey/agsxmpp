@@ -19,8 +19,6 @@
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
 
-using System;
-
 using agsXMPP.protocol.x.data;
 
 using agsXMPP.Xml.Dom;
@@ -32,13 +30,13 @@ namespace agsXMPP.protocol.extensions.pubsub.owner
         #region << Constructor >>
         public Configure()
         {
-            this.TagName    = "configure";
-            this.Namespace  = Uri.PUBSUB_OWNER;
+            TagName    = "configure";
+            Namespace  = Uri.PUBSUB_OWNER;
         }
 
-        public Configure(string node)
+        public Configure(string node) : this()
         {
-            this.Node = node;
+            Node = node;
         }
         #endregion
 
@@ -63,7 +61,7 @@ namespace agsXMPP.protocol.extensions.pubsub.owner
                     RemoveTag(typeof(Data));
 
                 if (value != null)
-                    this.AddChild(value);
+                    AddChild(value);
             }
         }
     }
