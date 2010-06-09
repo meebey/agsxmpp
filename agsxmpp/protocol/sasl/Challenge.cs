@@ -19,8 +19,6 @@
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
 
-using System;
-
 using agsXMPP.Xml.Dom;
 
 //<challenge xmlns='urn:ietf:params:xml:ns:xmpp-sasl'>
@@ -36,8 +34,8 @@ namespace agsXMPP.protocol.sasl
 	{
 		public Challenge()
 		{
-			this.TagName	= "challenge";
-			this.Namespace	= Uri.SASL;
+			TagName	= "challenge";
+			Namespace	= Uri.SASL;
 		}		
 	}
 }

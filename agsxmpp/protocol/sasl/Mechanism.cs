@@ -120,8 +120,8 @@ namespace agsXMPP.protocol.sasl
 			{
                 //case "KERBEROS_V4":
                 //    return MechanismType.KERBEROS_V4;
-                //case "GSSAPI":
-                //    return MechanismType.GSSAPI;
+                case "GSSAPI":
+                    return MechanismType.GSSAPI;
                 //case "SKEY":
                 //    return MechanismType.SKEY;
                 //case "EXTERNAL":
@@ -223,5 +223,15 @@ namespace agsXMPP.protocol.sasl
 					return null;
 			}
 		}
-	}
+
+        /// <summary>
+        /// Gets or sets the kerberos principal.
+        /// </summary>
+        /// <value>The kerberos proncipal.</value>
+	    public string KerberosPrincipal
+	    {
+            get { return GetAttribute("kerb:principal"); }
+            set { SetAttribute("kerb:principal", value); } 
+	    }
+    }
 }

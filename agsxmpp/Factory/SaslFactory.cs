@@ -24,12 +24,12 @@ using System.Collections;
 
 using agsXMPP.sasl;
 using agsXMPP.sasl.Plain;
-#if !SL
 using agsXMPP.sasl.DigestMD5;
-#endif
 using agsXMPP.sasl.Anonymous;
 using agsXMPP.sasl.XGoogleToken;
-
+#if WIN32 && EP
+using agsXMPP.sasl.Gssapi;
+#endif
 
 namespace agsXMPP.Factory
 {
@@ -49,6 +49,9 @@ namespace agsXMPP.Factory
 			AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.DIGEST_MD5),	    typeof(DigestMD5Mechanism));
             AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.ANONYMOUS),       typeof(AnonymousMechanism));
             AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.X_GOOGLE_TOKEN),  typeof(XGoogleTokenMechanism));
+#if WIN32 && EP
+            AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.GSSAPI),          typeof(GssapiMechanism));
+#endif
 		}
 
 

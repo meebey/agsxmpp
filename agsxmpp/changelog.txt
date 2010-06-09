@@ -11,6 +11,7 @@ version 1.2
 - fixed sasl DIGESTMD5 error with escaped jids
 - added some more generic functions to Element
 - AutoResolveConnectServer is true by default now
+- added GSSAPI SASL mechanism (only enterprise version)
 
 version 1.1
 ============

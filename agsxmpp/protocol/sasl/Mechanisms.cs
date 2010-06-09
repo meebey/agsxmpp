@@ -65,5 +65,20 @@ namespace agsXMPP.protocol.sasl
 			}
 			return false;
 		}
+
+        /// <summary>
+        /// Gets the given mechanism.
+        /// </summary>
+        /// <param name="type">The mechanism type.</param>
+        /// <returns></returns>
+        public Mechanism GetMechanism(MechanismType type)
+        {
+            foreach (Mechanism m in GetMechanisms())
+            {
+                if (m.MechanismType == type)
+                    return m;
+            }
+            return null;
+        }
 	}
 }

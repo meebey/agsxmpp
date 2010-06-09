@@ -39,13 +39,20 @@ namespace agsXMPP.protocol.sasl
 	{
 		public Response()
 		{
-			this.TagName	= "response";
-			this.Namespace	= Uri.SASL;
+			TagName	= "response";
+			Namespace	= Uri.SASL;
 		}
 
-		public Response(string text) :this()
+		public Response(string text) 
+            : this()
 		{
-			this.TextBase64	= text;
+			TextBase64	= text;
 		}
+
+        //public Response(byte[] bytes)
+        //    : this()
+        //{
+        //    this.Value = Convert.ToBase64String(bytes);
+        //}
 	}
 }

@@ -27,7 +27,7 @@
     </UpgradeBackupLocation>
     <SignAssembly>true</SignAssembly>
     <OldToolsVersion>2.0</OldToolsVersion>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
   </PropertyGroup>
@@ -55,14 +55,14 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin\Net35\Release\</OutputPath>
+    <OutputPath>bin\Net2\Release\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;SSL;WIN32;NET_2;STRINGPREP</DefineConstants>
-    <DocumentationFile>bin\NET35\Release\agsXMPP.xml</DocumentationFile>
+    <DocumentationFile>bin\NET2\Release\agsXMPP.xml</DocumentationFile>
     <DebugSymbols>false</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -79,9 +79,6 @@
   <ItemGroup>
     <Reference Include="System">
       <Name>System</Name>
-    </Reference>
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data">
       <Name>System.Data</Name>
@@ -620,6 +617,8 @@
     </Compile>
     <Compile Include="protocol\iq\privacy\RuleManager.cs" />
     <Compile Include="protocol\x\vcard_update\VcardUpdate.cs" />
+    <Compile Include="sasl\Gssapi\SSPIHelper.cs" />
+    <Compile Include="sasl\Gssapi\GssapiMechanism.cs" />
     <Compile Include="sasl\SaslEventArgs.cs">
       <SubType>Code</SubType>
     </Compile>

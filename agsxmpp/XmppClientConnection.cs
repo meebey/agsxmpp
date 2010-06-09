@@ -98,7 +98,12 @@ namespace agsXMPP
 		private		bool					m_AutoRoster		= true;
 		private		bool					m_AutoAgents		= true;
         private     bool                    m_AutoPresence      = true;
-           
+
+#if WIN32 && EP
+        private     bool                    m_UseSso            = false;
+        internal    string                  m_KerberosPrincipal;
+#endif
+	  
 		private		bool					m_UseSSL			= false;
 #if (CF || CF_2) && !BCCRYPTO
         private     bool                    m_UseStartTLS       = false;
@@ -282,7 +287,30 @@ namespace agsXMPP
 			set	{ m_AutoAgents = value;	}
 		}
 
-		/// <summary>
+#if WIN32 && EP
+        /// <summary>
+        /// Use Single sign on (GSSAPI/KERBEROS)
+        /// </summary>
+        public bool UseSso
+        {
+            get { return m_UseSso; }
+            set { m_UseSso = value; }
+        }
+
+        /// <summary>
+        /// Gets the kerberos principal.
+        /// </summary>
+        /// <value>The kerberos principal.</value>
+        public string KerberosPrincipal
+        {
+            get { return m_KerberosPrincipal; }
+            set { m_KerberosPrincipal = value; }
+        }
+#endif
+
+	    
+
+        /// <summary>
 		/// use "old style" ssl for this connection (Port 5223).
 		/// </summary>
 		public bool UseSSL
@@ -308,7 +336,7 @@ namespace agsXMPP
 		{
 			get { return m_UseStartTLS; }
 
-#if SSL || MONOSSL || BCCRYPTO
+#if SSL || MONOSSL || BCCRYPTO || CF_2
 			set
 			{
                 // Only one of both can be true
@@ -1387,6 +1415,14 @@ namespace agsXMPP
 				// Stream Features
 				// StartTLS stuff
 				Features f = e as Features;
+#if SSL || MONOSSL || BCCRYPTO || CF_2
+				if (f.SupportsStartTls && m_UseStartTLS)
+				{
+					DoChangeXmppConnectionState(XmppConnectionState.Securing);
+					Send(new StartTls());
+				}
+                else
+#endif
                 if (m_UseCompression &&
                     f.SupportsCompression &&
                     f.Compression.SupportsMethod(CompressionMethod.zlib))
@@ -1395,15 +1431,9 @@ namespace agsXMPP
                     // we support only ZLIB because its a free algorithm without patents
                     // yes ePatents suck                                       
                     DoChangeXmppConnectionState(XmppConnectionState.StartCompression);
-                    this.Send(new Compress(CompressionMethod.zlib));                    
+                    Send(new Compress(CompressionMethod.zlib));                    
                 }
-#if SSL || MONOSSL || BCCRYPTO
-				else if (f.SupportsStartTls && m_UseStartTLS)
-				{
-					DoChangeXmppConnectionState(XmppConnectionState.Securing);
-					this.Send(new StartTls());
-				}
-#endif
+
                 else if (f.SupportsRegistration && m_RegisterAccount)
                 {
                     // Do registration after TLS when possible
@@ -1418,12 +1448,12 @@ namespace agsXMPP
                     }
                 }
             }
-#if SSL || MONOSSL || BCCRYPTO
+#if SSL || MONOSSL || BCCRYPTO || CF_2
             else if ( e.GetType() == typeof (Proceed) )
 			{	
 				StreamParser.Reset();			
 				ClientSocket.StartTls();				
-				SendStreamHeader(false);				
+				SendStreamHeader(false);
 				DoChangeXmppConnectionState(XmppConnectionState.Authenticating);
             }
 #endif

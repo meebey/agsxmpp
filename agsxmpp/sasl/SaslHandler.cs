@@ -20,15 +20,12 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
 
 using System;
-
-using agsXMPP.protocol;
+using System.Diagnostics;
 using agsXMPP.protocol.client;
 using agsXMPP.protocol.iq.bind;
 using agsXMPP.protocol.iq.session;
 using agsXMPP.protocol.sasl;
 using agsXMPP.protocol.stream;
-
-using agsXMPP.sasl;
 
 using agsXMPP.Xml;
 using agsXMPP.Xml.Dom;
@@ -68,13 +65,13 @@ namespace agsXMPP.sasl
 			Dispose(false);
 		}
 		
-		internal void OnStreamElement(object sender, agsXMPP.Xml.Dom.Node e)
+		internal void OnStreamElement(object sender, Node e)
 		{
             if ( m_XmppClient.XmppConnectionState == XmppConnectionState.Securing
                 || m_XmppClient.XmppConnectionState == XmppConnectionState.StartCompression)
                 return;
 
-			if ( e.GetType() == typeof(protocol.stream.Features) )
+			if ( e.GetType() == typeof(Features) )
 			{
 				Features f = e as Features;
 				if (!m_XmppClient.Authenticated)
@@ -92,7 +89,7 @@ namespace agsXMPP.sasl
 					if (OnSaslStart != null)				
 						OnSaslStart(this, args);
 				
-					if (args.Auto == true)
+					if (args.Auto)
 					{	
 						// Library handles the Sasl stuff
 						if (f.Mechanisms!=null)
@@ -103,15 +100,32 @@ namespace agsXMPP.sasl
                                 // This is the only way to connect to GTalk on a unsecure Socket for now
                                 // Secure authentication is done over https requests to pass the
                                 // authentication credentials on a secure connection
-                                args.Mechanism = agsXMPP.protocol.sasl.Mechanism.GetMechanismName(MechanismType.X_GOOGLE_TOKEN);
+                                args.Mechanism = protocol.sasl.Mechanism.GetMechanismName(MechanismType.X_GOOGLE_TOKEN);
                             }
+#if WIN32 && EP
+                            else if (m_XmppClient.UseSso && f.Mechanisms.SupportsMechanism(MechanismType.GSSAPI))
+                            {
+                                args.Mechanism = protocol.sasl.Mechanism.GetMechanismName(MechanismType.GSSAPI);
+                                
+                                //Debug.WriteLine("SaslHandler.OnStreamElement");
+                                //Debug.WriteLine("read KerberosPrincipal");
+
+                                string kerbPrinc = f.Mechanisms.GetMechanism(MechanismType.GSSAPI).KerberosPrincipal;
+                                if (kerbPrinc != null)
+                                m_XmppClient.KerberosPrincipal =
+                                    f.Mechanisms.GetMechanism(MechanismType.GSSAPI).KerberosPrincipal;
+                                
+                                //if (m_XmppClient.KerberosPrincipal != null)
+                                //    Debug.WriteLine("XmppClientConnection.KerberosPrincipal = " + m_XmppClient.KerberosPrincipal);
+                            }
+#endif
 							else if (f.Mechanisms.SupportsMechanism(MechanismType.DIGEST_MD5))
 							{
-								args.Mechanism = agsXMPP.protocol.sasl.Mechanism.GetMechanismName(MechanismType.DIGEST_MD5);
+								args.Mechanism = protocol.sasl.Mechanism.GetMechanismName(MechanismType.DIGEST_MD5);
 							}
 							else if (f.Mechanisms.SupportsMechanism(MechanismType.PLAIN))							
 							{
-								args.Mechanism = agsXMPP.protocol.sasl.Mechanism.GetMechanismName(MechanismType.PLAIN);
+								args.Mechanism = protocol.sasl.Mechanism.GetMechanismName(MechanismType.PLAIN);
 							}
 							else
 							{								
@@ -158,14 +172,14 @@ namespace agsXMPP.sasl
 				}
 								
 			}
-			else if ( e.GetType() == typeof(protocol.sasl.Challenge) )
+			else if ( e.GetType() == typeof(Challenge) )
 			{
 				if (m_Mechanism != null && !m_XmppClient.Authenticated)
 				{
 					m_Mechanism.Parse(e);
 				}			
 			}
-			else if ( e.GetType() == typeof(protocol.sasl.Success) )
+			else if ( e.GetType() == typeof(Success) )
 			{
 				// SASL authentication was successfull
 				if (OnSaslEnd!=null)
@@ -177,7 +191,7 @@ namespace agsXMPP.sasl
 
 				m_XmppClient.Reset();				
 			}
-			else if ( e.GetType() == typeof(protocol.sasl.Failure) )
+			else if ( e.GetType() == typeof(Failure) )
 			{
 				// Authentication failure
 				m_XmppClient.FireOnAuthError(e as Element);
