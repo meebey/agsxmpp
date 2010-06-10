@@ -617,8 +617,6 @@
     </Compile>
     <Compile Include="protocol\iq\privacy\RuleManager.cs" />
     <Compile Include="protocol\x\vcard_update\VcardUpdate.cs" />
-    <Compile Include="sasl\Gssapi\SSPIHelper.cs" />
-    <Compile Include="sasl\Gssapi\GssapiMechanism.cs" />
     <Compile Include="sasl\SaslEventArgs.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -721,6 +719,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="sasl\Gssapi\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
