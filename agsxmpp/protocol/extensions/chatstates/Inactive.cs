@@ -19,9 +19,6 @@
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Text;
-
 using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.extensions.chatstates
@@ -33,12 +30,12 @@ namespace agsXMPP.protocol.extensions.chatstates
     public class Inactive : Element
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Inactive"/> class.
         /// </summary>
         public Inactive()
         {
-            this.TagName    = Chatstate.inactive.ToString(); ;
-            this.Namespace  = Uri.CHATSTATES;
+            TagName    = Chatstate.inactive.ToString();
+            Namespace  = Uri.CHATSTATES;
         }
     }
 }

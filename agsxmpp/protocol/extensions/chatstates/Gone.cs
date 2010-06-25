@@ -19,9 +19,6 @@
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Text;
-
 using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.extensions.chatstates
@@ -34,12 +31,12 @@ namespace agsXMPP.protocol.extensions.chatstates
     public class Gone : Element
     {
         /// <summary>
-        ///        
+        /// Initializes a new instance of the <see cref="Gone"/> class.
         /// </summary>
         public Gone()
         {
-            this.TagName    = Chatstate.gone.ToString(); ;
-            this.Namespace  = Uri.CHATSTATES;
+            TagName    = Chatstate.gone.ToString();
+            Namespace  = Uri.CHATSTATES;
         }
     }
 }

@@ -19,9 +19,6 @@
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Text;
-
 using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.extensions.chatstates
@@ -33,10 +30,13 @@ namespace agsXMPP.protocol.extensions.chatstates
     /// </summary>
     public class Composing : Element
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Composing"/> class.
+        /// </summary>
         public Composing()
         {
-            this.TagName    = Chatstate.composing.ToString(); ;
-            this.Namespace  = Uri.CHATSTATES;
+            TagName    = Chatstate.composing.ToString();
+            Namespace  = Uri.CHATSTATES;
         }
     }
 }

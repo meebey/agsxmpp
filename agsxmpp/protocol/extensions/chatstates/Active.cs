@@ -19,9 +19,6 @@
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Text;
-
 using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.extensions.chatstates
@@ -34,12 +31,12 @@ namespace agsXMPP.protocol.extensions.chatstates
     public class Active : Element
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Active"/> class.
         /// </summary>
         public Active()
         {
-            this.TagName    = Chatstate.active.ToString();
-            this.Namespace  = Uri.CHATSTATES;
+            TagName    = Chatstate.active.ToString();
+            Namespace  = Uri.CHATSTATES;
         }
     }
 }
