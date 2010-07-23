@@ -98,8 +98,7 @@ namespace agsXMPP
 		private		bool					m_AutoRoster		= true;
 		private		bool					m_AutoAgents		= true;
         private     bool                    m_AutoPresence      = true;
-
-#if WIN32 && EP
+#if WIN32
         private     bool                    m_UseSso            = false;
         internal    string                  m_KerberosPrincipal;
 #endif
@@ -273,9 +272,7 @@ namespace agsXMPP
             get { return m_AutoPresence; }
             set { m_AutoPresence = value; }
         }
-
-   
-
+        
 		/// <summary>
         /// If set to true then the Agents are requested automatically after sucessful login. 
         /// Set this property to false if you don't use agents at all, or if you request them manual.
@@ -287,14 +284,21 @@ namespace agsXMPP
 			set	{ m_AutoAgents = value;	}
 		}
 
-#if WIN32 && EP
+#if WIN32
         /// <summary>
         /// Use Single sign on (GSSAPI/KERBEROS)
         /// </summary>
         public bool UseSso
         {
             get { return m_UseSso; }
-            set { m_UseSso = value; }
+            set
+            {
+#if EP
+                m_UseSso = value;
+#else
+                throw new NotImplementedException();
+#endif
+            }
         }
 
         /// <summary>
@@ -307,7 +311,6 @@ namespace agsXMPP
             set { m_KerberosPrincipal = value; }
         }
 #endif
-
 	    
 
         /// <summary>

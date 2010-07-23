@@ -88,11 +88,17 @@ namespace agsXMPP
 			if (iq == null)
 				return;
 
+            // the tracker handles on iq responses, which are either result or error
+            if (iq.Type != IqType.error && iq.Type != IqType.result)
+                return;
+
 			string id = iq.Id;
 			if(id == null)
 				return;
 
-			TrackerData td;
+            
+		    
+            TrackerData td;
 
 			lock (m_grabbing)
 			{
