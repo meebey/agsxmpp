@@ -639,6 +639,7 @@
     <Compile Include="sasl\Plain\PlainMechanism.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="sasl\Scram\ScramSha1Mechanism.cs" />
     <Compile Include="sasl\XGoogleToken\XGoogleTokenMechanism.cs" />
     <Compile Include="Uri.cs">
       <SubType>Code</SubType>

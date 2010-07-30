@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2009 by AG-Software 											 *
+ * Copyright (c) 2003-2010 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -43,15 +43,23 @@ namespace agsXMPP.util
 		public static string Sha1Hash(string pass)
 		{			
 			SHA1 sha = SHA1.Create();
-			byte[] hash = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(pass));            
+			byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(pass));            
 			return HexToString(hash);
 		}
 
 		public static byte[] Sha1HashBytes(string pass)
 		{			
 			SHA1 sha = SHA1.Create();
-			return sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(pass));
+			return sha.ComputeHash(Encoding.UTF8.GetBytes(pass));
 		}
+
+        public static byte[] Sha1HashBytes(byte[] pass)
+        {
+            using (var sha = new SHA1Managed())
+            {
+                return sha.ComputeHash(pass);
+            }
+        }
 #endif
 
 		/// <summary>
@@ -146,6 +154,33 @@ namespace agsXMPP.util
 
 		#endif
 		#endregion
-	
-	}
+
+#if !CF || CF2
+        public static byte[] HMAC(byte[] key, byte[] data)
+        {
+            using (var hmacsha1 = new HMACSHA1(key, true))
+            {
+                byte[] bytes = hmacsha1.ComputeHash(data);
+                return bytes;
+            }
+        }
+
+        public static byte[] HMAC(string key, byte[] data)
+        {
+            return HMAC(Encoding.UTF8.GetBytes(key), data);
+        }
+
+        public static byte[] HMAC(byte[] key, string data)
+        {
+            return HMAC(key, Encoding.UTF8.GetBytes(data));
+        }
+
+        public static byte[] HMAC(string key, string data)
+        {
+            return HMAC(Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(data));
+        }
+
+#endif
+
+    }
 }

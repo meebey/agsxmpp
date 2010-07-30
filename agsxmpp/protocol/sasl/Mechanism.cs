@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2009 by AG-Software 											 *
+ * Copyright (c) 2003-2010 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -80,7 +80,8 @@ namespace agsXMPP.protocol.sasl
 		ISO_9798_M_ECDSA_SHA1,
 		KERBEROS_V5,
 		NMAS_SAMBA_AUTH,
-        X_GOOGLE_TOKEN
+        X_GOOGLE_TOKEN,
+        SCRAM_SHA_1
 	}
 
 	/// <summary>
@@ -164,6 +165,8 @@ namespace agsXMPP.protocol.sasl
                 //    return MechanismType.NMAS_SAMBA_AUTH;				
                 case "X-GOOGLE-TOKEN":
                     return MechanismType.X_GOOGLE_TOKEN;
+                case "SCRAM-SHA-1":
+			        return MechanismType.SCRAM_SHA_1;
                 default:
 					return MechanismType.NONE;
 			}
@@ -219,6 +222,8 @@ namespace agsXMPP.protocol.sasl
 					return "NMAS-SAMBA-AUTH";
                 case MechanismType.X_GOOGLE_TOKEN:
                     return "X-GOOGLE-TOKEN";
+                case MechanismType.SCRAM_SHA_1:
+			        return "SCRAM-SHA-1";
 				default:
 					return null;
 			}

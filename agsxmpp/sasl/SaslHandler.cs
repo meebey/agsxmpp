@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2009 by AG-Software 											 *
+ * Copyright (c) 2003-2010 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -119,6 +119,10 @@ namespace agsXMPP.sasl
                                 //    Debug.WriteLine("XmppClientConnection.KerberosPrincipal = " + m_XmppClient.KerberosPrincipal);
                             }
 #endif
+                            else if (f.Mechanisms.SupportsMechanism(MechanismType.SCRAM_SHA_1))
+                            {
+                                args.Mechanism = protocol.sasl.Mechanism.GetMechanismName(MechanismType.SCRAM_SHA_1);
+                            }
 							else if (f.Mechanisms.SupportsMechanism(MechanismType.DIGEST_MD5))
 							{
 								args.Mechanism = protocol.sasl.Mechanism.GetMechanismName(MechanismType.DIGEST_MD5);

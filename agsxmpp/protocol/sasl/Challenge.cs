@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2009 by AG-Software 											 *
+ * Copyright (c) 2003-2010 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *

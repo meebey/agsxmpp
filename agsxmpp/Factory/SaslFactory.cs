@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2009 by AG-Software 											 *
+ * Copyright (c) 2003-2010 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -26,6 +26,7 @@ using agsXMPP.sasl;
 using agsXMPP.sasl.Plain;
 using agsXMPP.sasl.DigestMD5;
 using agsXMPP.sasl.Anonymous;
+using agsXMPP.sasl.Scram;
 using agsXMPP.sasl.XGoogleToken;
 #if WIN32 && EP
 using agsXMPP.sasl.Gssapi;
@@ -49,6 +50,9 @@ namespace agsXMPP.Factory
 			AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.DIGEST_MD5),	    typeof(DigestMD5Mechanism));
             AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.ANONYMOUS),       typeof(AnonymousMechanism));
             AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.X_GOOGLE_TOKEN),  typeof(XGoogleTokenMechanism));
+#if !CF || CF2
+            AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.SCRAM_SHA_1),     typeof(ScramSha1Mechanism));
+#endif
 #if WIN32 && EP
             AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.GSSAPI),          typeof(GssapiMechanism));
 #endif
