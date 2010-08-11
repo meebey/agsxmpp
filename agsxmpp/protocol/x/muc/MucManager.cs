@@ -78,7 +78,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason">The reason.</param>
         public void Invite(Jid to, Jid room, string reason)
         {
-            Invite(new Jid[] { to }, room, reason);
+            Invite(new Jid[1] { to }, room, reason);
         }
 
         /// <summary>
