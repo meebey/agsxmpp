@@ -457,6 +457,8 @@ namespace agsXMPP.protocol.client
 					return ErrorCondition.JidMalformed;
 				else if (HasTag("not-acceptable"))			// <not-acceptable/> 
 					return ErrorCondition.NotAcceptable;
+                else if (HasTag("not-allowed"))             // <not-allowed/>
+                    return ErrorCondition.NotAllowed;
 				else if (HasTag("not-authorized"))			// <not-authorized/>
 					return ErrorCondition.NotAuthorized;
 				else if (HasTag("not-modified"))            // <not-modified/>

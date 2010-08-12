@@ -71,7 +71,7 @@ namespace agsXMPP.sasl
                 || m_XmppClient.XmppConnectionState == XmppConnectionState.StartCompression)
                 return;
 
-			if ( e.GetType() == typeof(Features) )
+			if (e is Features)
 			{
 				Features f = e as Features;
 				if (!m_XmppClient.Authenticated)
@@ -176,14 +176,14 @@ namespace agsXMPP.sasl
 				}
 								
 			}
-			else if ( e.GetType() == typeof(Challenge) )
+			else if (e is Challenge)
 			{
 				if (m_Mechanism != null && !m_XmppClient.Authenticated)
 				{
 					m_Mechanism.Parse(e);
 				}			
 			}
-			else if ( e.GetType() == typeof(Success) )
+			else if (e is Success)
 			{
 				// SASL authentication was successfull
 				if (OnSaslEnd!=null)
@@ -195,7 +195,7 @@ namespace agsXMPP.sasl
 
 				m_XmppClient.Reset();				
 			}
-			else if ( e.GetType() == typeof(Failure) )
+			else if (e is Failure)
 			{
 				// Authentication failure
 				m_XmppClient.FireOnAuthError(e as Element);

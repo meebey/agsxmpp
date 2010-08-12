@@ -1106,7 +1106,7 @@ namespace agsXMPP
         {
             if (iq.Type != IqType.error)
             {
-                if (iq.Query != null && iq.Query.GetType() == typeof(Register))
+                if (iq.Query != null && iq.Query is Register)
                 {
                     RegisterEventArgs args = new RegisterEventArgs(iq.Query as Register);
                     if (OnRegisterInformation != null)
@@ -1390,7 +1390,7 @@ namespace agsXMPP
 		{
 			base.StreamParserOnStreamElement(sender, e);
 
-			if ( e.GetType() == typeof(IQ) )
+			if (e is IQ)
 			{
 				if (OnIq != null)
 					OnIq(this, e as IQ);
@@ -1403,17 +1403,17 @@ namespace agsXMPP
                         OnRosterIQ(iq);                   
 				}	
 			}
-			else if ( e.GetType() == typeof(Message) )
+			else if (e is Message)
 			{
 				if (OnMessage != null)
 					OnMessage(this, e as Message);
 			}
-			else if ( e.GetType() == typeof(Presence) )
+			else if (e is Presence)
 			{
 				if (OnPresence != null)
 					OnPresence(this, e as Presence);
 			}
-			else if ( e.GetType() == typeof (Features) )
+			else if (e is Features)
 			{
 				// Stream Features
 				// StartTLS stuff
@@ -1452,7 +1452,7 @@ namespace agsXMPP
                 }
             }
 #if SSL || MONOSSL || BCCRYPTO || CF_2
-            else if ( e.GetType() == typeof (Proceed) )
+            else if (e is Proceed)
 			{	
 				StreamParser.Reset();			
 				ClientSocket.StartTls();				
@@ -1460,7 +1460,7 @@ namespace agsXMPP
 				DoChangeXmppConnectionState(XmppConnectionState.Authenticating);
             }
 #endif
-            else if ( e.GetType() == typeof (Compressed) )
+            else if (e is Compressed)
 			{
                 //DoChangeXmppConnectionState(XmppConnectionState.StartCompression);
 				StreamParser.Reset();

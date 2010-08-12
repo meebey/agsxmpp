@@ -82,6 +82,5 @@ namespace agsXMPP.protocol.x.muc.iq.admin
             }
             return items;
         }
-
     }
 }

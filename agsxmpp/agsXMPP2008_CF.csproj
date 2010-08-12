@@ -14,7 +14,7 @@
     <PlatformID>3C41C503-53EF-4c2a-8DD4-A8217CAD115E</PlatformID>
     <OSVersion>4.20</OSVersion>
     <DeployDirSuffix>agsXMPP_PPC_20</DeployDirSuffix>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FormFactorID>
     </FormFactorID>
     <SignAssembly>true</SignAssembly>
@@ -31,7 +31,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\CF2\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CF_2;STRINGPREP;BCCRYPTO</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CF_2;STRINGPREP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -408,10 +408,6 @@
     <None Include="key.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="crypto, Version=1.4.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\crypto.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Data" />

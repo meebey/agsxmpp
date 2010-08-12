@@ -44,7 +44,7 @@ namespace agsXMPP.sasl.DigestMD5
 
 		public override void Parse(Node e)
 		{
-			if ( e.GetType() == typeof(protocol.sasl.Challenge) )
+			if (e is protocol.sasl.Challenge)
 			{
 				protocol.sasl.Challenge c = e as protocol.sasl.Challenge;
 				
