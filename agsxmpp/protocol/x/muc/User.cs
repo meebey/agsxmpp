@@ -91,8 +91,7 @@ namespace agsXMPP.protocol.x.muc
                 AddChild(value);
             }
         }
-
-
+        
         /// <summary>
         /// Gets or sets the status codes.
         /// </summary>

@@ -1106,7 +1106,7 @@ namespace agsXMPP
         {
             if (iq.Type != IqType.error)
             {
-                if (iq.Query != null && iq.Query is Register)
+                if (iq.Query is Register)
                 {
                     RegisterEventArgs args = new RegisterEventArgs(iq.Query as Register);
                     if (OnRegisterInformation != null)
@@ -1437,7 +1437,7 @@ namespace agsXMPP
                     Send(new Compress(CompressionMethod.zlib));                    
                 }
 
-                else if (f.SupportsRegistration && m_RegisterAccount)
+                else if (m_RegisterAccount)
                 {
                     // Do registration after TLS when possible
                     if (f.SupportsRegistration)
