@@ -94,6 +94,25 @@ namespace agsXMPP.protocol.x.muc
         }
 
         /// <summary>
+        /// Get the Status Codes
+        /// </summary>
+        public Status[] GetStatusCodes()
+        {
+            return SelectElements<Status>().ToArray();
+        }
+
+        /// <summary>
+        /// Set the status codes
+        /// </summary>
+        /// <param name="statusCodes"></param>
+        public void SetStatusCodes(Status[] statusCodes)
+        {
+            RemoveTags(typeof (Status));
+            foreach (Status status in statusCodes)
+                AddChild(status);
+        }
+
+        /// <summary>
         /// The Status Element
         /// </summary>
         public Status Status
