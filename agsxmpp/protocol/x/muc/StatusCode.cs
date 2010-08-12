@@ -19,171 +19,113 @@
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
 
-using System;
-
 namespace agsXMPP.protocol.x.muc
 {
+    /// <summary>
+    /// StatusCode
+    /// </summary>
     public enum StatusCode
     {
         /// <summary>
-        /// <para>This Enum Member is used if we have a unknown status code. In this case you have to parse
-        /// the code on your own.</para>
+        /// Unkown status code.
         /// </summary>
-        Unknown = -1,        
+        Unknown                 = -1,
 
         /// <summary>
-        /// <para>Inform user that any occupant is allowed to see the user's full JID.</para>
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>message</description></item>
-        /// <item><term>context</term><description>Entering a room</description></item>
-        /// <item><term>code</term><description>100</description></item>
-        /// </list>
+        /// Inform user that any occupant is allowed to see the user's full JID.
         /// </summary>
-        FullJidVisible = 100,               
-
-        /// <summary>
-        /// <para>Inform user that his or her affiliation changed while not in the room.</para>
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>message (out of band)</description></item>
-        /// <item><term>context</term><description>Affiliation change</description></item>
-        /// <item><term>code</term><description>101</description></item>
-        /// </list>
-        /// </summary>
-        AffiliationChanged = 101,
-                
-        /// <summary>
-        /// <para>Inform occupants that room now shows unavailable members.</para>
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>message</description></item>
-        /// <item><term>context</term><description>Configuration change</description></item>
-        /// <item><term>code</term><description>102</description></item>
-        /// </list>
-        /// </summary>
-        ShowUnavailableMembers = 102,         
-
-        /// <summary>
-        /// <para>Inform occupants that room now does not show unavailable members</para>
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>message</description></item>
-        /// <item><term>context</term><description>Configuration change</description></item>
-        /// <item><term>code</term><description>103</description></item>
-        /// </list>
-        /// </summary>
-        HideUnavailableMembers = 103,
-                
-        /// <summary>
-        /// <para>Inform occupants that some room configuration has changed.</para>
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>message</description></item>
-        /// <item><term>context</term><description>Configuration change</description></item>
-        /// <item><term>code</term><description>104</description></item>
-        /// </list>
-        /// </summary>
-        ConfigurationChanged = 104,                
-
-        /// <summary>
-        /// <para>Inform occupant that room UI should not allow cut-copy-and-paste operations.</para>        
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>message</description></item>
-        /// <item><term>context</term><description>Entering a room; configuration change</description></item>
-        /// <item><term>code</term><description>171</description></item>
-        /// </list>
-        /// </summary>
-        RoomUiProhibitCutCopyPasteOperations = 171,               
+        FullJidVisible          = 100,
         
         /// <summary>
-        /// <para>Inform occupant that room UI should allow cut-copy-and-paste operations.</para>        
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>message</description></item>
-        /// <item><term>context</term><description>Entering a room; configuration change</description></item>
-        /// <item><term>code</term><description>172</description></item>
-        /// </list>
+        /// Inform user that his or her affiliation changed while not in the room.
         /// </summary>
-        RoomUiAllowCutCopyPasteOperations = 172,
+        AffiliationChanged      = 101,
 
         /// <summary>
-        /// <para>Inform user that a new room has been created</para>        
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>presence</description></item>
-        /// <item><term>context</term><description>Entering a room</description></item>
-        /// <item><term>code</term><description>201</description></item>
-        /// </list>
+        /// Inform occupants that room now shows unavailable members.
         /// </summary>
-        RoomCreated = 201,
-
-        /// <summary>
-        /// <para>Inform user that he or she has been banned from the room</para>        
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>presence</description></item>
-        /// <item><term>context</term><description>Removal from room</description></item>
-        /// <item><term>code</term><description>301</description></item>
-        /// </list>
-        /// </summary>
-        Banned  = 301,
-                
-        /// <summary>
-        /// <para>Inform all occupants of new room nickname</para>        
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>presence</description></item>
-        /// <item><term>context</term><description>Exiting a room</description></item>
-        /// <item><term>code</term><description>303</description></item>
-        /// </list>
-        /// </summary>
-        NewNickname = 303,
-        
-        /// <summary>
-        /// <para>Inform user that he or she has been kicked from the room</para>
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>presence</description></item>
-        /// <item><term>context</term><description>Removal from room</description></item>
-        /// <item><term>code</term><description>307</description></item>
-        /// </list>
-        /// </summary>
-        Kicked  = 307,            
-
-        /// <summary>
-        /// <para>Inform user that he or she is being removed from the room because of an affiliation change</para>
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>presence</description></item>
-        /// <item><term>context</term><description>Removal from room</description></item>
-        /// <item><term>code</term><description>321</description></item>
-        /// </list>
-        /// </summary>
-        AffiliationChange = 321,
-        
-        /// <summary>
-        /// <para>Inform user that he or she is being removed from the room because the room has been changed
-        /// to members-only and the user is not a member</para>
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>presence</description></item>
-        /// <item><term>context</term><description>Removal from room</description></item>
-        /// <item><term>code</term><description>322</description></item>
-        /// </list>
-        /// </summary>
-        MembersOnly = 322,
+        ShowUnavailableMembers = 102,
     
         /// <summary>
-        /// <para>Inform user that he or she is being removed from the room because of a system shutdown</para>
-        /// <list type="table">
-        /// <listheader><term>Info</term><description>Description</description></listheader>
-        /// <item><term>stanza</term><description>presence</description></item>
-        /// <item><term>context</term><description>Removal from room</description></item>
-        /// <item><term>code</term><description>332</description></item>
-        /// </list>
-        /// </summary>        
-        Shutdown = 332
+        /// Inform occupants that room now does not show unavailable members .
+        /// </summary>
+        HideUnavailableMembers = 103,
+
+        /// <summary>
+        /// Inform occupants that a non-privacy-related room configuration change has occurred.
+        /// </summary>
+        ConfigurationChanged    = 104,
+
+        /// <summary>
+        /// Inform user that presence refers to one of its own room occupants .
+        /// </summary>
+        SelfPresence            = 110,
+
+        /// <summary>
+        /// Inform occupants that room logging is now enabled.
+        /// </summary>
+        LoggingEnabled          = 170,
+
+        /// <summary>
+        /// Inform occupants that room logging is now disabled. 
+        /// </summary>
+        LoggingDisabled         = 171,
+    
+        /// <summary>
+        /// Inform occupants that the room is now non-anonymous.
+        /// </summary>
+        RoomNonAnonymous        = 172,
+
+        /// <summary>
+        /// Inform occupants that the room is now semi-anonymous.
+        /// </summary>
+        RoomSemiAnonymous       = 173,
+
+        /// <summary>
+        /// Inform occupants that the room is now fully-anonymous. 
+        /// </summary>
+        RoomAnonymous           = 174,
+
+        /// <summary>
+        /// Inform user that a new room has been created. 
+        /// </summary>
+        RoomCreated             = 201,
+
+        /// <summary>
+        ///  Inform user that service has assigned or modified occupant's roomnick.
+        /// </summary>
+        ModifiedNick            = 210,
+
+        /// <summary>
+        /// Inform user that he or she has been banned from the room. 
+        /// </summary>
+        Banned                  = 301,
+
+        /// <summary>
+        /// Inform all occupants of new room nickname. 
+        /// </summary>
+        NewNickname             = 303,
+
+        /// <summary>
+        /// Inform user that he or she has been kicked from the room. 
+        /// </summary>
+        Kicked                  = 307,
+
+        /// <summary>
+        /// Inform user that he or she is being removed from the room because of an affiliation change.
+        /// </summary>
+        // TODO, find better name
+        AffiliationChange       = 321,
+        
+        /// <summary>
+        /// Inform user that he or she is being removed from the room because the room 
+        /// has been changed to members-only and the user is not a member.
+        /// </summary>
+        MembersOnly             = 322,
+
+        /// <summary>
+        /// Inform user that he or she is being removed from the room because of a system shutdown.
+        /// </summary>
+        Shutdown                = 332
     }
 }
