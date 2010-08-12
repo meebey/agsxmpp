@@ -17,8 +17,9 @@
  *																					 *
  * For general enquiries visit our website at:										 *
  * http://www.ag-software.de														 *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+using System.Collections.Generic;
 using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.x.muc
@@ -91,23 +92,20 @@ namespace agsXMPP.protocol.x.muc
             }
         }
 
-        /// <summary>
-        /// Get the Status Codes
-        /// </summary>
-        public Status[] GetStatusCodes()
-        {
-            return SelectElements<Status>().ToArray();
-        }
 
         /// <summary>
-        /// Set the status codes
+        /// Gets or sets the status codes.
         /// </summary>
-        /// <param name="statusCodes"></param>
-        public void SetStatusCodes(Status[] statusCodes)
+        /// <value>The status codes.</value>
+        public List<Status> StatusCodes
         {
-            RemoveTags<Status>();
-            foreach (Status status in statusCodes)
-                AddChild(status);
+            get { return SelectElements<Status>(); }
+            set
+            {
+                RemoveTags<Status>();
+                foreach (Status status in value)
+                    AddChild(status);
+            }
         }
 
         /// <summary>
