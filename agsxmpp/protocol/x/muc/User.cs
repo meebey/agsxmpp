@@ -19,8 +19,6 @@
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
 
-using System;
-
 using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.x.muc
@@ -76,8 +74,8 @@ namespace agsXMPP.protocol.x.muc
         */
         public User()
 		{
-			this.TagName	= "x";
-			this.Namespace	= Uri.MUC_USER;
+			TagName	= "x";
+			Namespace	= Uri.MUC_USER;
 		}
 
         public Item Item
@@ -107,7 +105,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="statusCodes"></param>
         public void SetStatusCodes(Status[] statusCodes)
         {
-            RemoveTags(typeof (Status));
+            RemoveTags<Status>();
             foreach (Status status in statusCodes)
                 AddChild(status);
         }
@@ -124,7 +122,7 @@ namespace agsXMPP.protocol.x.muc
                     RemoveTag(typeof(Status));
                 
                 if (value != null)
-                    this.AddChild(value);
+                    AddChild(value);
             }
         }
 
@@ -140,7 +138,7 @@ namespace agsXMPP.protocol.x.muc
                     RemoveTag(typeof(Invite));
 
                 if (value != null)
-                    this.AddChild(value);
+                    AddChild(value);
             }
         }
 
@@ -156,7 +154,7 @@ namespace agsXMPP.protocol.x.muc
                     RemoveTag(typeof(Decline));
 
                 if (value != null)
-                    this.AddChild(value);
+                    AddChild(value);
             }
         }
 
@@ -165,6 +163,5 @@ namespace agsXMPP.protocol.x.muc
             set { SetTag("password", value); }
             get { return GetTag("password"); }
         }
-        
 	}
 }

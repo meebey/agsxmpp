@@ -604,13 +604,13 @@ namespace agsXMPP.Xml.Dom
 		public bool RemoveTag(System.Type type)
 		{
 			Element tag = this._SelectElement(this, type);
-			if ( tag != null)
+			if (tag != null)
 			{
 				tag.Remove();
 				return true;
 			}
-			else
-				return false;
+			
+            return false;
 		}
 
 #if NET_2
@@ -622,8 +622,8 @@ namespace agsXMPP.Xml.Dom
                 tag.Remove();
                 return true;
             }
-            else
-                return false;
+            
+            return false;
         }
 #endif
 
@@ -645,6 +645,16 @@ namespace agsXMPP.Xml.Dom
                 e.Remove();
 
             return ret;
+        }
+
+        /// <summary>
+        /// Removes all Tags of the given type. Doesnt traverse the tree
+        /// </summary>
+        /// <typeparam name="T">Type of the tags that should be removed</typeparam>
+        /// <returns>true when tags were removed, false when no tags were found and removed</returns>
+        public bool RemoveTags<T>() where T : Element
+        {
+            return RemoveTags(typeof (T));
         }
 
 		/// <summary>
