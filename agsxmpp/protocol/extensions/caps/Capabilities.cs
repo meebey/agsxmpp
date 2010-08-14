@@ -115,6 +115,15 @@ namespace agsXMPP.protocol.extensions.caps
             set { SetAttribute("ver", value); }
         }
 
+        /// <summary>
+        /// Required Hash-Type.
+        /// </summary>
+        public string Hash
+        {
+            get { return GetAttribute("hash"); }
+            set { SetAttribute("hash", value); }
+        }
+
         [Obsolete("This property is deprecated with version 1.4 of XEP-0115. You shouldn't use this propety anymore.")]
         public string[] Extensions
         {
@@ -153,6 +162,7 @@ namespace agsXMPP.protocol.extensions.caps
         /// <param name="di"></param>
         public void SetVersion(DiscoInfo di)
         {
+            Hash = "sha-1";
             Version = BuildCapsVersion(di);
         }
 
