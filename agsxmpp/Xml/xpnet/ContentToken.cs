@@ -18,21 +18,10 @@
  * For general enquiries visit our website at:										 *
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-/* --------------------------------------------------------------------------
- * Copyrights
- * 
- * Portions created by or assigned to Cursive Systems, Inc. are 
- * Copyright (c) 2002-2005 Cursive Systems, Inc.  All Rights Reserved.  Contact
- * information for Cursive Systems, Inc. is available at
- * http://www.cursive.net/.
- *
- * License
- * 
- * Jabber-Net can be used under either JOSL or the GPL.  
- * See LICENSE.txt for details.
- * --------------------------------------------------------------------------*/
-
+/*
+ * xpnet is a deriviative of James Clark's XP parser.
+ * See copying.txt for more info.
+ */
 using System;
 
 namespace agsXMPP.Xml.xpnet

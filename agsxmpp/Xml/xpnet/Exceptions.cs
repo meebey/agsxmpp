@@ -18,7 +18,10 @@
  * For general enquiries visit our website at:										 *
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+/*
+ * xpnet is a deriviative of James Clark's XP parser.
+ * See copying.txt for more info.
+ */
 namespace agsXMPP.Xml.xpnet
 {
     /// <summary>
