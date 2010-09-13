@@ -155,7 +155,7 @@ namespace agsXMPP.util
 		#endif
 		#endregion
 
-#if !CF || CF2
+#if WIN32
         public static byte[] HMAC(byte[] key, byte[] data)
         {
             using (var hmacsha1 = new HMACSHA1(key, true))

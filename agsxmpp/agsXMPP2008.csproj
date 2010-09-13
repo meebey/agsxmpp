@@ -691,9 +691,7 @@
     <Compile Include="Xml\xpnet\Exceptions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Xml\xpnet\NS.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Xml\xpnet\NamespaceStack.cs" />
     <Compile Include="Xml\xpnet\Position.cs">
       <SubType>Code</SubType>
     </Compile>

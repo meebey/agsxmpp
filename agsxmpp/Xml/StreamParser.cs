@@ -58,16 +58,15 @@ namespace agsXMPP.Xml
         /// </summary>
         public event ErrorHandler       OnError;
 			
-		private int						m_Depth				= 0;
-		private Node					m_root				= null;
-		//private Node					current				= null;
-		private Element					current				= null;
+		private int						m_Depth;
+		private Node					m_root;
+	    private Element                 current;
 		
 		private static System.Text.Encoding utf = System.Text.Encoding.UTF8;
-		private Encoding        m_enc   = new UTF8Encoding();
-		private BufferAggregate m_buf   = new BufferAggregate();
-		private NS              m_ns    = new NS();        
-		private bool            m_cdata = false;
+		private Encoding        m_enc               = new UTF8Encoding();
+		private BufferAggregate m_buf               = new BufferAggregate();
+		private NamespaceStack  m_NamespaceStack    = new NamespaceStack();        
+		private bool            m_cdata;
 
 		public StreamParser()
 		{
@@ -87,7 +86,7 @@ namespace agsXMPP.Xml
 			m_buf	= new BufferAggregate();
 			
 			//m_buf.Clear(0);
-			m_ns.Clear();		
+			m_NamespaceStack.Clear();		
 		}
 
 		/// <summary>
@@ -226,7 +225,7 @@ namespace agsXMPP.Xml
 			string prefix;
 			Hashtable ht = new Hashtable();
             
-			m_ns.PushScope();
+			m_NamespaceStack.Push();
             
 			// if i have attributes
 			if ((tok == TOK.START_TAG_WITH_ATTS) ||
@@ -253,11 +252,11 @@ namespace agsXMPP.Xml
 					{
 						colon = name.IndexOf(':');
 						prefix = name.Substring(colon+1);
-						m_ns.AddNamespace(prefix, val);
+						m_NamespaceStack.AddNamespace(prefix, val);
 					}
 					else if (name == "xmlns")
 					{
-                        m_ns.AddNamespace(string.Empty, val);						
+                        m_NamespaceStack.AddNamespace(string.Empty, val);						
 					}
 					else
 					{
@@ -277,11 +276,11 @@ namespace agsXMPP.Xml
 			{
 				prefix = name.Substring(0, colon);
 				name = name.Substring(colon + 1);
-				ns = m_ns.LookupNamespace(prefix);
+				ns = m_NamespaceStack.LookupNamespace(prefix);
 			}
 			else
 			{
-				ns = m_ns.DefaultNamespace;
+				ns = m_NamespaceStack.DefaultNamespace;
 			}
             			
 			Element newel = ElementFactory.GetElement(prefix, name, ns);
@@ -309,7 +308,7 @@ namespace agsXMPP.Xml
 		private void EndTag(byte[] buf, int offset,	ContentToken ct, TOK tok)
 		{
 			m_Depth--;
-			m_ns.PopScope();
+			m_NamespaceStack.Pop();
 
 			if (current == null)
 			{// end of doc

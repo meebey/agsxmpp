@@ -367,6 +367,16 @@ namespace agsXMPP
 				return false;
         }
 
+        public static bool operator !=(Jid jid1, Jid jid2)
+        {
+            return !jid1.Equals(jid2, new FullJidComparer());
+        }
+
+        public static bool operator ==(Jid jid1, Jid jid2)
+        {
+            return jid1.Equals(jid2, new FullJidComparer());
+        }
+
         #region << implicit operators >>
         static public implicit operator Jid(string value)
         {

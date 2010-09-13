@@ -21,9 +21,7 @@
 
 using System;
 using System.Collections;
-#if NET_2
 using System.Collections.Generic;
-#endif
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Text;
@@ -980,7 +978,7 @@ namespace agsXMPP.Xml.Dom
             return this._SelectElement(this, TagName, ns, traverseChildren);
         }
 
-#if NET_2
+
         public T SelectSingleElement<T>() where T : Element
         {
             return (T)this._SelectElement(this, typeof(T));
@@ -991,7 +989,6 @@ namespace agsXMPP.Xml.Dom
             return (T)this._SelectElement(this, typeof(T), traverseChildren);
         } 
         
-#endif
         //public Element Element(string name)
         //{
         //    return SelectSingleElement(name);
@@ -1239,7 +1236,7 @@ namespace agsXMPP.Xml.Dom
 			return es;
         }
 
-#if NET_2
+
         public List<T> SelectElements<T>() where T : Element
         {
             return SelectElements<T>(false);
@@ -1270,8 +1267,6 @@ namespace agsXMPP.Xml.Dom
             }
             return list;
         }
-#endif
-
         #endregion
     }
 }
