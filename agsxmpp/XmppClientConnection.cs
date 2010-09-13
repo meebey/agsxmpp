@@ -234,10 +234,10 @@ namespace agsXMPP
 			get { return m_Priority; }
 			set
             {
-                if (value < -127 || value > 127)
-                    m_Priority = value;
-                else
+                if ((value < -127) || (value > 127))
                     throw new ArgumentException("The value MUST be an integer between -128 and +127");
+                
+                m_Priority = value;
 			}
 		}
 

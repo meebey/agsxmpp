@@ -43,7 +43,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\CF2\Release\</OutputPath>
-    <DefineConstants>TRACE;CF_2;STRINGPREP;BCCRYPTO</DefineConstants>
+    <DefineConstants>TRACE;CF_2;STRINGPREP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -392,7 +392,7 @@
     <Compile Include="Xml\xpnet\ContentToken.cs" />
     <Compile Include="Xml\xpnet\Encoding.cs" />
     <Compile Include="Xml\xpnet\Exceptions.cs" />
-    <Compile Include="Xml\xpnet\NS.cs" />
+    <Compile Include="Xml\xpnet\NamespaceStack.cs" />
     <Compile Include="Xml\xpnet\Position.cs" />
     <Compile Include="Xml\xpnet\Token.cs" />
     <Compile Include="Xml\xpnet\UTF8Encoding.cs" />
@@ -403,6 +403,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="changelog.txt" />
+    <Content Include="Xml\xpnet\copying.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="key.snk" />
