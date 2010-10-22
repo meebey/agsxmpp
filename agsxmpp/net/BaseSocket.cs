@@ -26,7 +26,7 @@ using System.Net.Security;
 #endif
 using System.Security.Cryptography.X509Certificates;
 
-namespace agsXMPP.net
+namespace agsXMPP.Net
 {
 	/// <summary>
 	/// Base Socket class
@@ -54,11 +54,7 @@ namespace agsXMPP.net
                 OnOutgoingCompressionDebug(sender, CompData, CompCount, UncompData, UncompCount);
         }
         */
-				
-#if MONOSSL
-        public delegate bool CertificateValidationCallback(X509Certificate certificate, int[] certificateErrors);
-        public event CertificateValidationCallback	OnValidateCertificate;
-#endif
+		
 #if SSL
         public event RemoteCertificateValidationCallback    OnValidateCertificate;
 #endif
@@ -149,24 +145,6 @@ namespace agsXMPP.net
 
             // Do not allow this client to communicate with unauthenticated servers.
             //return false;
-        }
-#endif
-#if MONOSSL
-        protected bool FireOnValidateCertificate(X509Certificate certificate, int[] certificateErrors)
-        {
-            if (OnValidateCertificate != null)
-                return OnValidateCertificate(certificate, certificateErrors);
-            else
-                return true;
-
-            // Console.WriteLine (certificate.ToString (true));			
-            // Console.WriteLine ("\tValid From:  {0}", certificate.GetEffectiveDateString ());
-            // Console.WriteLine ("\tValid Until: {0}{1}", certificate.GetExpirationDateString (), Environment.NewLine);
-            // // multiple errors are possible using SslClientStream
-            // foreach (int error in certificateErrors) 
-            // {
-            //	ShowCertificateError (error);
-            // }
         }
 #endif
 #if BCCRYPTO

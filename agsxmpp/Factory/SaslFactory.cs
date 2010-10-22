@@ -22,16 +22,14 @@
 using System;
 using System.Collections;
 
-using agsXMPP.sasl;
-using agsXMPP.sasl.Plain;
-using agsXMPP.sasl.DigestMD5;
-using agsXMPP.sasl.Anonymous;
-#if WIN32
-using agsXMPP.sasl.Scram;
-#endif
-using agsXMPP.sasl.XGoogleToken;
-#if WIN32 && EP
-using agsXMPP.sasl.Gssapi;
+using agsXMPP.Sasl;
+using agsXMPP.Sasl.Plain;
+using agsXMPP.Sasl.DigestMD5;
+using agsXMPP.Sasl.Anonymous;
+using agsXMPP.Sasl.XGoogleToken;
+#if !(CF || CF_2)
+using agsXMPP.Sasl.Scram;
+using agsXMPP.Sasl.Gssapi;
 #endif
 
 namespace agsXMPP.Factory
@@ -52,10 +50,8 @@ namespace agsXMPP.Factory
 			AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.DIGEST_MD5),	    typeof(DigestMD5Mechanism));
             AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.ANONYMOUS),       typeof(AnonymousMechanism));
             AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.X_GOOGLE_TOKEN),  typeof(XGoogleTokenMechanism));
-#if WIN32
+#if !(CF || CF_2)
             AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.SCRAM_SHA_1),     typeof(ScramSha1Mechanism));
-#endif
-#if WIN32 && EP
             AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.GSSAPI),          typeof(GssapiMechanism));
 #endif
 		}

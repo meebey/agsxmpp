@@ -29,7 +29,7 @@ using agsXMPP.Xml.Dom;
 
 using agsXMPP.Factory;
 
-using agsXMPP.Xml.xpnet;
+using agsXMPP.Xml.Xpnet;
 
 using agsXMPP.protocol.client;
 

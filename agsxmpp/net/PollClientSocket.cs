@@ -31,7 +31,7 @@ using System.Security.Cryptography;
 using agsXMPP.util;
 #endif
 
-namespace agsXMPP.net
+namespace agsXMPP.Net
 {
 	/// <summary>
 	/// JEP-0025 Jabber HTTP Polling Socket
@@ -185,7 +185,7 @@ namespace agsXMPP.net
 			byte[] buf = new byte[m_lenght];
 			RNG.GetBytes(buf);
 			
-			return util.Hash.HexToString(buf).ToLower();
+			return Util.Hash.HexToString(buf).ToLower();
 		}
 
 		/// <summary>
@@ -198,7 +198,7 @@ namespace agsXMPP.net
 			
 			for (int i=0; i < m_CountKeys; i++)
 			{
-				byte[] hash = util.Hash.Sha1HashBytes(prev);
+				byte[] hash = Util.Hash.Sha1HashBytes(prev);
 				m_Keys[i] = Convert.ToBase64String(hash, 0, hash.Length);
 				prev = m_Keys[i];
 			}

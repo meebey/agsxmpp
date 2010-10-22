@@ -129,7 +129,7 @@ namespace agsXMPP.protocol.iq.rpc
             // XML-RPC dates are formatted in iso8601 standard, same as xmpp,
             else if (param is DateTime)
             {
-                value.AddChild( new Element("dateTime.iso8601", util.Time.ISO_8601Date( (DateTime) param) ) );                
+                value.AddChild( new Element("dateTime.iso8601", Util.Time.ISO_8601Date( (DateTime) param) ) );                
             }
             // byte arrays must be encoded in Base64 encoding
             else if (param is byte[])

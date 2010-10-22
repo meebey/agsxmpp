@@ -24,7 +24,7 @@ using System;
 using agsXMPP.protocol.sasl;
 using agsXMPP.protocol.stream;
 
-namespace agsXMPP.sasl
+namespace agsXMPP.Sasl
 {
 	public delegate void SaslEventHandler	(object sender, SaslEventArgs args);
 

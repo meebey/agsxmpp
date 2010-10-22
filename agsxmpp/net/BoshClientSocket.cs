@@ -31,7 +31,7 @@ using agsXMPP.Xml;
 using agsXMPP.Xml.Dom;
 using agsXMPP.protocol.extensions.bosh;
 
-namespace agsXMPP.net
+namespace agsXMPP.Net
 {
 
     public class WebRequestState
@@ -289,7 +289,7 @@ namespace agsXMPP.net
 
             for (int i = 0; i < countKeys; i++)
             {
-                Keys[i] = util.Hash.Sha1Hash(prev);
+                Keys[i] = Util.Hash.Sha1Hash(prev);
                 prev = Keys[i];
             }
             CurrentKeyIdx = countKeys - 1;
@@ -307,7 +307,7 @@ namespace agsXMPP.net
             byte[] buf = new byte[m_lenght];
             rng.GetBytes(buf);
 
-            return util.Hash.HexToString(buf);
+            return Util.Hash.HexToString(buf);
         }
 
         private int GenerateRid()

@@ -47,18 +47,14 @@ using agsXMPP.protocol.tls;
 using agsXMPP.protocol.extensions.caps;
 using agsXMPP.protocol.extensions.compression;
 
-using agsXMPP.exceptions;
+using agsXMPP.Exceptions;
 
-using agsXMPP.sasl;
-using agsXMPP.net;
-using agsXMPP.net.dns;
+using agsXMPP.Sasl;
+using agsXMPP.Net;
+using agsXMPP.Net.Dns;
 
 
 using agsXMPP.Idn;
-
-#if MONOSSL
-using  Mono.Security.Protocol.Tls;
-#endif
 
 namespace agsXMPP
 {
@@ -98,7 +94,7 @@ namespace agsXMPP
 		private		bool					m_AutoRoster		= true;
 		private		bool					m_AutoAgents		= true;
         private     bool                    m_AutoPresence      = true;
-#if WIN32
+#if !(CF || CF_2)
         private     bool                    m_UseSso            = false;
         internal    string                  m_KerberosPrincipal;
 #endif
@@ -282,9 +278,9 @@ namespace agsXMPP
 		{
 			get	{ return m_AutoAgents; }
 			set	{ m_AutoAgents = value;	}
-		}
+        }
 
-#if WIN32
+#if !(CF || CF_2)
         /// <summary>
         /// Use Single sign on (GSSAPI/KERBEROS)
         /// </summary>
@@ -293,11 +289,12 @@ namespace agsXMPP
             get { return m_UseSso; }
             set
             {
-#if EP
+                if (Util.Runtime.IsMono() && Util.Runtime.IsUnix())
+                    throw new NotImplementedException();
+                
                 m_UseSso = value;
-#else
+
                 throw new NotImplementedException();
-#endif
             }
         }
 
@@ -320,7 +317,7 @@ namespace agsXMPP
 		{
 			get	{ return m_UseSSL; }
 
-#if SSL || MONOSSL
+#if SSL
 			set
 			{
                 // Only one of both can be true
@@ -339,7 +336,7 @@ namespace agsXMPP
 		{
 			get { return m_UseStartTLS; }
 
-#if SSL || MONOSSL || BCCRYPTO || CF_2
+#if SSL || BCCRYPTO || CF_2
 			set
 			{
                 // Only one of both can be true
@@ -744,7 +741,7 @@ namespace agsXMPP
             m_StreamStarted = false;
 
 			StreamParser.Reset();
-#if SSL || MONOSSL
+#if SSL
 			if (ClientSocket.GetType() == typeof(ClientSocket))
 				((ClientSocket) ClientSocket).SSL = m_UseSSL;
 #endif		
@@ -772,28 +769,23 @@ namespace agsXMPP
         /// </summary>
         private void ResolveSrv()
         {
-#if WIN32
+#if !(CF || CF_2)
             try
             {
                 // get the machine's default DNS servers
-                string[] dnsServers = IPConfigurationInformation.DnsServers;
+                var dnsServers = IPConfigurationInformation.DnsServers;
 
-                if (dnsServers[0] == "")
+                if (dnsServers.Count > 0)
                 {
-                    FireOnError(this, new Exception("No DNS Servers found"));
-                    return;
+                    // Take the 1st DNS Server for our query
+                    IPAddress dnsServer = dnsServers[0];
+                    
+                    string queryDomain = SRV_RECORD_PREFIX + Server;
+                    
+                    _SRVRecords = Resolver.SRVLookup(queryDomain, dnsServer);
+
+                    SetConnectServerFromSRVRecords();   
                 }
-
-                // Take the 1st DNS Server for our query
-                IPAddress dnsServer = IPAddress.Parse(dnsServers[0]);
-
-                // Information
-                string queryDomain = SRV_RECORD_PREFIX + this.Server;
-                //QuerySrvRecord(dnsServer, queryDomain, DnsType.SRV);
-
-                _SRVRecords = Resolver.SRVLookup(queryDomain, dnsServer);
-
-                SetConnectServerFromSRVRecords();
             }
             catch (Exception ex)
             {
@@ -1418,7 +1410,7 @@ namespace agsXMPP
 				// Stream Features
 				// StartTLS stuff
 				Features f = e as Features;
-#if SSL || MONOSSL || BCCRYPTO || CF_2
+#if SSL || BCCRYPTO || CF_2
 				if (f.SupportsStartTls && m_UseStartTLS)
 				{
 					DoChangeXmppConnectionState(XmppConnectionState.Securing);
@@ -1451,7 +1443,7 @@ namespace agsXMPP
                     }
                 }
             }
-#if SSL || MONOSSL || BCCRYPTO || CF_2
+#if SSL || BCCRYPTO || CF_2
             else if (e is Proceed)
 			{	
 				StreamParser.Reset();			

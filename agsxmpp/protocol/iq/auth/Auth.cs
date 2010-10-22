@@ -86,7 +86,7 @@ namespace agsXMPP.protocol.iq.auth
 			// Jive Messenger has a problem when we dont remove the password Tag
 			this.RemoveTag("password");
 			this.Username	= username;
-			this.Digest		= util.Hash.Sha1Hash(StreamID + password);			
+			this.Digest		= Util.Hash.Sha1Hash(StreamID + password);			
 		}
 		
 		/// <summary>

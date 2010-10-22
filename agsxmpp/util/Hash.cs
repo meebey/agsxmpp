@@ -17,24 +17,18 @@
  *																					 *
  * For general enquiries visit our website at:										 *
  * http://www.ag-software.de														 *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Reflection;
 using System.Text;
-using System.Runtime.InteropServices;
-
 #if !CF
 using System.Security.Cryptography;
 #endif
 
-namespace agsXMPP.util
+namespace agsXMPP.Util
 {
 	/// <summary>
-	/// Summary description for Hash.
+	/// Helper class for hashing.
 	/// </summary>
-	/// 
-
 	public class Hash
 	{		
 
@@ -155,7 +149,7 @@ namespace agsXMPP.util
 		#endif
 		#endregion
 
-#if WIN32
+#if !(CF || CF_2)
         public static byte[] HMAC(byte[] key, byte[] data)
         {
             using (var hmacsha1 = new HMACSHA1(key, true))

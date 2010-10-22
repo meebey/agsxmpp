@@ -25,7 +25,7 @@ using agsXMPP;
 using agsXMPP.Xml.Dom;
 using agsXMPP.protocol.sasl;
 
-namespace agsXMPP.sasl.Anonymous
+namespace agsXMPP.Sasl.Anonymous
 {
     /// <summary>
     /// SALS ANONYMOUS Mechanism, this allows anonymous logins to a xmpp server.

@@ -21,7 +21,7 @@
 
 using System;
 
-using agsXMPP.sasl;
+using agsXMPP.Sasl;
 using agsXMPP.Xml.Dom;
 
 //	<mechanism>DIGEST-MD5</mechanism>

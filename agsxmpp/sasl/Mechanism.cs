@@ -19,24 +19,15 @@
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
 
-using System;
-
 using agsXMPP.Xml.Dom;
 
-namespace agsXMPP.sasl
+namespace agsXMPP.Sasl
 {
 	/// <summary>
 	/// Summary description for Mechanism.
 	/// </summary>
 	public abstract class Mechanism
 	{
-        /// <summary>
-        /// 
-        /// </summary>
-		public Mechanism()
-		{			
-		}
-
 		#region << Properties and member variables >>
         private XmppClientConnection m_XmppClientConnection;                
 		private string m_Username;

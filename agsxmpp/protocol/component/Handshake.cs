@@ -49,7 +49,7 @@ namespace agsXMPP.protocol.component
 
 		public void SetAuth(string password, string streamId)
 		{
-			this.Value = util.Hash.Sha1Hash(streamId + password);
+			this.Value = Util.Hash.Sha1Hash(streamId + password);
 		}
 
 		/// <summary>

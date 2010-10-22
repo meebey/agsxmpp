@@ -28,7 +28,7 @@
 using System;
 using System.Net;
 
-namespace agsXMPP.net.dns
+namespace agsXMPP.Net.Dns
 {
 	/// <summary>
 	/// A Response is a logical representation of the byte data returned from a DNS query

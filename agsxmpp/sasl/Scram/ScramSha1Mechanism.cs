@@ -24,10 +24,10 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using agsXMPP.protocol.sasl;
-using agsXMPP.util;
+using agsXMPP.Util;
 using agsXMPP.Xml.Dom;
 
-namespace agsXMPP.sasl.Scram
+namespace agsXMPP.Sasl.Scram
 {
     /// <summary>
     /// 

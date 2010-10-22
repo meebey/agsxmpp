@@ -21,14 +21,14 @@
 
 using System;
 
-namespace agsXMPP.exceptions
+namespace agsXMPP.Exceptions
 {
     public class JidException : Exception
     {
         /// <summary>
         /// 
         /// </summary>
-        public JidException() : base()
+        public JidException()
         {
         }
 

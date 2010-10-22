@@ -21,7 +21,7 @@
 
 using System;
 
-namespace agsXMPP.net
+namespace agsXMPP.Net
 {
 	/// <summary>
 	/// Summary description for SocketType.

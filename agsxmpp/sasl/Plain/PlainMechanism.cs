@@ -27,7 +27,7 @@ using agsXMPP;
 using agsXMPP.Xml.Dom;
 using agsXMPP.protocol.sasl;
 
-namespace agsXMPP.sasl.Plain
+namespace agsXMPP.Sasl.Plain
 {
 	/// <summary>
 	/// Summary description for PlainMechanism.

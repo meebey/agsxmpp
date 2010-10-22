@@ -65,11 +65,11 @@ namespace agsXMPP.protocol.x
 		{
 			get
 			{
-				return util.Time.Date(GetAttribute("stamp"));
+				return Util.Time.Date(GetAttribute("stamp"));
 			}
 			set
 			{
-				SetAttribute("stamp", util.Time.Date(value));
+				SetAttribute("stamp", Util.Time.Date(value));
 			}
 		}
 	}

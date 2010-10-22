@@ -31,7 +31,7 @@ using System;
 //realm="somerealm",nonce="OA6MG9tEQGm2hh",qop="auth",charset=utf-8,algorithm=md5-sess
 
 
-namespace agsXMPP.sasl.DigestMD5
+namespace agsXMPP.Sasl.DigestMD5
 {
 	/// <summary>
 	/// Summary description for Step1.

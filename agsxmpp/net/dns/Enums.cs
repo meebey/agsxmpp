@@ -27,7 +27,7 @@
 
 using System;
 
-namespace agsXMPP.net.dns
+namespace agsXMPP.Net.Dns
 {
 	/// <summary>
 	/// The DNS TYPE (RFC1035 3.2.2/3).  Not all are supported

@@ -21,7 +21,7 @@
 
 using System;
 
-namespace agsXMPP.net.dns
+namespace agsXMPP.Net.Dns
 {
 	/// <summary>
 	/// Summary description for SRVRecord.

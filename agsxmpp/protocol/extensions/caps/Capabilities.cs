@@ -198,7 +198,7 @@ namespace agsXMPP.protocol.extensions.caps
             foreach (string s in features)
                 S.Append(s + "<");
 
-            byte[] sha1 = util.Hash.Sha1HashBytes(S.ToString());
+            byte[] sha1 = Util.Hash.Sha1HashBytes(S.ToString());
 
 #if CF
             return Convert.ToBase64String(sha1, 0, sha1.Length);

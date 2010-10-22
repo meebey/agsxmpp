@@ -21,7 +21,7 @@
 
 using System;
 
-namespace agsXMPP.util
+namespace agsXMPP.Util
 {
 	/// <summary>
 	/// Class handles the XMPP time format

@@ -117,8 +117,8 @@ namespace agsXMPP.protocol.x.muc
         /// </summary>
         public DateTime Since
         {
-            get { return util.Time.ISO_8601Date(GetAttribute("since")); }
-            set { SetAttribute("since", util.Time.ISO_8601Date(value)); }
+            get { return Util.Time.ISO_8601Date(GetAttribute("since")); }
+            set { SetAttribute("since", Util.Time.ISO_8601Date(value)); }
         }
 
         /// <summary>

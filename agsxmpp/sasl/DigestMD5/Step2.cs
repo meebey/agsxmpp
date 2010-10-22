@@ -28,7 +28,7 @@ using agsXMPP.util;
 #endif
 using System.Security.Cryptography;
 
-namespace agsXMPP.sasl.DigestMD5
+namespace agsXMPP.Sasl.DigestMD5
 {
 	/// <summary>
 	/// Summary description for Step2.
@@ -147,7 +147,7 @@ namespace agsXMPP.sasl.DigestMD5
 			byte[] buf = new byte[m_lenght];
 			RNG.GetBytes(buf);
 			
-			m_Cnonce = util.Hash.HexToString(buf).ToLower();
+			m_Cnonce = Util.Hash.HexToString(buf).ToLower();
 
 //			m_Cnonce = "e163ceed6cfbf8c1559a9ff373b292c2f926b65719a67a67c69f7f034c50aba3";
 		}
@@ -258,8 +258,8 @@ namespace agsXMPP.sasl.DigestMD5
 			H2 =util.Hash.MD5Hash(H2);
 #endif            
 			// create p1 and p2 as the hex representation of H1 and H2
-			p1 = util.Hash.HexToString(H1).ToLower();
-			p2 = util.Hash.HexToString(H2).ToLower();
+			p1 = Util.Hash.HexToString(H1).ToLower();
+			p2 = Util.Hash.HexToString(H2).ToLower();
             
 			sb.Remove(0, sb.Length);
 			sb.Append(p1);
@@ -281,7 +281,7 @@ namespace agsXMPP.sasl.DigestMD5
 			//H3 = Encoding.Default.GetBytes(util.Hash.MD5Hash(A3));
 			H3 =util.Hash.MD5Hash(Encoding.ASCII.GetBytes(A3));
 #endif
-			m_Response = util.Hash.HexToString(H3).ToLower(); 
+			m_Response = Util.Hash.HexToString(H3).ToLower(); 
 		}
 
 		private string GenerateMessage()

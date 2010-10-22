@@ -24,7 +24,7 @@
  */
 using System.Collections.Generic;
 
-namespace agsXMPP.Xml.xpnet
+namespace agsXMPP.Xml.Xpnet
 {
     /// <summary>
     /// Namespace stack.

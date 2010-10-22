@@ -28,7 +28,7 @@ using agsXMPP;
 using agsXMPP.Xml.Dom;
 using agsXMPP.protocol.sasl;
 
-namespace agsXMPP.sasl.XGoogleToken
+namespace agsXMPP.Sasl.XGoogleToken
 {
 	/// <summary>
 	/// X-GOOGLE-TOKEN Authentication

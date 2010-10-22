@@ -22,7 +22,7 @@
 using System;
 using System.Reflection;
 
-namespace agsXMPP.util
+namespace agsXMPP.Util
 {
 	/// <summary>
 	/// Provides helper functions for Enumerations.

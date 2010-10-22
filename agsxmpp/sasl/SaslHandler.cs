@@ -30,7 +30,7 @@ using agsXMPP.protocol.stream;
 using agsXMPP.Xml;
 using agsXMPP.Xml.Dom;
 
-namespace agsXMPP.sasl
+namespace agsXMPP.Sasl
 {
 	/// <summary>
 	/// Summary description for SaslHandler.
@@ -41,7 +41,7 @@ namespace agsXMPP.sasl
 		public event ObjectHandler		OnSaslEnd;
 
 		private XmppClientConnection	m_XmppClient	= null;		
-		private agsXMPP.sasl.Mechanism	m_Mechanism		= null;
+		private Mechanism	m_Mechanism		= null;
 		// Track whether Dispose has been called.
 		private bool					disposed		= false;
 
@@ -102,21 +102,15 @@ namespace agsXMPP.sasl
                                 // authentication credentials on a secure connection
                                 args.Mechanism = protocol.sasl.Mechanism.GetMechanismName(MechanismType.X_GOOGLE_TOKEN);
                             }
-#if WIN32 && EP
+#if !(CF || CF_2)
                             else if (m_XmppClient.UseSso && f.Mechanisms.SupportsMechanism(MechanismType.GSSAPI))
                             {
                                 args.Mechanism = protocol.sasl.Mechanism.GetMechanismName(MechanismType.GSSAPI);
                                 
-                                //Debug.WriteLine("SaslHandler.OnStreamElement");
-                                //Debug.WriteLine("read KerberosPrincipal");
-
                                 string kerbPrinc = f.Mechanisms.GetMechanism(MechanismType.GSSAPI).KerberosPrincipal;
                                 if (kerbPrinc != null)
                                 m_XmppClient.KerberosPrincipal =
                                     f.Mechanisms.GetMechanism(MechanismType.GSSAPI).KerberosPrincipal;
-                                
-                                //if (m_XmppClient.KerberosPrincipal != null)
-                                //    Debug.WriteLine("XmppClientConnection.KerberosPrincipal = " + m_XmppClient.KerberosPrincipal);
                             }
 #endif
                             else if (f.Mechanisms.SupportsMechanism(MechanismType.SCRAM_SHA_1))
@@ -166,7 +160,7 @@ namespace agsXMPP.sasl
 						m_XmppClient.DoChangeXmppConnectionState(XmppConnectionState.Binding);
                         
                         BindIq bIq;
-                        if (m_XmppClient.Resource == null || m_XmppClient.Resource.Length == 0)
+                        if (string.IsNullOrEmpty(m_XmppClient.Resource))
 						    bIq = new BindIq(IqType.set, new Jid(m_XmppClient.Server));
                         else
                             bIq = new BindIq(IqType.set, new Jid(m_XmppClient.Server), m_XmppClient.Resource);						

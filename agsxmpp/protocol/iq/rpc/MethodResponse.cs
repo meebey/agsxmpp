@@ -23,7 +23,7 @@ using System;
 using System.Collections;
 using System.Globalization;
 
-using agsXMPP.exceptions;
+using agsXMPP.Exceptions;
 using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.iq.rpc
@@ -129,7 +129,7 @@ namespace agsXMPP.protocol.iq.rpc
                         result = Double.Parse(next.Value, numberInfo);
                     }
                     else if (next.TagName == "dateTime.iso8601")
-                        result = util.Time.ISO_8601Date(next.Value);
+                        result = Util.Time.ISO_8601Date(next.Value);
                     else if (next.TagName == "base64")
                         result = Convert.FromBase64String(next.Value);
                     else if (next.TagName == "struct")

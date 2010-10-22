@@ -23,7 +23,7 @@ using System;
 using System.Text;
 using System.Threading;
 
-using agsXMPP.net;
+using agsXMPP.Net;
 using agsXMPP.protocol.extensions.bosh;
 
 using agsXMPP.Xml;
@@ -88,9 +88,9 @@ namespace agsXMPP
             m_StreamParser.OnError              += new ErrorHandler (StreamParserOnError);            
 		}
         
-		public XmppConnection(agsXMPP.net.SocketConnectionType type) : this()
+		public XmppConnection(agsXMPP.Net.SocketConnectionType type) : this()
 		{
-			m_SocketConnectionType = agsXMPP.net.SocketConnectionType.Direct;
+			m_SocketConnectionType = agsXMPP.Net.SocketConnectionType.Direct;
 		}
 		#endregion
 
@@ -328,9 +328,9 @@ namespace agsXMPP
 			m_ClientSocket = null;
 
 			// Socket Stuff
-			if (m_SocketConnectionType == agsXMPP.net.SocketConnectionType.HttpPolling)
+			if (m_SocketConnectionType == agsXMPP.Net.SocketConnectionType.HttpPolling)
 				m_ClientSocket= new PollClientSocket();            
-            else if (m_SocketConnectionType == agsXMPP.net.SocketConnectionType.Bosh)
+            else if (m_SocketConnectionType == agsXMPP.Net.SocketConnectionType.Bosh)
                 m_ClientSocket = new BoshClientSocket(this);
             else
                 m_ClientSocket = new ClientSocket();

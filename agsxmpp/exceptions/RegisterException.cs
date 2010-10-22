@@ -21,11 +21,11 @@
 
 using System;
 
-namespace agsXMPP.exceptions
+namespace agsXMPP.Exceptions
 {
     public class RegisterException : Exception
     {
-        public RegisterException() : base()
+        public RegisterException()
         {
         }
 

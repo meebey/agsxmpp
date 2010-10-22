@@ -35,11 +35,6 @@ using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 #endif
 
-#if MONOSSL
-using System.Security.Cryptography.X509Certificates;
-using Mono.Security.Protocol.Tls;
-#endif
-
 #if BCCRYPTO
 using Org.BouncyCastle.Crypto.Tls;
 #endif
@@ -48,7 +43,7 @@ using agsXMPP.IO.Compression;
 
 using agsXMPP;
 
-namespace agsXMPP.net
+namespace agsXMPP.Net
 {
     public class ConnectTimeoutException : Exception
     {
@@ -66,9 +61,6 @@ namespace agsXMPP.net
         Socket _socket;
 #if SSL	
         SslStream           m_SSLStream;
-#endif
-#if MONOSSL
-        SslClientStream		m_SSLStream;
 #endif
         NetworkStream m_Stream;
         Stream m_NetworkStream = null;
@@ -111,14 +103,14 @@ namespace agsXMPP.net
         public bool SSL
         {
             get { return m_SSL; }
-#if SSL || MONOSSL
+#if SSL
 			set	{ m_SSL = value; }
 #endif
         }
 
         public override bool SupportsStartTls
         {
-#if SSL || MONOSSL
+#if SSL
 			get
 			{
 				return true;
@@ -197,11 +189,8 @@ namespace agsXMPP.net
 
             try
             {
-#if NET_2 || CF_2
-                IPHostEntry ipHostInfo = Dns.GetHostEntry(Address);
-#else
-                IPHostEntry ipHostInfo = Dns.Resolve(Address);
-#endif
+
+                IPHostEntry ipHostInfo = System.Net.Dns.GetHostEntry(Address);
                 IPAddress ipAddress = ipHostInfo.AddressList[0];// IPAddress.Parse(address);
                 IPEndPoint endPoint = new IPEndPoint(ipAddress, Port);
 
@@ -213,33 +202,15 @@ namespace agsXMPP.net
                 TimerCallback timerDelegate = new TimerCallback(connectTimeoutTimerDelegate);
                 connectTimeoutTimer = new Timer(timerDelegate, null, ConnectTimeout, ConnectTimeout);
 
-#if NET_2
+#if !(CF || CF_2)
                 // IPV6 Support for .NET 2.0
                 if (Socket.OSSupportsIPv6 && (endPoint.AddressFamily == AddressFamily.InterNetworkV6))
-                {
-                    //Debug.WriteLine("IPV6");
                     _socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);                   
-                }
+                
                 else
-                {
-                    //Debug.WriteLine("IPV4");
                     _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                }
-#elif NET_11     
-                // IPV6 Support for .NET 1.1
-                if (Socket.SupportsIPv6 && (endPoint.AddressFamily == AddressFamily.InterNetworkV6))
-                {
-                    Debug.WriteLine("IPV6");
-                    _socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);                   
-                }
-                else
-                {
-                    Debug.WriteLine("IPV4");
-                    _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                }
 #else
                 // CF, there is no IPV6 support yet
-                Debug.WriteLine("IPV4");
                 _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 #endif
                 _socket.BeginConnect(endPoint, new AsyncCallback(EndConnect), null);
@@ -270,7 +241,7 @@ namespace agsXMPP.net
 
                     m_NetworkStream = m_Stream;
 
-#if SSL || MONOSSL
+#if SSL
                     if (m_SSL)
                         InitSSL();
 #endif
@@ -293,7 +264,6 @@ namespace agsXMPP.net
         /// <param name="stateInfo"></param>
         private void connectTimeoutTimerDelegate(Object stateInfo)
         {
-            // for compression debug statisticsConsole.WriteLine("Connect Timeout");
             connectTimeoutTimer.Dispose();
             m_ConnectTimedOut = true;
             _socket.Close();
@@ -343,7 +313,7 @@ namespace agsXMPP.net
             } 
             catch (AuthenticationException e)
             {
-                //Console.WriteLine("Exception: {0}", e.Message);
+                
                 if (e.InnerException != null)
                 {
                     //Console.WriteLine("Inner exception: {0}", e.InnerException.Message);
@@ -412,52 +382,6 @@ namespace agsXMPP.net
         private bool ValidateCertificate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
 		{
 			return base.FireOnValidateCertificate(sender, certificate, chain, sslPolicyErrors);
-		}
-#endif
-#if MONOSSL
-        /// <summary>
-		/// Starts TLS on a "normal" connection
-		/// </summary>
-		public override void StartTls()
-		{
-			base.StartTls();
-
-			Mono.Security.Protocol.Tls.SecurityProtocolType protocol = Mono.Security.Protocol.Tls.SecurityProtocolType.Tls;
-			InitSSL(protocol);
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		private void InitSSL()
-		{
-			InitSSL(Mono.Security.Protocol.Tls.SecurityProtocolType.Default);
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="protocol"></param>
-		private void InitSSL(Mono.Security.Protocol.Tls.SecurityProtocolType protocol)
-		{
-			m_SSLStream = new SslClientStream(m_Stream, Address, false, protocol, null);				
-			m_SSLStream.ServerCertValidationDelegate = new Mono.Security.Protocol.Tls.CertificateValidationCallback(ValidateCertificate);
-			m_NetworkStream = m_SSLStream;	
-			m_SSL = true;
-			// Send a whitespace to start the encryption of the connection now
-			Send(" ");
-		}
-
-		/// <summary>
-		/// Validate the SSL certificate here
-		/// for now we dont stop the SSL connection an return always true
-		/// </summary>
-		/// <param name="certificate"></param>
-		/// <param name="certificateErrors"></param>
-		/// <returns></returns>
-		private bool ValidateCertificate (X509Certificate certificate, int[] certificateErrors) 
-		{
-			return base.FireOnValidateCertificate(certificate, certificateErrors);
 		}
 #endif
 #if BCCRYPTO
@@ -652,7 +576,7 @@ namespace agsXMPP.net
             }
             catch (System.IO.IOException ex)
             {
-                Console.WriteLine("\nSocket Exception: " + ex.Message);
+                //Console.WriteLine("\nSocket Exception: " + ex.Message);
                 Disconnect();
             }
         }

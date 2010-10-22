@@ -22,7 +22,7 @@
  * xpnet is a deriviative of James Clark's XP parser.
  * See copying.txt for more info.
  */
-namespace agsXMPP.Xml.xpnet
+namespace agsXMPP.Xml.Xpnet
 {
 	/// <summary>
 	/// UTF-8 specific tokenizer.

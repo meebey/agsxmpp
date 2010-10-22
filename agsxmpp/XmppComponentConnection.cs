@@ -21,7 +21,7 @@
 
 using System;
 using System.Text;
-using agsXMPP.net;
+using agsXMPP.Net;
 using agsXMPP.Xml.Dom;
 using agsXMPP.protocol;
 using agsXMPP.protocol.component;

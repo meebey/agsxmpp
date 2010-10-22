@@ -25,7 +25,7 @@ using agsXMPP;
 using agsXMPP.Xml.Dom;
 using agsXMPP.protocol.sasl;
 
-namespace agsXMPP.sasl.DigestMD5
+namespace agsXMPP.Sasl.DigestMD5
 {
 	/// <summary>
 	/// Handels the SASL Digest MD5 authentication
@@ -48,11 +48,11 @@ namespace agsXMPP.sasl.DigestMD5
 			{
 				protocol.sasl.Challenge c = e as protocol.sasl.Challenge;
 				
-				sasl.DigestMD5.Step1 step1 = new sasl.DigestMD5.Step1(c.TextBase64);
+				Step1 step1 = new Step1(c.TextBase64);
 				if (step1.Rspauth == null)
 				{
 					//response xmlns="urn:ietf:params:xml:ns:xmpp-sasl">dXNlcm5hbWU9ImduYXVjayIscmVhbG09IiIsbm9uY2U9IjM4MDQzMjI1MSIsY25vbmNlPSIxNDE4N2MxMDUyODk3N2RiMjZjOWJhNDE2ZDgwNDI4MSIsbmM9MDAwMDAwMDEscW9wPWF1dGgsZGlnZXN0LXVyaT0ieG1wcC9qYWJiZXIucnUiLGNoYXJzZXQ9dXRmLTgscmVzcG9uc2U9NDcwMTI5NDU4Y2EwOGVjYjhhYTIxY2UzMDhhM2U5Nzc
-					sasl.DigestMD5.Step2 s2 = new agsXMPP.sasl.DigestMD5.Step2(step1, base.Username, base.Password, base.Server);
+					Step2 s2 = new Step2(step1, base.Username, base.Password, base.Server);
 					protocol.sasl.Response r = new agsXMPP.protocol.sasl.Response(s2.ToString());
                     base.XmppClientConnection.Send(r);
 				}

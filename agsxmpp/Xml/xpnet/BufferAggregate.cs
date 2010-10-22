@@ -22,10 +22,9 @@
  * xpnet is a deriviative of James Clark's XP parser.
  * See copying.txt for more info.
  */
-using System.Collections;
 using System.IO;
 
-namespace agsXMPP.Xml.xpnet
+namespace agsXMPP.Xml.Xpnet
 {
 	/// <summary>
 	/// Aggregate byte arrays together, so we can parse across IP packet boundaries

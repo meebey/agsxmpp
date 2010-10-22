@@ -23,7 +23,7 @@ using System;
 using System.Text;
 using System.Collections;
 
-using agsXMPP.exceptions;
+using agsXMPP.Exceptions;
 using agsXMPP.Collections;
 #if STRINGPREP
 using agsXMPP.Idn;
@@ -34,10 +34,8 @@ namespace agsXMPP
 	/// <summary>
 	/// Class for building and handling XMPP Id's (JID's)
 	/// </summary>  
-    public class Jid : IComparable
-#if NET_2 || CF_2
-        , IEquatable<Jid>
-#endif
+    public class Jid : IComparable, IEquatable<Jid>
+
 	{
         /*		
         14 possible invalid forms of JIDs and some variations on valid JIDs with invalid lengths, viz:
@@ -404,7 +402,7 @@ namespace agsXMPP
         }
         #endregion
    
-#if NET_2 || CF_2    
+
         #region IEquatable<Jid> Members
         public bool Equals(Jid other)
         {
@@ -415,7 +413,7 @@ namespace agsXMPP
                 return false;            
         }
         #endregion
-#endif
+
 
         #region << XEP-0106: JID Escaping >>
         /// <summary>

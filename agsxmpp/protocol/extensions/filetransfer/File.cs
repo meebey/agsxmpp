@@ -110,11 +110,11 @@ namespace agsXMPP.protocol.extensions.filetransfer
 		{
 			get
 			{
-				return util.Time.ISO_8601Date(GetAttribute("date"));
+				return Util.Time.ISO_8601Date(GetAttribute("date"));
 			}
 			set
 			{
-				SetAttribute("date", util.Time.ISO_8601Date(value));
+				SetAttribute("date", Util.Time.ISO_8601Date(value));
 			}
 		}
 

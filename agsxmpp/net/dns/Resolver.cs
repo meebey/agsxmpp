@@ -30,7 +30,7 @@ using System.Collections;
 using System.Net;
 using System.Net.Sockets;
 
-namespace agsXMPP.net.dns
+namespace agsXMPP.Net.Dns
 {
 	/// <summary>
 	/// Summary description for Dns.

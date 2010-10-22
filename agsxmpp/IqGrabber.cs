@@ -48,11 +48,8 @@ namespace agsXMPP
         public IqGrabber(XmppComponentConnection conn)
         {
             m_connection = conn;
-#if MONOSSL
-            conn.OnIq += new agsXMPP.protocol.component.IqHandler(OnIqComponent);
-#else
 			conn.OnIq += new agsXMPP.protocol.component.IqHandler(OnIq);
-#endif
+
         }        
         
 #if !CF
@@ -69,13 +66,6 @@ namespace agsXMPP
             set { m_SynchronousTimeout = value; }
         }
 #endif 
-		
-#if MONOSSL
-		private void OnIqComponent(object sender, agsXMPP.protocol.component.IQ iq)
-		{
-			OnIq(sender, iq);
-		}
-#endif
 
 		/// <summary>
 		/// An IQ Element is received. Now check if its one we are looking for and
@@ -95,8 +85,6 @@ namespace agsXMPP
 			string id = iq.Id;
 			if(id == null)
 				return;
-
-            
 		    
             TrackerData td;
 

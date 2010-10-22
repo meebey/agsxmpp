@@ -532,7 +532,6 @@ namespace agsXMPP.Xml.Dom
 				return false;
 		}
 
-#if NET_2
         public bool HasTag<T>() where T : Element
         {
             return SelectSingleElement<T>() != null;
@@ -542,7 +541,7 @@ namespace agsXMPP.Xml.Dom
         {
             return this.SelectSingleElement<T>(traverseChildren) != null;
         }
-#endif
+
 
 		public bool HasTag(System.Type type, bool traverseChildren)
 		{
@@ -561,7 +560,7 @@ namespace agsXMPP.Xml.Dom
         public object HasTagEnum(System.Type enumType)
 		{			
 #if CF || CF_2            
-			string[] members = util.Enum.GetNames(enumType);	
+			string[] members = Util.Enum.GetNames(enumType);	
 #else
 			string[] members = Enum.GetNames(enumType);
 #endif
@@ -611,7 +610,6 @@ namespace agsXMPP.Xml.Dom
             return false;
 		}
 
-#if NET_2
         public bool RemoveTag<T>() where T : Element
         {
             Element tag = SelectSingleElement<T>();
@@ -623,7 +621,6 @@ namespace agsXMPP.Xml.Dom
             
             return false;
         }
-#endif
 
         /// <summary>
         /// Removes all Tags of the given type. Doesnt traverse the tree
@@ -784,31 +781,29 @@ namespace agsXMPP.Xml.Dom
 		{
 			get
 			{
-				if (this.ChildNodes.Count > 0)
+			    if (ChildNodes.Count > 0)
 				{
 					string xml = "";
 					try
 					{						
-						for (int i = 0; i < this.ChildNodes.Count; i++)
+						for (int i = 0; i < ChildNodes.Count; i++)
 						{
-							if (this.ChildNodes.Item(i).NodeType == NodeType.Element)
-								xml += this.ChildNodes.Item(i).ToString();
-							else if (this.ChildNodes.Item(i).NodeType == NodeType.Text)
-								xml += this.ChildNodes.Item(i).Value;
+							if (ChildNodes.Item(i).NodeType == NodeType.Element)
+								xml += ChildNodes.Item(i).ToString();
+							else if (ChildNodes.Item(i).NodeType == NodeType.Text)
+								xml += ChildNodes.Item(i).Value;
 						
 						}
 					}
-					catch (Exception ex)
+					catch (Exception)
 					{
-						Console.WriteLine(ex.Message);
 					}
 					return xml;
 
 				}
-				else
-					return null;
+			    return null;
 			}
-            set
+		    set
             {
                 Document doc = new Document();
                 doc.LoadXml(value);

@@ -141,8 +141,8 @@ namespace agsXMPP.protocol.extensions.geoloc
         /// </summary>
         public DateTime Timestamp
         {
-            get { return util.Time.ISO_8601Date(GetTag("timestamp")); }
-            set { SetTag("timestamp", util.Time.ISO_8601Date(value)); }
+            get { return Util.Time.ISO_8601Date(GetTag("timestamp")); }
+            set { SetTag("timestamp", Util.Time.ISO_8601Date(value)); }
         }
     }
 }

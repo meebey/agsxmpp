@@ -209,11 +209,10 @@ namespace agsXMPP.protocol.client
                     RemoveTag(typeof(Nickname));
 
                 if (value != null)
-                    this.AddChild(value);
+                    AddChild(value);
             }
         }
-
-#if NET_2
+              
         public Capabilities Capabilities
         {
             get
@@ -225,9 +224,8 @@ namespace agsXMPP.protocol.client
                 RemoveTag<Capabilities>();
 
                 if (value != null)
-                    this.AddChild(value);
+                    AddChild(value);
             }
         }
-#endif
 	}
 }
