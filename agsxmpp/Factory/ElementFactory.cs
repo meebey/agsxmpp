@@ -302,6 +302,12 @@ namespace agsXMPP.Factory
             AddElementType("amp",               Uri.AMP,                    typeof(agsXMPP.protocol.extensions.amp.Amp));
             AddElementType("rule",              Uri.AMP,                    typeof(agsXMPP.protocol.extensions.amp.Rule));
 
+            // Urn Time
+            AddElementType("time",              Uri.URN_TIME,               typeof(agsXMPP.protocol.time.Time));
+
+            // XEP-0145 Annotations
+            AddElementType("storage",           Uri.STORAGE_ROSTERNOTES,    typeof(agsXMPP.protocol.extensions.bookmarks.RosterNotes));
+            AddElementType("note",              Uri.STORAGE_ROSTERNOTES,    typeof(agsXMPP.protocol.extensions.bookmarks.RosterNote));
 		}		
 		
 		/// <summary>

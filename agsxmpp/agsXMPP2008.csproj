@@ -181,6 +181,8 @@
     <Compile Include="protocol\extensions\amp\Rule.cs" />
     <Compile Include="protocol\extensions\bookmarks\BookmarkManager.cs" />
     <Compile Include="protocol\extensions\bookmarks\Conference.cs" />
+    <Compile Include="protocol\extensions\bookmarks\RosterNote.cs" />
+    <Compile Include="protocol\extensions\bookmarks\RosterNotes.cs" />
     <Compile Include="protocol\extensions\bookmarks\Storage.cs" />
     <Compile Include="protocol\extensions\bookmarks\StorageIq.cs" />
     <Compile Include="protocol\extensions\bookmarks\Url.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="protocol\iq\register\RegisterEventArgs.cs" />
     <Compile Include="protocol\sasl\FailureCondition.cs" />
     <Compile Include="protocol\server\Presence.cs" />
+    <Compile Include="protocol\time\Time.cs" />
     <Compile Include="protocol\x\muc\Actor.cs" />
     <Compile Include="protocol\x\muc\MucManager.cs" />
     <Compile Include="Net\BaseSocket.cs">

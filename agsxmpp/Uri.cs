@@ -255,5 +255,13 @@ namespace agsXMPP
         /// <para>vcard-temp:x:update</para>
         /// </summary>
         public const string VCARD_UPDATE        = "vcard-temp:x:update";
+
+        public const string URN_TIME            = "urn:xmpp:time";
+
+        /// <summary>
+        /// <para>XEP-0145 Annotations</para>
+        /// <para>storage:rosternotes</para>
+        /// </summary>
+        public const string STORAGE_ROSTERNOTES = "storage:rosternotes";
 	}	
 }

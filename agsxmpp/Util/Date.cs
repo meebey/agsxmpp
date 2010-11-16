@@ -101,5 +101,12 @@ namespace agsXMPP.Util
 
             //("yyyy'-'MM'-'dd HH':'mm':'ss'Z'") 			
 		}
+        
+        public static TimeSpan UtcOffset()
+        {
+            var localZone = TimeZone.CurrentTimeZone;
+            var currentDate = DateTime.Now;
+            return localZone.GetUtcOffset(currentDate);
+        }
 	}
 }
