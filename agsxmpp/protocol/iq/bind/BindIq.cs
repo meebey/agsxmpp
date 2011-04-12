@@ -19,8 +19,6 @@
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-
 using agsXMPP.protocol.client;
 
 namespace agsXMPP.protocol.iq.bind
@@ -34,22 +32,16 @@ namespace agsXMPP.protocol.iq.bind
 		
 		public BindIq()
 		{
-			this.GenerateId();
-			this.AddChild(m_Bind);
+			GenerateId();
+			AddChild(m_Bind);
 		}
 
 		public BindIq(IqType type) : this()
 		{			
-			this.Type = type;		
+			Type = type;
 		}
 
-		public BindIq(IqType type, Jid to) : this()
-		{			
-			this.Type = type;
-			this.To = to;
-		}
-
-		public BindIq(IqType type, Jid to, string resource) : this(type, to)
+		public BindIq(IqType type, string resource) : this(type)
 		{			
 			m_Bind.Resource = resource;
 		}

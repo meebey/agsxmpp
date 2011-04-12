@@ -158,12 +158,8 @@ namespace agsXMPP.Sasl
 					if (f.SupportsBind)
 					{
 						m_XmppClient.DoChangeXmppConnectionState(XmppConnectionState.Binding);
-                        
-                        BindIq bIq;
-                        if (string.IsNullOrEmpty(m_XmppClient.Resource))
-						    bIq = new BindIq(IqType.set, new Jid(m_XmppClient.Server));
-                        else
-                            bIq = new BindIq(IqType.set, new Jid(m_XmppClient.Server), m_XmppClient.Resource);						
+
+					    BindIq bIq = string.IsNullOrEmpty(m_XmppClient.Resource) ? new BindIq(IqType.set) : new BindIq(IqType.set, m_XmppClient.Resource);						
 						
                         m_XmppClient.IqGrabber.SendIq(bIq, new IqCB(BindResult), null);					
 					}
@@ -200,11 +196,7 @@ namespace agsXMPP.Sasl
         {
             m_XmppClient.DoChangeXmppConnectionState(XmppConnectionState.Binding);
 
-            BindIq bIq;
-            if (m_XmppClient.Resource == null || m_XmppClient.Resource.Length == 0)
-                bIq = new BindIq(IqType.set, new Jid(m_XmppClient.Server));
-            else
-                bIq = new BindIq(IqType.set, new Jid(m_XmppClient.Server), m_XmppClient.Resource);
+            BindIq bIq = string.IsNullOrEmpty(m_XmppClient.Resource) ? new BindIq(IqType.set) : new BindIq(IqType.set, m_XmppClient.Resource);
 
             m_XmppClient.IqGrabber.SendIq(bIq, new IqCB(BindResult), null);	
         }
