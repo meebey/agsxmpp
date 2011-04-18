@@ -221,6 +221,10 @@ namespace agsXMPP.Xml.Dom
 			{
 				tw.WriteComment(e.Value);
 			}
+            else if (e.NodeType == NodeType.Cdata)
+            {
+                tw.WriteCData(e.Value);
+            }
 			else if (e.NodeType == NodeType.Element)
 			{
 				Element el = e as Element;

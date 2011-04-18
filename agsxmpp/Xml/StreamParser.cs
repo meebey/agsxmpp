@@ -443,11 +443,18 @@ namespace agsXMPP.Xml
 
 			if (current != null)
 			{		
-				Node last = current.LastNode;
-				if (last != null && last.NodeType == NodeType.Text)
-					last.Value = last.Value + text;
-				else
-					current.AddChild(new Text(text));
+                if (m_cdata)
+                {
+                    current.AddChild(new CData(text));
+                }
+                else
+                {
+				    Node last = current.LastNode;
+				    if (last != null && last.NodeType == NodeType.Text)
+					    last.Value = last.Value + text;
+				    else
+					    current.AddChild(new Text(text));
+                }
 			}
 		}      
 

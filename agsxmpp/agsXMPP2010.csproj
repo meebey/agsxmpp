@@ -673,6 +673,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Util\Runtime.cs" />
+    <Compile Include="Xml\Dom\CData.cs" />
     <Compile Include="Xml\Dom\Comment.cs">
       <SubType>Code</SubType>
     </Compile>
