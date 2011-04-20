@@ -776,8 +776,52 @@ namespace agsXMPP.Xml.Dom
 		{
 			this.SetAttribute("xmlns", value);	
 		}
-		
-		public string InnerXml
+
+        private CData GetFirstCDataNode()
+        {
+            foreach (Node ch in ChildNodes)
+            {
+                if (ch.NodeType == NodeType.Cdata)
+                    return ch as CData;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Has this Element some CDATA?
+        /// </summary>
+        /// <returns></returns>
+        public bool HasData()
+        {
+            return GetFirstCDataNode() != null;
+        }
+
+        /// <summary>
+        /// Get the CDATA
+        /// </summary>
+        /// <returns></returns>
+	    public string GetData()
+	    {
+	        var data = GetFirstCDataNode();
+	        return data == null ? null : data.Value;
+	    }
+
+        /// <summary>
+        /// Set the CDATA
+        /// </summary>
+        /// <param name="cdata"></param>
+        public void SetData(string cdata)
+        {
+            var data = GetFirstCDataNode();
+            if (data == null)
+            {
+                data = new CData();
+                AddChild(data);
+            }
+            data.Value = cdata;
+        }
+
+	    public string InnerXml
 		{
 			get
 			{
@@ -1053,7 +1097,7 @@ namespace agsXMPP.Xml.Dom
 		}
 
 		/// <summary>
-		/// Select a single Element.
+		/// Select a single element.
 		/// This function doesnt traverse the whole tree and checks only the underlying childnodes
 		/// </summary>
 		/// <param name="se"></param>
@@ -1065,7 +1109,7 @@ namespace agsXMPP.Xml.Dom
 		}
 
 		/// <summary>
-		/// Select a single Elemnt
+		/// Select a single element
 		/// </summary>
 		/// <param name="se"></param>
 		/// <param name="tagname"></param>
