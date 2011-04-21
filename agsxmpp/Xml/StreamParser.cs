@@ -445,7 +445,11 @@ namespace agsXMPP.Xml
 			{		
                 if (m_cdata)
                 {
-                    current.AddChild(new CData(text));
+                    Node last = current.LastNode;
+                    if (last != null && last.NodeType == NodeType.Cdata)
+                        last.Value = last.Value + text;
+                    else
+                        current.AddChild(new CData(text));
                 }
                 else
                 {

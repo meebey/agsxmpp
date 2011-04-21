@@ -732,7 +732,7 @@ namespace agsXMPP.Xml.Dom
             {
                 this.Attributes.Remove(name);
             }
-            m_Attributes.Add(name, val == true ? "true" : "false");
+            m_Attributes.Add(name, val ? "true" : "false");
         }
 
         /// <summary>
