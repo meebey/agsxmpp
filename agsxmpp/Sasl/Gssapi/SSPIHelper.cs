@@ -338,7 +338,7 @@ namespace agsXMPP.Sasl.Gssapi
             int fCredentialUse,
             IntPtr PAuthenticationID,//_LUID AuthenticationID,//pvLogonID, //PLUID
             IntPtr pAuthData,//PVOID
-            int pGetKeyFn, //SEC_GET_KEY_FN
+            IntPtr pGetKeyFn, //SEC_GET_KEY_FN
             IntPtr pvGetKeyArgument, //PVOID
             ref SECURITY_HANDLE phCredential, //SecHandle //PCtxtHandle ref
             ref SECURITY_INTEGER ptsExpiry); //PTimeStamp //TimeStamp ref
@@ -445,7 +445,7 @@ namespace agsXMPP.Sasl.Gssapi
             if (!_bGotClientCredentials)
             {
                 uint returnValue = AcquireCredentialsHandle(null, "Kerberos", SECPKG_CRED_OUTBOUND,
-                                                            IntPtr.Zero, IntPtr.Zero, 0, IntPtr.Zero,
+                                                            IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero,
                                                             ref _hOutboundCred, ref ClientLifeTime);
                 
                 if (returnValue != SEC_E_OK)
