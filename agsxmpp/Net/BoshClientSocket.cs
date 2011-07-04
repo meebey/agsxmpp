@@ -417,18 +417,26 @@ namespace agsXMPP.Net
 
         private void OnGetSessionRequestStream(IAsyncResult ar)
         {
-            WebRequestState state = ar.AsyncState as WebRequestState;
+            try
+            {
+                WebRequestState state = ar.AsyncState as WebRequestState;
+                HttpWebRequest req = state.WebRequest as HttpWebRequest;
 
-            HttpWebRequest req = state.WebRequest as HttpWebRequest;
+                Stream outputStream = req.EndGetRequestStream(ar);
 
-            Stream outputStream = req.EndGetRequestStream(ar);            
-            
-            byte[] bytes = Encoding.UTF8.GetBytes(state.Output);
-               
-            state.RequestStream = outputStream;
-            IAsyncResult result = outputStream.BeginWrite(bytes, 0, bytes.Length, new AsyncCallback(this.OnEndWrite), state);
+                byte[] bytes = Encoding.UTF8.GetBytes(state.Output);
+
+                state.RequestStream = outputStream;
+                IAsyncResult result = outputStream.BeginWrite(bytes, 0, bytes.Length, new AsyncCallback(this.OnEndWrite),
+                                                              state);
+            }
+            catch (WebException ex)
+            {
+                FireOnError(ex);
+                Disconnect();
+            }
         }
-        
+
         private void OnGetSessionRequestResponse(IAsyncResult result)
         {
             // grab the custom state object
