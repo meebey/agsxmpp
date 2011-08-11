@@ -359,7 +359,7 @@ namespace agsXMPP.Xml
             try
             {
                 if (OnStreamElement != null)
-                    OnStreamElement(this, current);
+                    OnStreamElement(this, el);
             }
             catch (Exception ex)
             {
