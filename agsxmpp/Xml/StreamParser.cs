@@ -460,7 +460,24 @@ namespace agsXMPP.Xml
 					    current.AddChild(new Text(text));
                 }
 			}
-		}      
-
+            else
+			{
+			    // text in root element
+                Node last = ((Element)m_root).LastNode;
+                if (m_cdata)
+                {
+                    if (last != null && last.NodeType == NodeType.Cdata)
+                        last.Value = last.Value + text;
+                    else
+                        m_root.AddChild(new CData(text));
+                } else
+                {
+                    if (last != null && last.NodeType == NodeType.Text)
+                        last.Value = last.Value + text;
+                    else
+                        m_root.AddChild(new Text(text));
+                }
+			}
+		}
 	}
 }

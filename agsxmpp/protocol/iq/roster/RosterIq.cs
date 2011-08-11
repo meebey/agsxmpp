@@ -37,7 +37,7 @@ namespace agsXMPP.protocol.iq.roster
 		private Roster m_Roster = new Roster();
 
 		public RosterIq()
-		{		
+		{
 			base.Query = m_Roster;
 			this.GenerateId();
 		}
