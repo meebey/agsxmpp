@@ -4,7 +4,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{33BAFD81-945E-46CF-A6E1-42CB7B626CDB}</ProjectGuid>
+    <ProjectGuid>{A9D8FFC4-53FB-4750-BDA6-BCC0EC4B4E3C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>agsXMPP</RootNamespace>
@@ -30,8 +30,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\CF2\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CF_2;STRINGPREP;BCCRYPTO</DefineConstants>
+    <OutputPath>bin\CF35\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CF_2;STRINGPREP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -42,15 +42,15 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\CF2\Release\</OutputPath>
-    <DefineConstants>TRACE;CF_2;STRINGPREP</DefineConstants>
+    <OutputPath>bin\CF35\Release\</OutputPath>
+    <DefineConstants>TRACE;CF_2;STRINGPREP;BCCRYPTO</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <FileAlignment>512</FileAlignment>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <DocumentationFile>bin\CF2\Release\agsXMPP.xml</DocumentationFile>
+    <DocumentationFile>bin\CF35\Release\agsXMPP.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Collections\BareJidComparer.cs" />
@@ -97,7 +97,6 @@
     <Compile Include="net\ClientSocket.cs" />
     <Compile Include="net\dns\Enums.cs" />
     <Compile Include="net\dns\InvalidResponseException.cs" />
-    <Compile Include="net\dns\IPConfigurationInformation.cs" />
     <Compile Include="net\dns\NoResponseException.cs" />
     <Compile Include="net\dns\Pointer.cs" />
     <Compile Include="net\dns\Question.cs" />
@@ -146,6 +145,8 @@
     <Compile Include="protocol\extensions\amp\Rule.cs" />
     <Compile Include="protocol\extensions\bookmarks\BookmarkManager.cs" />
     <Compile Include="protocol\extensions\bookmarks\Conference.cs" />
+    <Compile Include="protocol\extensions\bookmarks\RosterNote.cs" />
+    <Compile Include="protocol\extensions\bookmarks\RosterNotes.cs" />
     <Compile Include="protocol\extensions\bookmarks\Storage.cs" />
     <Compile Include="protocol\extensions\bookmarks\StorageIq.cs" />
     <Compile Include="protocol\extensions\bookmarks\Url.cs" />
@@ -326,6 +327,7 @@
     <Compile Include="protocol\stream\feature\compression\Compression.cs" />
     <Compile Include="protocol\stream\feature\compression\Method.cs" />
     <Compile Include="protocol\stream\feature\Register.cs" />
+    <Compile Include="protocol\time\Time.cs" />
     <Compile Include="protocol\tls\Failure.cs" />
     <Compile Include="protocol\tls\Proceed.cs" />
     <Compile Include="protocol\tls\StartTls.cs" />
@@ -403,12 +405,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="changelog.txt" />
-    <Content Include="Xml\xpnet\copying.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="key.snk" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="crypto, Version=1.4.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\crypto.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
