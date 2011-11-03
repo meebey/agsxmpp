@@ -67,6 +67,7 @@ namespace agsXMPP.Sasl
 		
 		internal void OnStreamElement(object sender, Node e)
 		{
+            if (m_XmppClient == null) return;
             if ( m_XmppClient.XmppConnectionState == XmppConnectionState.Securing
                 || m_XmppClient.XmppConnectionState == XmppConnectionState.StartCompression)
                 return;

@@ -1446,10 +1446,12 @@ namespace agsXMPP
 #if SSL || BCCRYPTO || CF_2
             else if (e is Proceed)
 			{	
-				StreamParser.Reset();			
-				ClientSocket.StartTls();				
-				SendStreamHeader(false);
-				DoChangeXmppConnectionState(XmppConnectionState.Authenticating);
+				StreamParser.Reset();	
+		        if (ClientSocket.StartTls())
+                {
+				    SendStreamHeader(false);
+				    DoChangeXmppConnectionState(XmppConnectionState.Authenticating);
+                }
             }
 #endif
             else if (e is Compressed)

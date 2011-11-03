@@ -194,10 +194,10 @@ namespace agsXMPP.Net
 
 		}
 
-		public virtual void StartTls()
+		public virtual bool StartTls()
 		{
-
-        }
+		    return true;
+		}
 
         public virtual void StartCompression()
         {

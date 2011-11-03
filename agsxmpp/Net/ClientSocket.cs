@@ -273,27 +273,25 @@ namespace agsXMPP.Net
 		/// <summary>
 		/// Starts TLS on a "normal" connection
 		/// </summary>
-		public override void StartTls()
+		public override bool StartTls()
 		{
 			base.StartTls();
 			
             SslProtocols protocol = SslProtocols.Tls;
-			InitSSL(protocol);
+			return InitSSL(protocol);
 		}           
 
-		/// <summary>
-		/// 
-		/// </summary>
-		private void InitSSL()
+		
+		private bool InitSSL()
 		{
-            InitSSL(SslProtocols.Default);
+            return InitSSL(SslProtocols.Default);
 		}        
         
         /// <summary>
 		/// 
 		/// </summary>
 		/// <param name="protocol"></param>		
-        private void InitSSL(SslProtocols protocol)
+        private bool InitSSL(SslProtocols protocol)
 		{            
 			m_SSLStream = new SslStream(
                 m_Stream,
@@ -320,12 +318,15 @@ namespace agsXMPP.Net
                 }
                 //Console.WriteLine ("Authentication failed - closing the connection.");
                 //client.Close();
-                return;
+                Disconnect();
+                return false;
             }
 
             m_NetworkStream = m_SSLStream;
-			m_SSL = true;			
-        }
+			m_SSL = true;
+            
+            return true;
+		}
 
 
         #region << SSL Properties Display stuff >>
