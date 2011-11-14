@@ -911,6 +911,18 @@ namespace agsXMPP.Net
                     }
                     else
                     {
+                        if (sbody != null)
+                        {
+                            var doc = new Document();
+                            doc.LoadXml(sbody);
+                            if (doc.RootElement != null)
+                            {
+                                var body = doc.RootElement as Body;
+                                if (body.Type == BoshType.terminate)
+                                    TerminateBoshSession();
+                            }
+                        }
+
                         if (terminate && !terminated)
                         {
                             // empty teminate response
