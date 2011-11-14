@@ -902,7 +902,6 @@ namespace agsXMPP.Net
                     string stanzas = null;
 
                     ParseResponse(Encoding.UTF8.GetString(recv, 0, recv.Length), ref sbody, ref stanzas);
-                    //string res = Encoding.UTF8.GetString(recv, 0, recv.Length);
 
                     if (stanzas != null)
                     {
@@ -928,7 +927,6 @@ namespace agsXMPP.Net
                             // empty teminate response
                             TerminateBoshSession();
                         }
-                        //Console.WriteLine("Empty Response");
                     }
                 }
 
