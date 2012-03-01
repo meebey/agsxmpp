@@ -48,10 +48,5 @@ namespace agsXMPP.Net.Dns
 		{
 			// no implementation
 		}
-        
-        //protected NoResponseException(SerializationInfo info, StreamingContext context) : base(info, context)
-        //{
-        //    // no implementation
-        //}
-	}
+    }
 }

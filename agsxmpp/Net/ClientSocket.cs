@@ -189,9 +189,14 @@ namespace agsXMPP.Net
 
             try
             {
-
-                IPHostEntry ipHostInfo = System.Net.Dns.GetHostEntry(Address);
-                IPAddress ipAddress = ipHostInfo.AddressList[0];// IPAddress.Parse(address);
+                IPAddress ipAddress;
+                // first check if a IP adress was passed as Hostname            
+                if (!IPAddress.TryParse(Address, out ipAddress))
+                {
+                    IPHostEntry ipHostInfo = System.Net.Dns.GetHostEntry(Address);
+                    ipAddress = ipHostInfo.AddressList[0];
+                }
+                
                 IPEndPoint endPoint = new IPEndPoint(ipAddress, Port);
 
                 // Timeout
