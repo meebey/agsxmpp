@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (c) 2003-2010 by AG-Software 											 *
+ * Copyright (c) 2003-2012 by AG-Software 											 *
  * All Rights Reserved.																 *
  * Contact information for AG-Software is available at http://www.ag-software.de	 *
  *																					 *
@@ -210,8 +210,7 @@ namespace agsXMPP.Net
 #if !(CF || CF_2)
                 // IPV6 Support for .NET 2.0
                 if (Socket.OSSupportsIPv6 && (endPoint.AddressFamily == AddressFamily.InterNetworkV6))
-                    _socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);                   
-                
+                    _socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
                 else
                     _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 #else
