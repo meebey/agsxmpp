@@ -427,8 +427,7 @@ namespace agsXMPP.Net
                 byte[] bytes = Encoding.UTF8.GetBytes(state.Output);
 
                 state.RequestStream = outputStream;
-                IAsyncResult result = outputStream.BeginWrite(bytes, 0, bytes.Length, new AsyncCallback(this.OnEndWrite),
-                                                              state);
+                IAsyncResult result = outputStream.BeginWrite(bytes, 0, bytes.Length, OnEndWrite, state);
             }
             catch (WebException ex)
             {
@@ -452,7 +451,6 @@ namespace agsXMPP.Net
             // sending any session errors as specially-formatted identifiers.
             if (resp.StatusCode != HttpStatusCode.OK)
             {
-                //FireOnError(new PollSocketException("unexpected status code " + resp.StatusCode.ToString()));
                 return;
             }
 
@@ -583,7 +581,7 @@ namespace agsXMPP.Net
             
             if (data.EndsWith("</stream:stream>"))
             {
-                agsXMPP.protocol.client.Presence pres = new agsXMPP.protocol.client.Presence();
+                protocol.client.Presence pres = new protocol.client.Presence();
                 pres.Type = agsXMPP.protocol.client.PresenceType.unavailable;
                 data = pres.ToString(); //= "<presence type='unavailable' xmlns='jabber:client'/>";
                 terminate = true;
@@ -702,17 +700,16 @@ namespace agsXMPP.Net
             req.ContentType     = CONTENT_TYPE;
             req.Timeout         = m_Wait * 1000;
             req.KeepAlive       = m_KeepAlive;       
-            req.ContentLength   = state.Output.Length;
+            req.ContentLength   = Encoding.UTF8.GetBytes(state.Output).Length;
             
             // Create the delegate that invokes methods for the timer.            
-            TimerCallback timerDelegate = new TimerCallback(TimeOutGetRequestStream);
+            TimerCallback timerDelegate = TimeOutGetRequestStream;
             Timer timeoutTimer = new Timer(timerDelegate, state, WEBREQUEST_TIMEOUT, WEBREQUEST_TIMEOUT);
             state.TimeOutTimer = timeoutTimer;
-
-            //Console.WriteLine(String.Format("Start Webrequest: id:{0}", webRequestId.ToString()));
+            
             try
             {
-                IAsyncResult result = req.BeginGetRequestStream(new AsyncCallback(this.OnGetRequestStream), state);                
+                req.BeginGetRequestStream(OnGetRequestStream, state);                
             }
             catch(Exception ex)
             {
@@ -731,24 +728,11 @@ namespace agsXMPP.Net
             state.WebRequest.Abort();
         }
 
-//        public void TimeOutGetResponseStream(Object stateObj)
-//        {
-//#if DEBUG
-//            Console.WriteLine("Web Response timed out");
-//#endif
-//            WebRequestState state = stateObj as WebRequestState;
-//            state.TimeOutTimer.Dispose();
-//            state.Aborted = true;
-//            state.WebRequest.Abort();
-//        }
-
         private void OnGetRequestStream(IAsyncResult ar)
         {
             try
             {
                 WebRequestState state = ar.AsyncState as WebRequestState;
-
-                //Console.WriteLine(String.Format("OnGetRequestStream: id:{0}", state.WebRequestId.ToString()));
 
                 if (state.Aborted)
                 {
@@ -762,16 +746,12 @@ namespace agsXMPP.Net
 
                     Stream requestStream = req.EndGetRequestStream(ar);
                     state.RequestStream = requestStream;
-                    //byte[] bytes = Encoding.UTF8.GetBytes(BuildPostData());
                     byte[] bytes = Encoding.UTF8.GetBytes(state.Output);
-                    //Console.WriteLine("Write Request:");
-                    //Console.WriteLine(state.Output);
-                    IAsyncResult result = requestStream.BeginWrite(bytes, 0, bytes.Length, new AsyncCallback(this.OnEndWrite), state);
+                    requestStream.BeginWrite(bytes, 0, bytes.Length, OnEndWrite, state);
                 }
             }
             catch (Exception ex)
             {
-                //Console.WriteLine(ex.Message);
                 activeRequests--;
 
                 WebRequestState state = ar.AsyncState as WebRequestState;
@@ -782,8 +762,6 @@ namespace agsXMPP.Net
         private void OnEndWrite(IAsyncResult ar)
         {
             WebRequestState state = ar.AsyncState as WebRequestState;
-
-            //Console.WriteLine(String.Format("OnEndWrite: id:{0}", state.WebRequestId.ToString()));
 
             HttpWebRequest req      = state.WebRequest as HttpWebRequest;
             Stream requestStream    = state.RequestStream;
@@ -796,9 +774,9 @@ namespace agsXMPP.Net
             try
             {
                 if (state.IsSessionRequest)
-                    result = req.BeginGetResponse(new AsyncCallback(this.OnGetSessionRequestResponse), state);            
+                    req.BeginGetResponse(OnGetSessionRequestResponse, state);            
                 else
-                    result = req.BeginGetResponse(new AsyncCallback(this.OnGetResponse), state);     
+                    req.BeginGetResponse(OnGetResponse, state);     
                
             }
             catch (Exception ex)
@@ -814,23 +792,7 @@ namespace agsXMPP.Net
                 requestIsTerminating = true;
                 // grab the custom state object
                 WebRequestState state = (WebRequestState)ar.AsyncState;
-                
-                //Console.WriteLine(String.Format("OnGetResponse: id:{0}", state.WebRequestId.ToString()));
-
-                //if (state.Aborted)
-                //{
-                //    waitingRequests--;
-                //    if (waitingRequests == 0 && !terminated)
-                //    {
-                //        StartWebRequest();
-                //    }
-                //    return;
-                //}
-                               
-
                 HttpWebRequest request = (HttpWebRequest)state.WebRequest;               
-                
-
                 HttpWebResponse resp = null;
 
                 if (request.HaveResponse)
@@ -856,10 +818,6 @@ namespace agsXMPP.Net
                             {
                                 TerminateBoshSession();
                             }
-                            //if (waitingRequests == 0)
-                            //{
-                            //    StartWebRequest();                    
-                            //}  
                         }
                         return;
                     }
@@ -875,7 +833,6 @@ namespace agsXMPP.Net
                             //Console.WriteLine("Not Found");
                             TerminateBoshSession();
                         }
-                        //FireOnError(new PollSocketException("unexpected status code " + resp.StatusCode.ToString()));
                         return;
                     }
                 }
@@ -947,8 +904,7 @@ namespace agsXMPP.Net
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("Error in OnGetResponse");
-                //Console.WriteLine(ex.Message);
+                
             }
         }
 
