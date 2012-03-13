@@ -20,14 +20,11 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
 
 using System;
-using System.Diagnostics;
 using agsXMPP.protocol.client;
 using agsXMPP.protocol.iq.bind;
 using agsXMPP.protocol.iq.session;
 using agsXMPP.protocol.sasl;
 using agsXMPP.protocol.stream;
-
-using agsXMPP.Xml;
 using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.Sasl
@@ -40,16 +37,16 @@ namespace agsXMPP.Sasl
 		public event SaslEventHandler	OnSaslStart;
 		public event ObjectHandler		OnSaslEnd;
 
-		private XmppClientConnection	m_XmppClient	= null;		
-		private Mechanism	m_Mechanism		= null;
+		private XmppClientConnection	m_XmppClient;		
+		private Mechanism	m_Mechanism;
 		// Track whether Dispose has been called.
-		private bool					disposed		= false;
+		private bool					m_Disposed;
 
 		public SaslHandler(XmppClientConnection conn)
 		{
 			m_XmppClient = conn;		
 		
-			m_XmppClient.StreamParser.OnStreamElement	+= new StreamHandler(OnStreamElement);
+			m_XmppClient.StreamParser.OnStreamElement += OnStreamElement;
 		}
 
 		// Use C# destructor syntax for finalization code.
@@ -162,7 +159,7 @@ namespace agsXMPP.Sasl
 
 					    BindIq bIq = string.IsNullOrEmpty(m_XmppClient.Resource) ? new BindIq(IqType.set) : new BindIq(IqType.set, m_XmppClient.Resource);						
 						
-                        m_XmppClient.IqGrabber.SendIq(bIq, new IqCB(BindResult), null);					
+                        m_XmppClient.IqGrabber.SendIq(bIq, BindResult, null);					
 					}
 				}
 								
@@ -199,7 +196,7 @@ namespace agsXMPP.Sasl
 
             BindIq bIq = string.IsNullOrEmpty(m_XmppClient.Resource) ? new BindIq(IqType.set) : new BindIq(IqType.set, m_XmppClient.Resource);
 
-            m_XmppClient.IqGrabber.SendIq(bIq, new IqCB(BindResult), null);	
+            m_XmppClient.IqGrabber.SendIq(bIq, BindResult, null);	
         }
 
 		private void BindResult(object sender, IQ iq, object data)
@@ -235,12 +232,13 @@ namespace agsXMPP.Sasl
 				// success, so start the session now
 				m_XmppClient.DoChangeXmppConnectionState(XmppConnectionState.StartSession);
 				SessionIq sIq = new SessionIq(IqType.set, new Jid(m_XmppClient.Server));
-				m_XmppClient.IqGrabber.SendIq(sIq, new IqCB(SessionResult), null);
+				m_XmppClient.IqGrabber.SendIq(sIq, SessionResult, null);
 
 			}
 			else if (iq.Type == IqType.error)
 			{
 				// TODO, handle bind errors
+			    m_XmppClient.DoRaiseEventBindError(iq);
 			}			
 		}
 
@@ -275,7 +273,7 @@ namespace agsXMPP.Sasl
 		private void Dispose(bool disposing)
 		{
 			// Check to see if Dispose has already been called.
-			if(!this.disposed)
+			if(!m_Disposed)
 			{
 				// If disposing equals true, dispose all managed 
 				// and unmanaged resources.
@@ -283,7 +281,7 @@ namespace agsXMPP.Sasl
 				{
 					// Dispose managed resources.
 					// Remove the event handler or we will be in trouble with too many events
-					m_XmppClient.StreamParser.OnStreamElement	-= new StreamHandler(OnStreamElement);
+					m_XmppClient.StreamParser.OnStreamElement -= OnStreamElement;
 					m_XmppClient	= null;		
 					m_Mechanism		= null;
 				}
@@ -294,10 +292,8 @@ namespace agsXMPP.Sasl
 				// only the following code is executed.
 				        
 			}
-			disposed = true;         
+			m_Disposed = true;         
 		}
-
-
 		#endregion
 	}
 }

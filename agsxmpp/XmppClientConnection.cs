@@ -452,6 +452,11 @@ namespace agsXMPP
 		public event ObjectHandler				OnBinded;
 
         /// <summary>
+        /// Event that occurs on bind errors
+        /// </summary>
+        public event XmppElementHandler         OnBindError;
+
+        /// <summary>
         /// This event is fired when we get register information.
         /// You ca use this event for custom registrations.
         /// </summary>
@@ -1554,6 +1559,12 @@ namespace agsXMPP
 			if (OnBinded!=null)
 				OnBinded(this);
 		}
+
+        internal void DoRaiseEventBindError(Element iq)
+        {
+            if (OnBindError != null)
+                OnBindError(this, iq);
+        }
         
 		#region << SASL Handler Events >>
 		private void m_SaslHandler_OnSaslStart(object sender, SaslEventArgs args)
