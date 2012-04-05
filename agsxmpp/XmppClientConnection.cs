@@ -293,8 +293,6 @@ namespace agsXMPP
                     throw new NotImplementedException();
                 
                 m_UseSso = value;
-
-                throw new NotImplementedException();
             }
         }
 
