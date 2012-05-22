@@ -249,11 +249,12 @@ namespace agsXMPP.Sasl.Gssapi
     [StructLayout(LayoutKind.Sequential)]
     internal struct SECURITY_HANDLE
     {
-        public uint LowPart;
-        public uint HighPart;
+        //both changed from uint - crucial for 64 bit platforms
+        public IntPtr LowPart;
+        public IntPtr HighPart;
         public SECURITY_HANDLE(int dummy)
         {
-            LowPart = HighPart = 0;
+            LowPart = HighPart = IntPtr.Zero;
         }
     };
 
