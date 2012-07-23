@@ -381,6 +381,7 @@
     <Compile Include="util\Exceptions.cs" />
     <Compile Include="util\Hash.cs" />
     <Compile Include="util\WinCeApi.cs" />
+    <Compile Include="Xml\Dom\CData.cs" />
     <Compile Include="Xml\Dom\Comment.cs" />
     <Compile Include="Xml\Dom\Document.cs" />
     <Compile Include="Xml\Dom\DomLoader.cs" />
