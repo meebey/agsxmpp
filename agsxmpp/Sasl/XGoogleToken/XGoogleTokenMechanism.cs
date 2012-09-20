@@ -54,11 +54,6 @@ namespace agsXMPP.Sasl.XGoogleToken
         private const   string                  URL_ISSUE_AUTH_TOKEN    = "https://www.google.com/accounts/IssueAuthToken";
         private const   string                  URL_CLIENT_AUTH         = "https://www.google.com/accounts/ClientAuth";        
         
-
-        public XGoogleTokenMechanism()
-		{			
-		}
-
 		public override void Init(XmppClientConnection con)
 		{
             base.XmppClientConnection = con;			

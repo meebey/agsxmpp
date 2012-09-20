@@ -143,6 +143,8 @@ namespace agsXMPP.Sasl
 						m_Mechanism.Username = m_XmppClient.Username;
 						m_Mechanism.Password = m_XmppClient.Password;
 						m_Mechanism.Server = m_XmppClient.Server;
+
+                        m_Mechanism.Token = args.Token;
 						// Call Init Method on the mechanism
 						m_Mechanism.Init(m_XmppClient);
 					}
