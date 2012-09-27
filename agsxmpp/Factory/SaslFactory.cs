@@ -23,6 +23,7 @@ using System;
 using System.Collections;
 
 using agsXMPP.Sasl;
+using agsXMPP.Sasl.Facebook;
 using agsXMPP.Sasl.Plain;
 using agsXMPP.Sasl.DigestMD5;
 using agsXMPP.Sasl.Anonymous;
@@ -46,13 +47,14 @@ namespace agsXMPP.Factory
 
 		static SaslFactory()
 		{
-			AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.PLAIN),		    typeof(PlainMechanism));
-			AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.DIGEST_MD5),	    typeof(DigestMD5Mechanism));
-            AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.ANONYMOUS),       typeof(AnonymousMechanism));
-            AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.X_GOOGLE_TOKEN),  typeof(XGoogleTokenMechanism));
+			AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.PLAIN),		        typeof(PlainMechanism));
+			AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.DIGEST_MD5),	        typeof(DigestMD5Mechanism));
+            AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.ANONYMOUS),           typeof(AnonymousMechanism));
+            AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.X_GOOGLE_TOKEN),      typeof(XGoogleTokenMechanism));
+            AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.X_FACEBOOK_PLATFORM), typeof(FacebookMechanism);
 #if !(CF || CF_2)
-            AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.SCRAM_SHA_1),     typeof(ScramSha1Mechanism));
-            AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.GSSAPI),          typeof(GssapiMechanism));
+            AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.SCRAM_SHA_1),         typeof(ScramSha1Mechanism));
+            AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.GSSAPI),              typeof(GssapiMechanism));
 #endif
 		}
 
