@@ -61,6 +61,10 @@ namespace agsXMPP.Sasl
 	    public string Mechanism { get; set; }
 
 	    public Mechanisms Mechanisms { get; set; }
-        public string Token { get; set; }
+        
+        /// <summary>
+        /// Extra Data for special Sasl mechanisms
+        /// </summary>
+        public object ExtentedData { get; set; }
 	}
 }

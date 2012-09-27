@@ -68,7 +68,10 @@ namespace agsXMPP.Sasl
 			set { m_Server = value.ToLower(); }
 		}
 
-        public string Token { get; set; }
+        /// <summary>
+        /// Extra data for special Sasl mechanisms
+        /// </summary>
+        public ExtendedData ExtentedData { get; set; }
 		#endregion
 
         /// <summary>

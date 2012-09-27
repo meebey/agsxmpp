@@ -634,6 +634,9 @@
     </Compile>
     <Compile Include="protocol\iq\privacy\RuleManager.cs" />
     <Compile Include="protocol\x\vcard_update\VcardUpdate.cs" />
+    <Compile Include="Sasl\ExtendedData.cs" />
+    <Compile Include="Sasl\Facebook\FacebookExtendedData.cs" />
+    <Compile Include="Sasl\Facebook\FacebookMechanism.cs" />
     <Compile Include="Sasl\Gssapi\GssapiMechanism.cs" />
     <Compile Include="Sasl\Gssapi\SSPIHelper.cs" />
     <Compile Include="Sasl\SaslEventArgs.cs">

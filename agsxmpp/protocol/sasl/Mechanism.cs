@@ -81,7 +81,8 @@ namespace agsXMPP.protocol.sasl
 		KERBEROS_V5,
 		NMAS_SAMBA_AUTH,
         X_GOOGLE_TOKEN,
-        SCRAM_SHA_1
+        SCRAM_SHA_1,
+        X_FACEBOOK_PLATFORM
 	}
 
 	/// <summary>
@@ -167,6 +168,8 @@ namespace agsXMPP.protocol.sasl
                     return MechanismType.X_GOOGLE_TOKEN;
                 case "SCRAM-SHA-1":
 			        return MechanismType.SCRAM_SHA_1;
+                case "X-FACEBOOK-PLATFORM":
+			        return MechanismType.X_FACEBOOK_PLATFORM;
                 default:
 					return MechanismType.NONE;
 			}
@@ -224,6 +227,8 @@ namespace agsXMPP.protocol.sasl
                     return "X-GOOGLE-TOKEN";
                 case MechanismType.SCRAM_SHA_1:
 			        return "SCRAM-SHA-1";
+                case MechanismType.X_FACEBOOK_PLATFORM:
+			        return "X-FACEBOOK-PLATFORM";
 				default:
 					return null;
 			}
