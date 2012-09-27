@@ -65,6 +65,6 @@ namespace agsXMPP.Sasl
         /// <summary>
         /// Extra Data for special Sasl mechanisms
         /// </summary>
-        public object ExtentedData { get; set; }
+        public ExtendedData ExtentedData { get; set; }
 	}
 }
