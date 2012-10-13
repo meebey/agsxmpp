@@ -90,7 +90,7 @@ namespace agsXMPP.protocol.iq.rpc
             ArrayList al = new ArrayList();
 
             // If an error occurred, the server will return fault
-            Element fault = this.SelectSingleElement("fault");
+            Element fault = SelectSingleElement("fault");
             if (fault != null)
             {
                 Hashtable ht = ParseStruct(fault.SelectSingleElement("struct", true));
@@ -98,7 +98,7 @@ namespace agsXMPP.protocol.iq.rpc
             }
             else
             {
-                Element elParams = this.SelectSingleElement("params");
+                Element elParams = SelectSingleElement("params");
                 ElementList nl = elParams.SelectElements("param");
 
 
@@ -129,7 +129,7 @@ namespace agsXMPP.protocol.iq.rpc
                     if (next.TagName == "string")
                         result = next.Value;
                     else if (next.TagName == "boolean")
-                        result = next.Value == "1" ? true : false;
+                        result = next.Value == "1";
                     else if (next.TagName == "i4")
                         result = Int32.Parse(next.Value);
                     else if (next.TagName == "int") // occurs in fault
@@ -187,8 +187,7 @@ namespace agsXMPP.protocol.iq.rpc
                 }               
                 return al;
             }
-            else
-                return null;
+            return null;
         }
 
         /// <summary>

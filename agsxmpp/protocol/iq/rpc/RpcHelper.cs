@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.iq.rpc
@@ -43,7 +41,7 @@ namespace agsXMPP.protocol.iq.rpc
             {
                 value.AddChild(new Element("i4", ((Int32)param).ToString()));
             }
-            else if (param is System.Double)
+            else if (param is Double)
             {
                 NumberFormatInfo numberInfo = new NumberFormatInfo();
                 numberInfo.NumberDecimalSeparator = ".";
@@ -100,18 +98,23 @@ namespace agsXMPP.protocol.iq.rpc
                     Element member = new Element("member");
                     object key = myEnumerator.Current;
 
-                    member.AddChild(new Element("name", key.ToString()));
-                    WriteValue(ht[key], member);
+                    if (key != null)
+                    {
+                        member.AddChild(new Element("name", key.ToString()));
+                        WriteValue(ht[key], member);
+                    }
 
                     elStruct.AddChild(member);
                 }
 
                 value.AddChild(elStruct);
             }
+            /*
             else
             {
                 // Unknown Type
             }
+            */
             parent.AddChild(value);
         }
     }

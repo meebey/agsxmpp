@@ -17,12 +17,9 @@
  *																					 *
  * For general enquiries visit our website at:										 *
  * http://www.ag-software.de														 *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
 using System.Collections;
-using System.Globalization;
-
 using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.iq.rpc
@@ -49,8 +46,8 @@ namespace agsXMPP.protocol.iq.rpc
         /// </summary>
         public MethodCall()
         {
-            this.TagName    = "methodCall";
-            this.Namespace  = Uri.IQ_RPC;
+            TagName    = "methodCall";
+            Namespace  = Uri.IQ_RPC;
         }
 
         /// <summary>

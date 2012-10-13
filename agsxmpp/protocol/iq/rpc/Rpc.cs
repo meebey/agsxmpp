@@ -17,9 +17,8 @@
  *																					 *
  * For general enquiries visit our website at:										 *
  * http://www.ag-software.de														 *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
 using agsXMPP.Xml.Dom;
 
 namespace agsXMPP.protocol.iq.rpc
@@ -66,10 +65,9 @@ namespace agsXMPP.protocol.iq.rpc
     {
         public Rpc()
         {
-            this.TagName    = "query";
-            this.Namespace  = Uri.IQ_RPC;
+            TagName    = "query";
+            Namespace  = Uri.IQ_RPC;
         }
-
 
         /// <summary>
         /// 
