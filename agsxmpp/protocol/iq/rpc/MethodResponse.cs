@@ -55,8 +55,20 @@ namespace agsXMPP.protocol.iq.rpc
          */
         public MethodResponse()
         {
-            this.TagName = "methodResponse";
-            this.Namespace = Uri.IQ_RPC;
+            TagName = "methodResponse";
+            Namespace = Uri.IQ_RPC;
+        }
+
+        public void WriteResponse(ArrayList Params)
+        {
+            // remove this tag if exists, in case this function gets
+            // calles multiple times by some guys
+            RemoveTag("params");
+
+            var elParams = RpcHelper.WriteParams(Params);
+
+            if (elParams != null)
+                AddChild(elParams);
         }
 
         /// <summary>
