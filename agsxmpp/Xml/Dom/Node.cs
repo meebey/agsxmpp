@@ -17,9 +17,8 @@
  *																					 *
  * For general enquiries visit our website at:										 *
  * http://www.ag-software.de														 *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
 using System.IO;
 using System.Xml;
 using System.Text;
@@ -43,15 +42,15 @@ namespace agsXMPP.Xml.Dom
 	/// </summary>
 	public abstract class Node
 	{
-		internal	Node			Parent			= null;
+		internal	Node			Parent;
 
-		private		NodeType		m_NodeType;
-		private		string			m_Value			= null;
-		private		string			m_Namespace		= null;
-		internal	int				m_Index			= 0;
-		private		NodeList		m_ChildNodes;
+		private		NodeType		    m_NodeType;
+		private		string			    m_Value;
+		private		string			    m_Namespace;
+		internal	int				    m_Index;
+		private     readonly NodeList   m_ChildNodes;
 
-		public Node()
+	    protected Node()
 		{	
 			m_ChildNodes = new NodeList(this);
 		}
@@ -108,7 +107,7 @@ namespace agsXMPP.Xml.Dom
 		/// <param name="e"></param>
 		public virtual void AddChild(Node e)
 		{
-			this.m_ChildNodes.Add(e);
+			m_ChildNodes.Add(e);
 		}
 		
 		/// <summary>
@@ -121,27 +120,24 @@ namespace agsXMPP.Xml.Dom
 
 		public string ToString(Encoding enc)
 		{
-			if ( this != null )
-			{
-				StringWriterWithEncoding tw = new StringWriterWithEncoding(enc);
-				//System.IO.StringWriter tw = new StringWriter();
-				XmlTextWriter w = new XmlTextWriter(tw);
-				// Format the Output. So its human readable in notepad
-				// Without that everyting is in one line
-				w.Formatting = Formatting.Indented;
-				w.Indentation = 3;	
-			
-				WriteTree(this, w, null);
+            using (var tw = new StringWriterWithEncoding(enc))
+            {
+                //System.IO.StringWriter tw = new StringWriter();
+                using (var w = new XmlTextWriter(tw))
+                {
+                    // Format the Output. So its human readable in notepad
+                    // Without that everyting is in one line
+                    w.Formatting = Formatting.Indented;
+                    w.Indentation = 3;
 
-				return tw.ToString();
-			}
-			else
-			{
-				return "";
-			}
+                    WriteTree(this, w, null);
+
+                    return tw.ToString();
+                }
+            }
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// returns the Xml, difference to the Xml property is that you can set formatting porperties
 		/// </summary>
 		/// <param name="format"></param>
@@ -166,26 +162,26 @@ namespace agsXMPP.Xml.Dom
 		
 		private string BuildXml(Node e, Formatting format, int indent, char indentchar)
 		{
-			if ( e != null )
+		    if ( e != null )
 			{
-				System.IO.StringWriter tw = new StringWriter();
-				XmlTextWriter w = new XmlTextWriter(tw);
-				w.Formatting	= format;
-				w.Indentation	= indent;
-				w.IndentChar	= indentchar;
+				using(var tw = new StringWriter())
+                {
+				    using(var w = new XmlTextWriter(tw))
+                    {
+				        w.Formatting	= format;
+				        w.Indentation	= indent;
+				        w.IndentChar	= indentchar;
 
-				WriteTree(this, w, null);
+				        WriteTree(this, w, null);
 
-				return tw.ToString();
+				        return tw.ToString();
+                    }
+                }
 			}
-			else
-			{
-				return "";
-			}
-
+		    return "";
 		}
-		
-		private void WriteTree(Node e, XmlTextWriter tw, Node parent) 
+
+	    private void WriteTree(Node e, XmlTextWriter tw, Node parent) 
 		{		
 			if (e.NodeType == NodeType.Document)
 			{
