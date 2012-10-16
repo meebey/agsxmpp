@@ -58,7 +58,7 @@ namespace agsXMPP.Xml.Dom
 
             e.m_Index = Count;
 
-            this.List.Add(e);
+            List.Add(e);
         }
 	
 		// Method implementation from the CollectionBase class
@@ -80,14 +80,6 @@ namespace agsXMPP.Xml.Dom
 			int idx = e.Index;
 			List.Remove(e);
 			RebuildIndex(idx);
-			//			for ( int i = 0; i< this.Count; i++)
-			//			{
-			//				if (e == (Element) this.List[i])
-			//				{
-			//					Remove(i);
-			//					return;
-			//				}
-			//			}
 		}
 	
 		public Node Item(int index) 
@@ -114,7 +106,6 @@ namespace agsXMPP.Xml.Dom
 		{
 			for (int i = start; i < Count; i++)
 			{
-				//Element e = (Element) List[i];
                 Node node = (Node) List[i];
 				node.m_Index = i;
 			}			

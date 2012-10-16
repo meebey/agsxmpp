@@ -17,9 +17,8 @@
  *																					 *
  * For general enquiries visit our website at:										 *
  * http://www.ag-software.de														 *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
 using System.IO;
 
 namespace agsXMPP.Xml.Dom
@@ -31,7 +30,7 @@ namespace agsXMPP.Xml.Dom
 	{
 		public Document()
 		{
-			this.NodeType = NodeType.Document;
+			NodeType = NodeType.Document;
 		}
 
 		public Element RootElement
@@ -75,42 +74,43 @@ namespace agsXMPP.Xml.Dom
 		#region << Load functions >>		
 		public void LoadXml(string xml)
 		{
-            if (xml != "" && xml != null)
+            if (!string.IsNullOrEmpty(xml))
             {
-                DomLoader l = new DomLoader(xml, this);
+                DomLoader.Load(xml, this);
             }
 		}
 
 		public bool LoadFile(string filename)
 		{
-			if (File.Exists(filename) == true)
+		    if (File.Exists(filename))
 			{
 				try
 				{
-					StreamReader sr = new StreamReader(filename);				
-					DomLoader l = new DomLoader(sr, this);
-					sr.Close();					
-					return true;
+					using(var sr = new StreamReader(filename))
+                    {
+					    DomLoader.Load(sr, this);
+					    sr.Close();					
+					    return true;
+                    }
 				}
 				catch
 				{
 					return false;
 				}
 			}
-			else
-			{
-				return false;
-			}
+		    return false;
 		}
 
-        public bool LoadStream(Stream stream)
+	    public bool LoadStream(Stream stream)
         {
             try
             {
-                StreamReader sr = new StreamReader(stream);
-                DomLoader l = new DomLoader(sr, this);
-                sr.Close();
-                return true;
+                using(var sr = new StreamReader(stream))
+                {
+                    DomLoader.Load(sr, this);
+                    sr.Close();
+                    return true;
+                }
             }
             catch
             {
@@ -120,11 +120,12 @@ namespace agsXMPP.Xml.Dom
 		
 		public void Save(string filename)
 		{
-			StreamWriter w = new StreamWriter(filename);
-
-			w.Write(this.ToString(System.Text.Encoding.UTF8));
-			w.Flush();
-			w.Close();
+			using (var w = new StreamWriter(filename))
+            {
+			    w.Write(ToString(System.Text.Encoding.UTF8));
+			    w.Flush();
+			    w.Close();
+            }
 		}
 		#endregion
 	}

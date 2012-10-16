@@ -17,9 +17,7 @@
  *																					 *
  * For general enquiries visit our website at:										 *
  * http://www.ag-software.de														 *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
-
-using System;
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 namespace agsXMPP.Xml.Dom
 {
@@ -30,12 +28,12 @@ namespace agsXMPP.Xml.Dom
 	{
 		public Text()
 		{
-			this.NodeType = NodeType.Text;
+			NodeType = NodeType.Text;
 		}
 		
 		public Text(string text) : this()
 		{
-			this.Value = text;
+			Value = text;
 		}
 	}
 }

@@ -26,21 +26,14 @@ namespace agsXMPP.Xml.Dom
 {
     public class ElementList : CollectionBase
     {
-        /// <summary>
-		/// A Collection of Element Nodes
-		/// </summary>		
-		public ElementList() 
-		{			
-		}
-	
-		public void Add(Node e) 
+        public void Add(Node e) 
 		{
             // can't add a empty node, so return immediately
             // Some people tried dthis which caused an error
             if (e == null)
                 return;
             
-            this.List.Add(e);
+            List.Add(e);
 		}
 	
 		// Method implementation from the CollectionBase class
@@ -63,9 +56,7 @@ namespace agsXMPP.Xml.Dom
 	
 		public Element Item(int index) 
 		{
-			return (Element) this.List[index];
+			return (Element) List[index];
 		}
-
-       
     }
 }

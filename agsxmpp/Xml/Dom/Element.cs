@@ -20,16 +20,12 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Text;
 using System.IO;
 using System.Xml;
-
-//using System.Linq;
-//using System.Linq.Expressions;
 
 namespace agsXMPP.Xml.Dom
 {	
@@ -38,54 +34,29 @@ namespace agsXMPP.Xml.Dom
 	{
 		// Member Variables
 		private		string			m_TagName;
-		private		string			m_Prefix			= null;
+		private		string			m_Prefix;
         private     ListDictionary  m_Attributes;
 		private		Text			m_Value				= new Text();
 
 		public Element() 
 		{
-			this.NodeType = NodeType.Element;
-			this.AddChild(m_Value);
+			NodeType = NodeType.Element;
+			AddChild(m_Value);
 
             m_Attributes = new ListDictionary();
 
-            this.m_TagName	= "";
-			this.Value		= "";			
+            m_TagName	= "";
+			Value		= "";			
 		}
-
-        /* 
-         * don't think we need this 2 constructors anymore
-         * 
-        public Element(NodeType type)
-        {
-            this.NodeType = NodeType.Element;
-            this.AddChild(m_Value);
-
-            m_Attributes = new ListDictionary();
-
-            NodeType = type;
-        }
-
-        public Element(NodeType type, string text)
-        {
-            this.NodeType = NodeType.Element;
-            this.AddChild(m_Value);
-
-            m_Attributes = new ListDictionary();
-
-            NodeType = type;
-            Value = text;
-        }
-         */
 
 		public Element(string tagName) :this() 
 		{
-            this.m_TagName = tagName;
+            m_TagName = tagName;
 		}
 
 		public Element(string tagName, string tagText) : this(tagName)
 		{
-            this.Value		= tagText;			
+            Value		= tagText;			
 		}
 
         public Element(string tagName, bool tagText) : this(tagName, tagText ? "true" : "false")
@@ -94,7 +65,7 @@ namespace agsXMPP.Xml.Dom
 
 		public Element(string tagName, string tagText, string ns) : this(tagName, tagText)
 		{
-           this.Namespace		= ns;			
+           Namespace		= ns;			
 		}
 				
 		/// <summary>
@@ -126,7 +97,7 @@ namespace agsXMPP.Xml.Dom
 		public string TagName 
 		{
 			get	{ return m_TagName;	}
-			set { this.m_TagName = value; }
+			set { m_TagName = value; }
 		}
 
 		public string TextBase64
@@ -140,18 +111,18 @@ namespace agsXMPP.Xml.Dom
 			{
                 byte[] b = Encoding.UTF8.GetBytes(value);
 				//byte[] b = Encoding.Default.GetBytes(value);
-				this.Value = Convert.ToBase64String(b, 0, b.Length);
+				Value = Convert.ToBase64String(b, 0, b.Length);
 			}
 		}
       
         public ListDictionary Attributes
         {
-            get { return this.m_Attributes; }
+            get { return m_Attributes; }
         }
 
-		public object GetAttributeEnum(string name, System.Type enumType)
+		public object GetAttributeEnum(string name, Type enumType)
 		{
-			string att = this.GetAttribute(name);
+			string att = GetAttribute(name);
 			if ((att == null))
 				return -1;
 			try
@@ -170,68 +141,62 @@ namespace agsXMPP.Xml.Dom
 
 		public string GetAttribute(string name)
 		{
-			if (HasAttribute(name))
+		    if (HasAttribute(name))
 				return (string) m_Attributes[name];
-			else
-				return null;
+		    return null;
 		}
 
-		public int GetAttributeInt(string name)
-		{
-			if (HasAttribute(name))
+	    public int GetAttributeInt(string name)
+	    {
+	        if (HasAttribute(name))
 			{				
 				return int.Parse((string) m_Attributes[name]);
 			}
-			else
-				return 0;
-		}
+	        return 0;
+	    }
 
-		public long GetAttributeLong(string name)
-		{
-			if (HasAttribute(name))
+	    public long GetAttributeLong(string name)
+	    {
+	        if (HasAttribute(name))
 			{				
 				return long.Parse((string) m_Attributes[name]);
 			}
-			else
-				return 0;
-		}
+	        return 0;
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Reads a boolean Attribute, if the attrib is absent it returns also false.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
         public bool GetAttributeBool(string name)
-        {
-            if (HasAttribute(name))
+	    {
+	        if (HasAttribute(name))
             {
                 string tmp = (string) m_Attributes[name];
                 if (tmp.ToLower() == "true")
                     return true;
-                else
-                    return false;
-            }
-            else
                 return false;
-        }
+            }
+	        return false;
+	    }
 
-        public Jid GetAttributeJid(string name)
-        {
-            if (HasAttribute(name))
+	    public Jid GetAttributeJid(string name)
+	    {
+	        if (HasAttribute(name))
                 return new Jid(this.GetAttribute(name));
-            else
-                return null;			
-        }
+	        return null;
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// 
         /// </summary>
         /// <param name="name"></param>
         /// <param name="ifp"></param>
         /// <returns></returns>
         public double GetAttributeDouble(string name, IFormatProvider ifp)
-        {            
-            if (HasAttribute(name))
+	    {
+	        if (HasAttribute(name))
             {
                 try
                 {
@@ -242,11 +207,10 @@ namespace agsXMPP.Xml.Dom
                     return double.NaN;
                 }
             }
-            else
-                return double.NaN;
-        }        
+	        return double.NaN;
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Get a Attribute of type double (Decimal seperator = ".")
         /// </summary>
         /// <param name="name"></param>
@@ -261,7 +225,7 @@ namespace agsXMPP.Xml.Dom
 
 		public bool HasAttribute(string name)
 		{
-			return this.Attributes.Contains(name);
+			return Attributes.Contains(name);
 		}
 		
 		/// <summary>
@@ -275,8 +239,7 @@ namespace agsXMPP.Xml.Dom
 			Element tag = this._SelectElement(this, TagName);
 			if ( tag != null)
 				return tag.Value;
-			else
-				return null;
+		    return null;
 		}
 
 		public string GetTag(string TagName, bool traverseChildren)
@@ -284,8 +247,7 @@ namespace agsXMPP.Xml.Dom
 			Element tag = this._SelectElement(this, TagName, traverseChildren);
 			if ( tag != null)
 				return tag.Value;
-			else
-				return null;
+		    return null;
 		}
 
 		public string GetTag(System.Type type)
@@ -293,8 +255,7 @@ namespace agsXMPP.Xml.Dom
 			Element tag = this._SelectElement(this, type);
 			if ( tag != null)
 				return tag.Value;
-			else
-				return null;
+		    return null;
 		}
 
 		public string GetTagBase64(string TagName)
@@ -327,30 +288,30 @@ namespace agsXMPP.Xml.Dom
 		public void SetTag(string argTagname, string argText)
 		{
 			if (HasTag(argTagname) == false)
-				this.AddChild(new Element(argTagname, argText));
+				AddChild(new Element(argTagname, argText));
 			else
-				this.SelectSingleElement(argTagname).Value = argText;
+				SelectSingleElement(argTagname).Value = argText;
 		}
 
-		public void SetTag(System.Type type, string argText)
+		public void SetTag(Type type, string argText)
 		{
 			if (HasTag(type) == false)
 			{
 				Element newel;
-				newel		= (Element) System.Activator.CreateInstance(type);
+				newel		= (Element) Activator.CreateInstance(type);
 				newel.Value = argText;
-				this.AddChild(newel);
+				AddChild(newel);
 			}
 			else
-				this.SelectSingleElement(type).Value = argText;
+				SelectSingleElement(type).Value = argText;
 		}
 
-		public void SetTag(System.Type type)
+		public void SetTag(Type type)
 		{
 			if (HasTag(type))			
 				RemoveTag(type);
 			
-			this.AddChild( (Element) System.Activator.CreateInstance(type) );
+			AddChild( (Element) Activator.CreateInstance(type) );
 		}
 
 		public void SetTag(string argTagname)
@@ -361,10 +322,10 @@ namespace agsXMPP.Xml.Dom
 		public void SetTag(string argTagname, string argText, string argNS)
 		{
 			if (HasTag(argTagname) == false)				
-				this.AddChild(new Element(argTagname, argText, argNS));			
+				AddChild(new Element(argTagname, argText, argNS));			
 			else
 			{
-				Element e = this.SelectSingleElement(argTagname);
+				Element e = SelectSingleElement(argTagname);
 				e.Value		= argText;
 				e.Namespace = argNS;
 			}
@@ -384,7 +345,7 @@ namespace agsXMPP.Xml.Dom
 
         public void SetTag(string argTagname, bool val)
         {
-            SetTag(argTagname, val == true ? "true" : "false");
+            SetTag(argTagname, val ? "true" : "false");
         }
 
         public void SetTag(string argTagname, int val)
@@ -399,12 +360,12 @@ namespace agsXMPP.Xml.Dom
 
 		public void AddTag(string argTagname, string argText)
 		{			
-			this.AddChild(new Element(argTagname, argText));			
+			AddChild(new Element(argTagname, argText));			
 		}
 
 		public void AddTag(string argTagname)
 		{			
-			this.AddChild(new Element(argTagname));			
+			AddChild(new Element(argTagname));			
 		}
 
 		public object GetTagEnum(string name, System.Type enumType)
@@ -436,32 +397,25 @@ namespace agsXMPP.Xml.Dom
 			Element tag = this._SelectElement(this, TagName);
 			if ( tag != null)
 			{
-				if (tag.Value.ToLower() == "false" || tag.Value.ToLower() == "0")
+			    if (tag.Value.ToLower() == "false" || tag.Value.ToLower() == "0")
 				{
 					return false;
 				}
-				else if(tag.Value.ToLower() == "true" ||	tag.Value.ToLower() == "1")
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
+			    if(tag.Value.ToLower() == "true" ||	tag.Value.ToLower() == "1")
+			    {
+			        return true;
+			    }
+			    return false;
 			}
-			else
-			{
-				return false;
-			}
+		    return false;
 		}
 
 		public int GetTagInt(string TagName)
 		{
-			Element tag = this._SelectElement(this, TagName);
+			Element tag = _SelectElement(this, TagName);
 			if ( tag != null)
 				return int.Parse(tag.Value);
-			else
-				return 0;
+		    return 0;
 		}
 
 
@@ -471,8 +425,7 @@ namespace agsXMPP.Xml.Dom
             
             if (jid != null)
                 return new Jid(jid);
-            else
-                return null;
+            return null;
         }         
          
         
@@ -501,35 +454,31 @@ namespace agsXMPP.Xml.Dom
             string val = GetTag(argTagName);
             if (val != null)
                 return Double.Parse(val, ifp);
-            else
-                return Double.NaN;
+            return Double.NaN;
         }
 
 		public bool HasTag(string name)
 		{
-			Element tag = this._SelectElement(this, name);
+			Element tag = _SelectElement(this, name);
 			if ( tag != null)
 				return true;
-			else
-				return false;
+		    return false;
 		}
 
 		public bool HasTag(string name, bool traverseChildren)
 		{
-			Element tag = this._SelectElement(this, name, traverseChildren);
+			Element tag = _SelectElement(this, name, traverseChildren);
 			if ( tag != null)
 				return true;
-			else
-				return false;
+		    return false;
 		}		
 
-		public bool HasTag(System.Type type)
+		public bool HasTag(Type type)
 		{
-			Element tag = this._SelectElement(this, type);
+			Element tag = _SelectElement(this, type);
 			if ( tag != null)
 				return true;
-			else
-				return false;
+		    return false;
 		}
 
         public bool HasTag<T>() where T : Element
@@ -539,17 +488,16 @@ namespace agsXMPP.Xml.Dom
 
         public bool HasTagt<T>(bool traverseChildren) where T : Element
         {
-            return this.SelectSingleElement<T>(traverseChildren) != null;
+            return SelectSingleElement<T>(traverseChildren) != null;
         }
 
 
-		public bool HasTag(System.Type type, bool traverseChildren)
+		public bool HasTag(Type type, bool traverseChildren)
 		{
 			Element tag = this._SelectElement(this, type, traverseChildren);
 			if ( tag != null)
 				return true;
-			else
-				return false;
+		    return false;
 		}
 
 		/// <summary>
@@ -557,7 +505,7 @@ namespace agsXMPP.Xml.Dom
 		/// </summary>
 		/// <param name="enumType"></param>
 		/// <returns></returns>		
-        public object HasTagEnum(System.Type enumType)
+        public object HasTagEnum(Type enumType)
 		{			
 #if CF || CF_2            
 			string[] members = Util.Enum.GetNames(enumType);	
@@ -583,14 +531,13 @@ namespace agsXMPP.Xml.Dom
 		/// <returns>true when existing and removed, false when not existing</returns>
 		public bool RemoveTag(string TagName)
 		{
-			Element tag = this._SelectElement(this, TagName);
+			Element tag = _SelectElement(this, TagName);
 			if ( tag != null)
 			{
 				tag.Remove();
 				return true;
 			}
-			else
-				return false;
+		    return false;
 		}
 
 		/// <summary>
@@ -598,9 +545,9 @@ namespace agsXMPP.Xml.Dom
 		/// </summary>
 		/// <param name="type">Type of the tag that should be removed</param>
 		/// <returns>true when existing and removed, false when not existing</returns>
-		public bool RemoveTag(System.Type type)
+		public bool RemoveTag(Type type)
 		{
-			Element tag = this._SelectElement(this, type);
+			Element tag = _SelectElement(this, type);
 			if (tag != null)
 			{
 				tag.Remove();
@@ -627,11 +574,11 @@ namespace agsXMPP.Xml.Dom
         /// </summary>
         /// <param name="type">Type of the tags that should be removed</param>
         /// <returns>true when tags were removed, false when no tags were found and removed</returns>
-        public bool RemoveTags(System.Type type)
+        public bool RemoveTags(Type type)
         {
             bool ret = false;
 
-            ElementList list = this.SelectElements(type);
+            ElementList list = SelectElements(type);
             
             if (list.Count > 0)
                 ret = true;
@@ -675,10 +622,9 @@ namespace agsXMPP.Xml.Dom
 		/// <param name="name">Attribute as string to remove</param>
 		public void RemoveAttribute(string name)
 		{
-			if (this.HasAttribute(name))
+			if (HasAttribute(name))
 			{
-				this.Attributes.Remove(name);
-				return;
+				Attributes.Remove(name);
 			}
 		}
 
@@ -691,9 +637,9 @@ namespace agsXMPP.Xml.Dom
 		{
 			// When the attrib already exists then we overweite it
 			// So we must remove it first and add it again then
-			if (this.HasAttribute(name))
+			if (HasAttribute(name))
 			{
-				this.Attributes.Remove(name);
+				Attributes.Remove(name);
 			}
 			m_Attributes.Add(name, val);
 			
@@ -728,9 +674,9 @@ namespace agsXMPP.Xml.Dom
         {
             // When the attrib already exists then we overweite it
             // So we must remove it first and add it again then
-            if (this.HasAttribute(name))
+            if (HasAttribute(name))
             {
-                this.Attributes.Remove(name);
+                Attributes.Remove(name);
             }
             m_Attributes.Add(name, val ? "true" : "false");
         }
@@ -743,7 +689,7 @@ namespace agsXMPP.Xml.Dom
         public void SetAttribute(string name, Jid value)
         {
              if (value != null)
-                    this.SetAttribute(name, value.ToString());
+                    SetAttribute(name, value.ToString());
                 else
                     RemoveAttribute(name);
         }
@@ -774,7 +720,7 @@ namespace agsXMPP.Xml.Dom
 
 		public void SetNamespace(string value) 
 		{
-			this.SetAttribute("xmlns", value);	
+			SetAttribute("xmlns", value);	
 		}
 
         private CData GetFirstCDataNode()
@@ -854,8 +800,8 @@ namespace agsXMPP.Xml.Dom
                 Element root = doc.RootElement;
                 if (root != null)
                 {
-                    this.ChildNodes.Clear();
-                    this.AddChild(root);
+                    ChildNodes.Clear();
+                    AddChild(root);
                 }
                 
             }
@@ -869,7 +815,7 @@ namespace agsXMPP.Xml.Dom
         {
 	        get
 	        {
-                foreach (Node e in this.ChildNodes)
+                foreach (Node e in ChildNodes)
                 {
                     if (e.NodeType == NodeType.Element)
                         return true;
@@ -884,19 +830,17 @@ namespace agsXMPP.Xml.Dom
 		public Element FirstChild
 		{
 			get
-			{                
-                if (this.ChildNodes.Count > 0)
+			{
+			    if (ChildNodes.Count > 0)
                 {
-                    foreach (Node e in this.ChildNodes)
+                    foreach (Node e in ChildNodes)
                     {
                         if (e.NodeType == NodeType.Element)
                             return e as Element;
                     }
                     return null;
 	            }
-                
-                else
-                    return null;
+			    return null;
 			}
 		}
 
@@ -907,10 +851,9 @@ namespace agsXMPP.Xml.Dom
 		{
 			get
 			{
-				if(this.ChildNodes.Count > 0)
-					return this.ChildNodes.Item(0) as Node;
-				else
-					return null;
+			    if(ChildNodes.Count > 0)
+					return ChildNodes.Item(0) as Node;
+			    return null;
 			}
 		}
 
@@ -921,55 +864,57 @@ namespace agsXMPP.Xml.Dom
 		{
 			get
 			{
-				if(this.ChildNodes.Count > 0)
-					return this.ChildNodes.Item(ChildNodes.Count -1) as Node;
-				else
-					return null;
+			    if(ChildNodes.Count > 0)
+					return ChildNodes.Item(ChildNodes.Count -1) as Node;
+			    return null;
 			}
 		}
 
         internal string StartTag()
         {
-            System.IO.StringWriter sw = new StringWriter();
-            XmlTextWriter tw = new XmlTextWriter(sw);
-            tw.Formatting = Formatting.None;
-                        
-            if (this.Prefix == null)
-                tw.WriteStartElement(this.TagName);
-            else
-                tw.WriteStartElement(this.Prefix + ":" + this.TagName);
-
-            // Write Namespace
-            if (this.Namespace != null
-                && this.Namespace.Length != 0
-                )
+            using (StringWriter sw = new StringWriter())
             {
-                if (this.Prefix == null)
-                    tw.WriteAttributeString("xmlns", this.Namespace);
-                else
-                    tw.WriteAttributeString("xmlns:" + this.Prefix, this.Namespace);
-            }
+                using (XmlTextWriter tw = new XmlTextWriter(sw))
+                {
+                    tw.Formatting = Formatting.None;
 
-            foreach (string attName in this.Attributes.Keys)
-            {
-                tw.WriteAttributeString(attName, this.Attribute(attName));
+                    if (Prefix == null)
+                        tw.WriteStartElement(TagName);
+                    else
+                        tw.WriteStartElement(Prefix + ":" + TagName);
+
+                    // Write Namespace
+                    if (Namespace != null
+                        && Namespace.Length != 0
+                        )
+                    {
+                        if (Prefix == null)
+                            tw.WriteAttributeString("xmlns", Namespace);
+                        else
+                            tw.WriteAttributeString("xmlns:" + Prefix, Namespace);
+                    }
+
+                    foreach (string attName in this.Attributes.Keys)
+                    {
+                        tw.WriteAttributeString(attName, Attribute(attName));
+                    }
+
+                    tw.Flush();
+                    tw.Close();
+
+                    return sw.ToString().Replace("/>", ">");
+                }
             }
-                        
-            tw.Flush();
-            tw.Close();
-            
-            return sw.ToString().Replace("/>", ">");
-        }
-        
-        internal string EndTag()
-        {
-            if (this.Prefix == null)
-                return "</" + this.TagName + ">";
-            else
-                return "</" + this.Prefix + ":" + this.TagName + ">";
         }
 
-		#region << Xml Select Functions >>
+	    internal string EndTag()
+	    {
+	        if (Prefix == null)
+                return "</" + TagName + ">";
+	        return "</" + Prefix + ":" + TagName + ">";
+	    }
+
+	    #region << Xml Select Functions >>
         /// <summary>
         /// Find a Element by type
         /// </summary>
@@ -977,7 +922,7 @@ namespace agsXMPP.Xml.Dom
         /// <returns></returns>
 		public Element SelectSingleElement(System.Type type)
 		{
-			return this._SelectElement(this, type);
+			return _SelectElement(this, type);
 		}
 
         /// <summary>
@@ -988,55 +933,43 @@ namespace agsXMPP.Xml.Dom
         /// <returns></returns>
         public Element SelectSingleElement(System.Type type, bool loopChildren)
         {
-            return this._SelectElement(this, type, true);
+            return _SelectElement(this, type, true);
         }
 
 		public Element SelectSingleElement(string TagName)
 		{
-			return this._SelectElement(this, TagName);
+			return _SelectElement(this, TagName);
 		}
 
         public Element SelectSingleElement(string TagName, bool traverseChildren)
         {
-            return this._SelectElement(this, TagName, true);
+            return _SelectElement(this, TagName, true);
         }
 
 		public Element SelectSingleElement(string TagName, string AttribName, string AttribValue)
 		{
-			return this._SelectElement(this, TagName, AttribName, AttribValue);
+			return _SelectElement(this, TagName, AttribName, AttribValue);
 		}
 
 		public Element SelectSingleElement(string TagName, string ns)
 		{
-			//return this._SelectElement(this, TagName, "xmlns", ns);
-            return this._SelectElement(this, TagName, ns, true);
+            return _SelectElement(this, TagName, ns, true);
 		}
 
         public Element SelectSingleElement(string TagName, string ns, bool traverseChildren)
         {            
-            return this._SelectElement(this, TagName, ns, traverseChildren);
+            return _SelectElement(this, TagName, ns, traverseChildren);
         }
-
-
+        
         public T SelectSingleElement<T>() where T : Element
         {
-            return (T)this._SelectElement(this, typeof(T));
+            return (T)_SelectElement(this, typeof(T));
         }
 
         public T SelectSingleElement<T>(bool traverseChildren) where T : Element
         {
-            return (T)this._SelectElement(this, typeof(T), traverseChildren);
+            return (T)_SelectElement(this, typeof(T), traverseChildren);
         } 
-        
-        //public Element Element(string name)
-        //{
-        //    return SelectSingleElement(name);
-        //}
-
-        //public T Element<T>() where T : Element
-        //{
-        //    return (T)this._SelectElement(this, typeof(T));
-        //}
 
 		/// <summary>
 		/// Returns all childNodes with the given Tagname,
@@ -1048,20 +981,20 @@ namespace agsXMPP.Xml.Dom
 		{
             ElementList es = new ElementList();
 			//return this._SelectElements(this, TagName, es);
-			return this._SelectElements(this, TagName, es, false);
+			return _SelectElements(this, TagName, es, false);
 		}
 
         public ElementList SelectElements(string TagName, bool traverseChildren)
         {
             ElementList es = new ElementList();
             //return this._SelectElements(this, TagName, es);
-            return this._SelectElements(this, TagName, es, traverseChildren);
+            return _SelectElements(this, TagName, es, traverseChildren);
         }
 
         public ElementList SelectElements(System.Type type)
 		{
             ElementList es = new ElementList();
-			return this._SelectElements(this, type, es);
+			return _SelectElements(this, type, es);
 		}
 
 		/// <summary>
@@ -1071,12 +1004,12 @@ namespace agsXMPP.Xml.Dom
 		/// <param name="type"></param>
 		/// <param name="es"></param>
 		/// <returns></returns>
-        private ElementList _SelectElements(Element e, System.Type type, ElementList es)
+        private ElementList _SelectElements(Element e, Type type, ElementList es)
 		{			
 			return _SelectElements(e, type, es, false);	
 		}
 
-        private ElementList _SelectElements(Element e, System.Type type, ElementList es, bool traverseChildren)
+        private ElementList _SelectElements(Element e, Type type, ElementList es, bool traverseChildren)
 		{						
 			if (e.ChildNodes.Count > 0) 
 			{		
@@ -1218,10 +1151,10 @@ namespace agsXMPP.Xml.Dom
         /// <summary>
         /// Find Element by Namespace
         /// </summary>
-        /// <param name="se"></param>
-        /// <param name="tagname"></param>
-        /// <param name="AttribName"></param>
-        /// <param name="AttribValue"></param>
+        /// <param name="se">The se.</param>
+        /// <param name="tagname">The tagname.</param>
+        /// <param name="nameSpace">The name space.</param>
+        /// <param name="traverseChildren">if set to <c>true</c> [traverse children].</param>
         /// <returns></returns>
         private Element _SelectElement(Node se, string tagname, string nameSpace, bool traverseChildren)
         {
