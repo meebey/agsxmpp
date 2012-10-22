@@ -43,7 +43,7 @@ namespace agsXMPP.Factory
 		/// <summary>
 		/// This Hashtable stores Mapping of mechanism <--> SASL class in agsXMPP
 		/// </summary>
-		private static Hashtable m_table = new Hashtable();
+		private static readonly Hashtable m_table = new Hashtable();
 
 		static SaslFactory()
 		{
@@ -61,7 +61,7 @@ namespace agsXMPP.Factory
 
 		public static Mechanism GetMechanism(string mechanism)
 		{
-			Type t = (Type) m_table[mechanism];
+			var t = (Type) m_table[mechanism];
 			if (t != null)
 				return (Mechanism) Activator.CreateInstance(t);
 			else

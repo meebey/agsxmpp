@@ -216,6 +216,7 @@
     <Compile Include="protocol\iq\browse\Service.cs" />
     <Compile Include="protocol\iq\disco\DiscoManager.cs" />
     <Compile Include="protocol\iq\register\RegisterEventArgs.cs" />
+    <Compile Include="protocol\iq\rpc\RpcHelper.cs" />
     <Compile Include="protocol\sasl\FailureCondition.cs" />
     <Compile Include="protocol\server\Presence.cs" />
     <Compile Include="protocol\time\Time.cs" />
