@@ -148,7 +148,11 @@ namespace agsXMPP.Net.Dns
 				}
 
 				// we'll be send and receiving a UDP packet
-				Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+				Socket socket;
+                if (Socket.OSSupportsIPv6 && (server.AddressFamily == AddressFamily.InterNetworkV6))
+                    socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp); // V6
+                else
+                    socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 			
 				// we will wait at most 1 second for a dns reply
 				socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, _udpTimeout);
