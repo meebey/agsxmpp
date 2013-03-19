@@ -28,6 +28,7 @@ using agsXMPP.protocol.client;
 using agsXMPP.protocol.iq.bind;
 using agsXMPP.protocol.stream.feature;
 using agsXMPP.protocol.stream.feature.compression;
+using agsXMPP.protocol.extensions.caps;
 
 //</stream:features>
 // <stream:features>
@@ -187,6 +188,20 @@ namespace agsXMPP.protocol.stream
             }
         }
 
+        public Capabilities Capabilities
+        {
+            get
+            {
+                return SelectSingleElement<Capabilities>();
+            }
+            set
+            {
+                RemoveTag<Capabilities>();
+
+                if (value != null)
+                    AddChild(value);
+            }
+        }
 		
 	}
 }
