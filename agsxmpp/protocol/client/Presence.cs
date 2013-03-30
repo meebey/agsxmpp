@@ -193,6 +193,38 @@ namespace agsXMPP.protocol.client
                     this.AddChild(value);
             }
         }
+        
+        /// <summary>
+        /// The muc element. Doesn't have much use
+        /// </summary>
+        public x.muc.Muc Muc
+        {
+            get { return SelectSingleElement(typeof(x.muc.Muc)) as x.muc.Muc; }
+            set
+            {
+                if (HasTag(typeof(x.muc.Muc)))
+                    RemoveTag(typeof(x.muc.Muc));
+                
+                if (value != null)
+                    this.AddChild(value);
+            }
+        }
+        
+        /// <summary>
+        /// in case of away, says how long the user was idle
+        /// </summary>
+        public iq.last.Last Last
+        {
+            get { return SelectSingleElement(typeof(iq.last.Last)) as iq.last.Last; }
+            set
+            {
+                if (HasTag(typeof(iq.last.Last)))
+                    RemoveTag(typeof(iq.last.Last));
+                
+                if (value != null)
+                    this.AddChild(value);
+            }
+        }
 
         /// <summary>
         /// Nickname Element
