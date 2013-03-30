@@ -423,6 +423,8 @@ namespace agsXMPP
             get { return m_Capabilities; }
             set { m_Capabilities = value; }
         }
+        
+        public Capabilities ServerCapabilities { get; set; }
 
         /// <summary>
         /// The DiscoInfo object is used to respond to DiscoInfo request if AutoAnswerDiscoInfoRequests == true in DisoManager objects,
@@ -1408,11 +1410,11 @@ namespace agsXMPP
 				if (OnPresence != null)
 					OnPresence(this, e as Presence);
 			}
-			else if (e is Features)
+			else if (e is protocol.stream.Features)
 			{
 				// Stream Features
 				// StartTLS stuff
-				Features f = e as Features;
+				protocol.stream.Features f = e as protocol.stream.Features;
 #if SSL || BCCRYPTO || CF_2
 				if (f.SupportsStartTls && m_UseStartTLS)
 				{
@@ -1445,6 +1447,7 @@ namespace agsXMPP
                         // Close the stream
                     }
                 }
+                ServerCapabilities = f.Capabilities;
             }
 #if SSL || BCCRYPTO || CF_2
             else if (e is Proceed)

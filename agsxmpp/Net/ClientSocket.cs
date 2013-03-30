@@ -29,6 +29,8 @@ using System.Configuration;
 using System.Collections;
 using System.Diagnostics;
 
+using Starksoft.Net.Proxy;
+
 #if SSL
 using System.Net.Security;
 using System.Security.Authentication;
@@ -58,7 +60,7 @@ namespace agsXMPP.Net
     /// </summary>
     public class ClientSocket : BaseSocket
     {
-        Socket _socket;
+        TcpClient _socket;
 #if SSL	
         SslStream           m_SSLStream;
 #endif
@@ -79,7 +81,6 @@ namespace agsXMPP.Net
         /// </summary>
         private bool m_Compressed = false;
 
-        private bool m_ConnectTimedOut = false;
         /// <summary>
         /// is used to compress data
         /// </summary>
@@ -88,9 +89,8 @@ namespace agsXMPP.Net
         /// is used to decompress data
         /// </summary>
         private Inflater inflater = null;
-
-        private Timer connectTimeoutTimer;
-
+  
+        public IProxyClient Proxy { get; set; }
 
         #region << Constructor >>
         public ClientSocket()
@@ -189,92 +189,37 @@ namespace agsXMPP.Net
 
             try
             {
-#if NET_2 || CF_2
-                IPHostEntry ipHostInfo = System.Net.Dns.GetHostEntry(Address);
-                IPAddress ipAddress = ipHostInfo.AddressList[0];// IPAddress.Parse(address);
-#else
-                IPAddress ipAddress;
-                // first check if a IP adress was passed as Hostname            
-                if (!IPAddress.TryParse(Address, out ipAddress))
-                {
-                    IPHostEntry ipHostInfo = System.Net.Dns.GetHostEntry(Address);
-                    ipAddress = ipHostInfo.AddressList[0];
+                _socket = new TcpClient();
+                _socket.NoDelay = true;
+                _socket.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, 1);
+                // set timeout, after this the connection will be aborted
+                _socket.ReceiveTimeout = 600 * 1000;
+                _socket.SendTimeout = 600 * 1000;
+                if (Proxy != null) {
+                    _socket.Connect(Proxy.ProxyHost, Proxy.ProxyPort);
+                    Proxy.TcpClient = _socket;
+                    Proxy.CreateConnection(Address, Port);
+                } else {
+                    _socket.Connect(Address, Port);
                 }
-#endif           
-                IPEndPoint endPoint = new IPEndPoint(ipAddress, Port);
+                m_Stream = _socket.GetStream();
 
-                // Timeout
-                // .NET supports no timeout for connect, and the default timeout is very high, so it could
-                // take very long to establish the connection with the default timeout. So we handle custom
-                // connect timeouts with a timer
-                m_ConnectTimedOut = false;
-                TimerCallback timerDelegate = new TimerCallback(connectTimeoutTimerDelegate);
-                connectTimeoutTimer = new Timer(timerDelegate, null, ConnectTimeout, ConnectTimeout);
+                m_NetworkStream = m_Stream;
 
-#if !(CF || CF_2)
-                // IPV6 Support for .NET 2.0
-                if (Socket.OSSupportsIPv6 && (endPoint.AddressFamily == AddressFamily.InterNetworkV6))
-                    _socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
-                else
-                    _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-#else
-                // CF, there is no IPV6 support yet
-                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+#if SSL
+                if (m_SSL)
+                    InitSSL();
 #endif
-                _socket.BeginConnect(endPoint, new AsyncCallback(EndConnect), null);
+
+                FireOnConnect();
+
+                // Setup Receive Callback
+                this.Receive();
             }
             catch (Exception ex)
             {
                 base.FireOnError(ex);
             }
-        }
-
-        private void EndConnect(IAsyncResult ar)
-        {
-            if (m_ConnectTimedOut)
-            {
-                base.FireOnError(new ConnectTimeoutException("Attempt to connect timed out"));
-            }
-            else
-            {
-                try
-                {
-                    // stop the timeout timer
-                    connectTimeoutTimer.Dispose();
-
-                    // pass connection status with event
-                    _socket.EndConnect(ar);
-
-                    m_Stream = new NetworkStream(_socket, false);
-
-                    m_NetworkStream = m_Stream;
-
-#if SSL
-                    if (m_SSL)
-                        InitSSL();
-#endif
-
-                    FireOnConnect();
-
-                    // Setup Receive Callback
-                    this.Receive();
-                }
-                catch (Exception ex)
-                {
-                    base.FireOnError(ex);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Connect Timeout Timer Callback
-        /// </summary>
-        /// <param name="stateInfo"></param>
-        private void connectTimeoutTimerDelegate(Object stateInfo)
-        {
-            connectTimeoutTimer.Dispose();
-            m_ConnectTimedOut = true;
-            _socket.Close();
         }
 
 #if SSL
@@ -463,14 +408,7 @@ namespace agsXMPP.Net
 
             try
             {
-                // first, shutdown the socket
-                _socket.Shutdown(SocketShutdown.Both);
-            }
-            catch { }
-
-            try
-            {
-                // next, close the socket which terminates any pending
+                // close the socket which terminates any pending
                 // async operations
                 _socket.Close();
             }

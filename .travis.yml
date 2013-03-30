@@ -1,0 +1,8 @@
+language: c
+
+install:
+    - sudo apt-get update > /dev/null
+    - sudo apt-get install mono-devel > /dev/null
+
+script:
+    - xbuild agsxmpp/agsxmpp.sln
