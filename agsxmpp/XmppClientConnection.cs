@@ -1410,11 +1410,11 @@ namespace agsXMPP
 				if (OnPresence != null)
 					OnPresence(this, e as Presence);
 			}
-			else if (e is Features)
+			else if (e is protocol.stream.Features)
 			{
 				// Stream Features
 				// StartTLS stuff
-				Features f = e as Features;
+				protocol.stream.Features f = e as protocol.stream.Features;
 #if SSL || BCCRYPTO || CF_2
 				if (f.SupportsStartTls && m_UseStartTLS)
 				{
