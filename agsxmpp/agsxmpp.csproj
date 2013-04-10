@@ -27,6 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DefineConstants>TRACE;DEBUG;SSL;STRINGPREP</DefineConstants>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -403,6 +404,10 @@
     <None Include="Xml\Xpnet\copying.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\StarkSoftProxy\StarkSoftProxy.csproj">
+      <Project>{3F8CF2C1-EA37-444F-8693-A3A00B1131D2}</Project>
+      <Name>StarkSoftProxy</Name>
+    </ProjectReference>
     <ProjectReference Include="starksoftproxy\StarkSoftProxy.csproj">
       <Project>{3F8CF2C1-EA37-444F-8693-A3A00B1131D2}</Project>
       <Name>StarkSoftProxy</Name>
