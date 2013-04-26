@@ -355,6 +355,22 @@ namespace agsXMPP.protocol.client
             }
         }
         
+        /// <summary>
+        ///
+        /// </summary>
+        public x.muc.User MucUser
+        {
+            get { return SelectSingleElement(typeof(x.muc.User)) as x.muc.User; }
+            set
+            {
+                if (HasTag(typeof(x.muc.User)))
+                    RemoveTag(typeof(x.muc.User));
+                
+                if (value != null)
+                    this.AddChild(value);
+            }
+        }
+        
         #region << Chatstate Properties >>   
 
         public Chatstate Chatstate
