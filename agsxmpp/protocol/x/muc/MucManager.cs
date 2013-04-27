@@ -78,7 +78,19 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason">The reason.</param>
         public void Invite(Jid to, Jid room, string reason)
         {
-            Invite(new Jid[1] { to }, room, reason);
+            Invite(to, room, reason, null);
+        }
+        
+        /// <summary>
+        /// Invite a contact to join a chatroom
+        /// </summary>
+        /// <param name="to">The Jid of the contact to invite</param>
+        /// <param name="room">The Jid of the chatroom</param>
+        /// <param name="reason">The reason.</param>
+        /// <param name="password">The password required to enter the room.</param>
+        public void Invite(Jid to, Jid room, string reason, string password)
+        {
+            Invite(new Jid[1] { to }, room, reason, password);
         }
 
         /// <summary>
@@ -87,7 +99,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="jids"></param>
         /// <param name="room"></param>
         /// <param name="reason"></param>
-        public void Invite(Jid[] jids, Jid room, string reason)
+        public void Invite(Jid[] jids, Jid room, string reason, string password)
         {
             Message msg = new Message();
             msg.To = room;
@@ -100,6 +112,10 @@ namespace agsXMPP.protocol.x.muc
                 else
                     user.AddChild(new Invite(jid));
             }           
+
+            if (password != null) {
+                user.Password = password;
+            }
 
             msg.AddChild(user);
 
