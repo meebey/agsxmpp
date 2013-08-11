@@ -325,6 +325,12 @@ namespace agsXMPP
 
 		private void InitSocket()
 		{
+            if (m_ClientSocket != null) {
+                m_ClientSocket.OnConnect    -= SocketOnConnect;
+                m_ClientSocket.OnDisconnect -= SocketOnDisconnect;
+                m_ClientSocket.OnReceive    -= SocketOnReceive;
+                m_ClientSocket.OnError      -= SocketOnError;
+            }
 			m_ClientSocket = null;
 
 			// Socket Stuff
@@ -335,10 +341,10 @@ namespace agsXMPP
             else
                 m_ClientSocket = new ClientSocket();
 		
-			m_ClientSocket.OnConnect	+= new ObjectHandler(SocketOnConnect);
-			m_ClientSocket.OnDisconnect	+= new ObjectHandler(SocketOnDisconnect);
-			m_ClientSocket.OnReceive	+= new ClientSocket.OnSocketDataHandler(SocketOnReceive);
-            m_ClientSocket.OnError      += new ErrorHandler(SocketOnError);
+            m_ClientSocket.OnConnect    += SocketOnConnect;
+            m_ClientSocket.OnDisconnect += SocketOnDisconnect;
+            m_ClientSocket.OnReceive    += SocketOnReceive;
+            m_ClientSocket.OnError      += SocketOnError;
 		}        
 
 		/// <summary>
