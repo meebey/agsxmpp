@@ -18,6 +18,7 @@
  * For general enquiries visit our website at:										 *
  * http://www.ag-software.de														 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+#if !MONO
 using System;
 using System.Security.Principal;
 using agsXMPP.Xml.Dom;
@@ -107,3 +108,4 @@ namespace agsXMPP.Sasl.Gssapi
         }
     }
 }
+#endif

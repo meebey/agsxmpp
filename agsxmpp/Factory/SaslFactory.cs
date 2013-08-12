@@ -30,6 +30,8 @@ using agsXMPP.Sasl.Anonymous;
 using agsXMPP.Sasl.XGoogleToken;
 #if !(CF || CF_2)
 using agsXMPP.Sasl.Scram;
+#endif
+#if !(CF || CF_2 || MONO)
 using agsXMPP.Sasl.Gssapi;
 #endif
 
@@ -54,6 +56,8 @@ namespace agsXMPP.Factory
             AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.X_FACEBOOK_PLATFORM), typeof(FacebookMechanism));
 #if !(CF || CF_2)
             AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.SCRAM_SHA_1),         typeof(ScramSha1Mechanism));
+#endif
+#if !(CF || CF_2 || MONO)
             AddMechanism(protocol.sasl.Mechanism.GetMechanismName(protocol.sasl.MechanismType.GSSAPI),              typeof(GssapiMechanism));
 #endif
 		}

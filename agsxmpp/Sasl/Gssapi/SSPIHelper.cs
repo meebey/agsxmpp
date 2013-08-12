@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !MONO
+using System;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 
@@ -614,3 +615,4 @@ namespace agsXMPP.Sasl.Gssapi
         }
     }
 }
+#endif

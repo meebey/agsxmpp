@@ -1,3 +1,4 @@
+#if !MONO
 using System;
 using System.Runtime.InteropServices;
 
@@ -43,3 +44,4 @@ namespace agsXMPP.util
 		
 	}
 }
+#endif
