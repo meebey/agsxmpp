@@ -40,16 +40,7 @@ namespace agsXMPP.protocol.extensions.bookmarks
         /// </summary>
         public void RequestBookmarks()
         {
-            RequestBookmarks(null, null);
-        }
-
-        /// <summary>
-        /// Request the bookmarks from the storage on the server
-        /// </summary>
-        /// <param name="cb"></param>
-        public void RequestBookmarks(IqCB cb)
-        {
-            RequestBookmarks(cb, null);
+            RequestBookmarks(null);
         }
 
         /// <summary>
@@ -57,14 +48,14 @@ namespace agsXMPP.protocol.extensions.bookmarks
         /// </summary>
         /// <param name="cb"></param>
         /// <param name="cbArgs"></param>
-        public void RequestBookmarks(IqCB cb, object cbArgs)
+        public void RequestBookmarks(IqHandler cb)
         {
             StorageIq siq = new StorageIq(IqType.get);
                       
             if (cb == null)
                 m_connection.Send(siq);
             else
-                m_connection.IqGrabber.SendIq(siq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(siq, cb);
         }
         #endregion
 
@@ -76,17 +67,7 @@ namespace agsXMPP.protocol.extensions.bookmarks
         /// <param name="urls"></param>
         public void StoreBookmarks(Url[] urls)
         {
-            StoreBookmarks(urls, null, null, null);
-        }
-
-        /// <summary>
-        /// Send booksmarks to the server storage
-        /// </summary>
-        /// <param name="urls"></param>
-        /// <param name="cb"></param>
-        public void StoreBookmarks(Url[] urls, IqCB cb)
-        {
-            StoreBookmarks(urls, null, cb, null);
+            StoreBookmarks(urls, null, null);
         }
 
         /// <summary>
@@ -95,9 +76,9 @@ namespace agsXMPP.protocol.extensions.bookmarks
         /// <param name="urls"></param>
         /// <param name="cb"></param>
         /// <param name="cbArgs"></param>
-        public void StoreBookmarks(Url[] urls, IqCB cb, object cbArgs)
+        public void StoreBookmarks(Url[] urls, IqHandler cb)
         {
-            StoreBookmarks(urls, null, cb, cbArgs);
+            StoreBookmarks(urls, null, cb);
         }
 
         /// <summary>
@@ -106,17 +87,7 @@ namespace agsXMPP.protocol.extensions.bookmarks
         /// <param name="conferences"></param>
         public void StoreBookmarks(Conference[] conferences)
         {
-            StoreBookmarks(null, conferences, null, null);
-        }
-
-        /// <summary>
-        /// Send booksmarks to the server storage
-        /// </summary>
-        /// <param name="conferences"></param>
-        /// <param name="cb"></param>
-        public void StoreBookmarks(Conference[] conferences, IqCB cb)
-        {
-            StoreBookmarks(null, conferences, cb, null);
+            StoreBookmarks(null, conferences, null);
         }
 
         /// <summary>
@@ -125,9 +96,9 @@ namespace agsXMPP.protocol.extensions.bookmarks
         /// <param name="conferences"></param>
         /// <param name="cb"></param>
         /// <param name="cbArgs"></param>
-        public void StoreBookmarks(Conference[] conferences, IqCB cb, object cbArgs)
+        public void StoreBookmarks(Conference[] conferences, IqHandler cb)
         {
-            StoreBookmarks(null, conferences, cb, cbArgs);
+            StoreBookmarks(null, conferences, cb);
         }
 
         /// <summary>
@@ -137,18 +108,7 @@ namespace agsXMPP.protocol.extensions.bookmarks
         /// <param name="conferences"></param>
         public void StoreBookmarks(Url[] urls, Conference[] conferences)
         {
-            StoreBookmarks(urls, conferences, null, null);
-        }
-
-        /// <summary>
-        /// Send booksmarks to the server storage
-        /// </summary>
-        /// <param name="urls"></param>
-        /// <param name="conferences"></param>
-        /// <param name="cb"></param>
-        public void StoreBookmarks(Url[] urls, Conference[] conferences, IqCB cb)
-        {
-            StoreBookmarks(urls, conferences, cb, null);
+            StoreBookmarks(urls, conferences, null);
         }
 
         /// <summary>
@@ -158,7 +118,7 @@ namespace agsXMPP.protocol.extensions.bookmarks
         /// <param name="conferences"></param>
         /// <param name="cb"></param>
         /// <param name="cbArgs"></param>
-        public void StoreBookmarks(Url[] urls, Conference[] conferences, IqCB cb, object cbArgs)
+        public void StoreBookmarks(Url[] urls, Conference[] conferences, IqHandler cb)
         {
             StorageIq siq = new StorageIq(IqType.set);
             
@@ -171,7 +131,7 @@ namespace agsXMPP.protocol.extensions.bookmarks
             if (cb == null)
                 m_connection.Send(siq);
             else
-                m_connection.IqGrabber.SendIq(siq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(siq, cb);
         }
         #endregion
     }

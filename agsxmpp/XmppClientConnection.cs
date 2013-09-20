@@ -978,7 +978,7 @@ namespace agsXMPP
 			AuthIq iq = new AuthIq(IqType.get, new Jid(base.Server));
 			iq.Query.Username = this.m_Username;
 
-			IqGrabber.SendIq(iq, new IqCB(OnGetAuthInfo), null);
+            IqGrabber.SendIq(iq, OnGetAuthInfo);
 		}
 
 		/// <summary>
@@ -1024,7 +1024,9 @@ namespace agsXMPP
 			regIq.Query.Username = this.m_Username;
 			regIq.Query.Password = newPass;
 			
-			IqGrabber.SendIq(regIq, new IqCB(OnChangePasswordResult), newPass);
+            IqGrabber.SendIq(regIq,
+                (object sender, IQEventArgs e) => OnChangePasswordResult(e, newPass)
+            );
 		}
 
 		/// <summary>
@@ -1033,17 +1035,18 @@ namespace agsXMPP
 		/// <param name="sender"></param>
 		/// <param name="iq"></param>
 		/// <param name="data">contains the new password</param>
-		private void OnChangePasswordResult(object sender, IQ iq, object data)
+        private void OnChangePasswordResult(IQEventArgs e, string newPass)
 		{
-			if (iq.Type == IqType.result)
+            if (e.IQ.Type == IqType.result)
 			{
 				if(OnPasswordChanged!=null)
 					OnPasswordChanged(this);
 				
 				// Set the new password in the Password property on sucess
-				m_Password = (string) data;
+                m_Password = newPass;
+                e.Handled = true;
 			}
-			else if (iq.Type == IqType.error)
+            else if (e.IQ.Type == IqType.error)
 			{
 				/*
 				The server or service SHOULD NOT return the original XML sent in 
@@ -1078,7 +1081,8 @@ namespace agsXMPP
 				*/
 
 				if(OnRegisterError!=null)
-					OnRegisterError(this, iq);
+                    OnRegisterError(this, e.IQ);
+                e.Handled = true; // not really
 			}
         }
 
@@ -1089,23 +1093,26 @@ namespace agsXMPP
         /// requests the registration fields
         /// </summary>
         /// <param name="obj">object which contains the features node which we need later for login again</param>
-        private void GetRegistrationFields(object data)
+        private void GetRegistrationFields(Node data)
         {
             // <iq type='get' id='reg1'>
             //  <query xmlns='jabber:iq:register'/>
             // </iq>
 
             RegisterIq regIq = new RegisterIq(IqType.get, new Jid(base.Server));
-            IqGrabber.SendIq(regIq, new IqCB(OnRegistrationFieldsResult), data);
+            IqGrabber.SendIq(regIq,
+                (object sender, IQEventArgs e) =>
+                    OnRegistrationFieldsResult(e, data)
+            );
         }
 
-        private void OnRegistrationFieldsResult(object sender, IQ iq, object data)
+        private void OnRegistrationFieldsResult(IQEventArgs e, Node data)
         {
-            if (iq.Type != IqType.error)
+            if (e.IQ.Type != IqType.error)
             {
-                if (iq.Query is Register)
+                if (e.IQ.Query is Register)
                 {
-                    RegisterEventArgs args = new RegisterEventArgs(iq.Query as Register);
+                    RegisterEventArgs args = new RegisterEventArgs(e.IQ.Query as Register);
                     if (OnRegisterInformation != null)
                         OnRegisterInformation(this, args);
 
@@ -1125,17 +1132,21 @@ namespace agsXMPP
                     {
                         regIq.Query = args.Register;
                     }
-                    IqGrabber.SendIq(regIq, new IqCB(OnRegisterResult), data);
+                    IqGrabber.SendIq(regIq,
+                        (object sender, IQEventArgs ev) => OnRegisterResult(ev, data)
+                    );
+                    e.Handled = true;
                 }
             }
             else
             {
                 if (OnRegisterError != null)
-                    OnRegisterError(this, iq);
+                    OnRegisterError(this, e.IQ);
+                e.Handled = true; // not really
             }
         }
         
-        private void OnRegisterResult(object sender, IQ iq, object data)
+        private void OnRegisterResult(IQEventArgs e, Node data)
 		{
 			/*
 			Example 6. Host Informs Entity of Failed Registration (Username Conflict)
@@ -1164,7 +1175,7 @@ namespace agsXMPP
 			</error>
 			</iq>
 			*/
-            if (iq.Type == IqType.result)
+            if (e.IQ.Type == IqType.result)
             {
                 DoChangeXmppConnectionState(XmppConnectionState.Registered);
                 if (OnRegistered != null)
@@ -1181,16 +1192,18 @@ namespace agsXMPP
                     // old jabber style login
                     RequestLoginInfo();
                 }
+                e.Handled = true;
             }
-            else if (iq.Type == IqType.error)
+            else if (e.IQ.Type == IqType.error)
             {
                 if (OnRegisterError != null)
-                    OnRegisterError(this, iq);
+                    OnRegisterError(this, e.IQ);
+                e.Handled = true; // not really
             }
         }
         #endregion
 
-        private void OnGetAuthInfo(object sender, IQ iq, object data)
+        private void OnGetAuthInfo(object sender, IQEventArgs e)
 		{
 			// We get smth like this and should add password (digest) and ressource
 			// Recv:<iq type="result" id="MX_7"><query xmlns="jabber:iq:auth"><username>gnauck</username><password/><digest/><resource/></query></iq>
@@ -1199,6 +1212,8 @@ namespace agsXMPP
 			//		</iq>
 			// Recv:<iq id="mx_login" type="result"/> 
 			
+            var iq = e.IQ;
+
 			iq.GenerateId();
 			iq.SwitchDirection();
 			iq.Type = IqType.set;
@@ -1208,7 +1223,7 @@ namespace agsXMPP
 			auth.Resource = this.m_Resource;
 			auth.SetAuth(this.m_Username, this.m_Password, this.StreamId);
 			
-			IqGrabber.SendIq(iq, new IqCB(OnAuthenticate), null);
+            IqGrabber.SendIq(iq, OnAuthenticate);
 		}
 
 		/// <summary>
@@ -1231,15 +1246,16 @@ namespace agsXMPP
 		public void RequestAgents()
 		{			
 			AgentsIq iq = new AgentsIq(IqType.get, new Jid(base.Server));
-			IqGrabber.SendIq(iq, new IqCB(OnAgents), null);
+            IqGrabber.SendIq(iq, OnAgents);
 		}
 
-		private void OnAgents(object sender, IQ iq, object data)
+        private void OnAgents(object sender, IQEventArgs e)
 		{	
+            e.Handled = true;
 			if (OnAgentStart != null)
 				OnAgentStart(this);
 						
-			Agents agents = iq.Query as Agents;
+            Agents agents = e.IQ.Query as Agents;
 			if (agents != null)
 			{
 				foreach (Agent a in agents.GetAgents())
@@ -1289,14 +1305,14 @@ namespace agsXMPP
 		}
 		#endregion       
 
-		private void OnAuthenticate(object sender, IQ iq, object data)
+        private void OnAuthenticate(object sender, IQEventArgs e)
 		{			
-			if (iq.Type == IqType.result)
+            if (e.IQ.Type == IqType.result)
 			{
                 m_Authenticated = true;
                 RaiseOnLogin();                
 			}
-			else if(iq.Type == IqType.error)
+            else if(e.IQ.Type == IqType.error)
 			{
 				/* 
 				 * <iq xmlns="jabber:client" id="agsXMPP_2" type="error">
@@ -1310,7 +1326,7 @@ namespace agsXMPP
 				 * 
 				 */
                 if (OnAuthError!=null)
-					OnAuthError(this, iq);
+                    OnAuthError(this, e.IQ);
 			}
 			
 		}
@@ -1386,29 +1402,40 @@ namespace agsXMPP
 		public override void StreamParserOnStreamElement(object sender, Node e)
 		{
 			base.StreamParserOnStreamElement(sender, e);
+            bool handled = false;
 
 			if (e is IQ)
 			{
-				if (OnIq != null)
-					OnIq(this, e as IQ);
-					
-				IQ iq = e as IQ;
+                IQ iq = e as IQ;
+
+                if (OnIq != null) {
+                    var ev = new IQEventArgs(iq);
+                    OnIq(this, ev);
+                    handled = handled || ev.Handled;
+                }
+
 				if ( iq != null && iq.Query != null)
 				{
 					// Roster
-                    if (iq.Query is Roster)
+                    if (iq.Query is Roster) {
                         OnRosterIQ(iq);                   
+                        handled = true;
+                    }
 				}	
 			}
 			else if (e is Message)
 			{
-				if (OnMessage != null)
+                if (OnMessage != null) {
 					OnMessage(this, e as Message);
+                    handled = true;
+                }
 			}
 			else if (e is Presence)
 			{
-				if (OnPresence != null)
+                if (OnPresence != null) {
 					OnPresence(this, e as Presence);
+                    handled = true;
+                }
 			}
 			else if (e is protocol.stream.Features)
 			{
@@ -1448,6 +1475,7 @@ namespace agsXMPP
                     }
                 }
                 ServerCapabilities = f.Capabilities;
+                handled = true;
             }
 #if SSL || BCCRYPTO || CF_2
             else if (e is Proceed)
@@ -1457,6 +1485,7 @@ namespace agsXMPP
                 {
 				    SendStreamHeader(false);
 				    DoChangeXmppConnectionState(XmppConnectionState.Authenticating);
+                    handled = true;
                 }
             }
 #endif
@@ -1469,13 +1498,34 @@ namespace agsXMPP
                 SendStreamHeader(false);
 
                 DoChangeXmppConnectionState(XmppConnectionState.Compressed);
+                handled = true;
 			}
             else if (e is agsXMPP.protocol.Error)
             {
-                if (OnStreamError != null)
+                if (OnStreamError != null) {
                     OnStreamError(this, e as Element);
+                    handled = true;
+                }
             }
 
+            if (!handled) {
+                if (e is IQ) {
+                    var iq = e as IQ;
+                    iq.Error = new protocol.client.Error(ErrorCondition.ServiceUnavailable);
+                } else if (e is Message) {
+                    var msg = e as Message;
+                    msg.Error = new protocol.client.Error(ErrorCondition.ServiceUnavailable);
+                } else if (e is Presence) {
+                    var pres = e as Presence;
+                    pres.Error = new protocol.client.Error(ErrorCondition.ServiceUnavailable);
+                } else {
+                    // what should we do here?
+                    return;
+                }
+                var dir = (protocol.Base.DirectionalElement)e;
+                dir.SwitchDirection();
+                Send((Element)e);
+            }
 		}
 
 		public override void StreamParserOnStreamError(object sender, Exception ex)

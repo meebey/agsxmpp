@@ -31,8 +31,6 @@ using agsXMPP.Xml;
 
 namespace agsXMPP
 {
-    public delegate void IqCB(object sender, IQ iq, object data);
-	
 	public class IqGrabber : PacketGrabber
 	{
 		/// <summary>
@@ -41,15 +39,14 @@ namespace agsXMPP
 		/// <param name="conn"></param>
 		public IqGrabber(XmppClientConnection conn)
 		{
-			m_connection		= conn;
-			conn.OnIq	+= new IqHandler(OnIq);
+            m_connection = conn;
+            conn.OnIq += OnIq;
 		}
 
         public IqGrabber(XmppComponentConnection conn)
         {
             m_connection = conn;
-			conn.OnIq += new agsXMPP.protocol.component.IqHandler(OnIq);
-
+            conn.OnIq += OnIq;
         }        
         
 #if !CF
@@ -73,24 +70,21 @@ namespace agsXMPP
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		public void OnIq(object sender, agsXMPP.protocol.client.IQ iq)
-		{			
-			if (iq == null)
-				return;
-
+		public void OnIq(object sender, IQEventArgs e)
+		{
             // the tracker handles on iq responses, which are either result or error
-            if (iq.Type != IqType.error && iq.Type != IqType.result)
+            if (e.IQ.Type != IqType.error && e.IQ.Type != IqType.result)
                 return;
 
-			string id = iq.Id;
+            string id = e.IQ.Id;
 			if(id == null)
 				return;
 		    
-            TrackerData td;
+            IqHandler td;
 
 			lock (m_grabbing)
 			{
-				td = (TrackerData) m_grabbing[id];
+				td = (IqHandler) m_grabbing[id];
 
 				if (td == null)
 				{
@@ -99,7 +93,7 @@ namespace agsXMPP
 				m_grabbing.Remove(id);
 			}
                        
-            td.cb(this, iq, td.data);           
+            td(this, e);
 		}
 
         /// <summary>
@@ -107,28 +101,19 @@ namespace agsXMPP
         /// </summary>
         /// <param name="iq">The iq to send</param>
         /// <param name="cb">the callback function which gets raised for the response</param>
-        public void SendIq(IQ iq, IqCB cb)
+        public void SendIq(IQ iq, IqHandler cb)
         {
-            SendIq(iq, cb, null);
-        }
-
-        /// <summary>
-        /// Send an IQ Request and store the object with callback in the Hashtable
-        /// </summary>
-        /// <param name="iq">The iq to send</param>
-        /// <param name="cb">the callback function which gets raised for the response</param>
-        /// <param name="cbArg">additional object for arguments</param>
-		public void SendIq(IQ iq, IqCB cb, object cbArg)
-		{
             // check if the callback is null, in case of wrong usage of this class
-            if (cb != null)
-            {
-                TrackerData td = new TrackerData();
-                td.cb = cb;
-                td.data = cbArg;
-
-                m_grabbing[iq.Id] = td;
+            if (cb == null) {
+                throw new ArgumentNullException("cb");
             }
+
+            if (iq == null) {
+                throw new ArgumentNullException("cb");
+            }
+
+            m_grabbing[iq.Id] = cb;
+
 			m_connection.Send(iq);
 		}
 
@@ -144,7 +129,13 @@ namespace agsXMPP
             synchronousResponse = null;
             AutoResetEvent are = new AutoResetEvent(false);
 
-            SendIq(iq, new IqCB(SynchronousIqResult), are);
+            SendIq(iq,
+                   delegate (object sender, IQEventArgs e)
+                    {
+                        e.Handled = true;
+                        are.Set();
+                    }
+            );
 
             if (!are.WaitOne(timeout, true))
             {
@@ -171,24 +162,6 @@ namespace agsXMPP
             return SendIq(iq, m_SynchronousTimeout);
         }
 
-        /// <summary>
-        /// Callback for synchronous iq grabbing
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="iq"></param>
-        /// <param name="data"></param>
-        private void SynchronousIqResult(object sender, IQ iq, object data)
-        {
-            synchronousResponse = iq;
-            
-            AutoResetEvent are = data as AutoResetEvent;
-            are.Set();
-        }		
 #endif
-		private class TrackerData
-		{
-			public IqCB  cb;
-			public object data;
-		}		
 	}
 }
