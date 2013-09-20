@@ -293,7 +293,7 @@ namespace agsXMPP
             else if (e is IQ)
             {
                 if (OnIq != null)
-                    OnIq(this, e as IQ);
+                    OnIq(this, new protocol.client.IQEventArgs((IQ)e));
             }
 		
 		}

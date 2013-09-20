@@ -161,7 +161,7 @@ namespace agsXMPP.Sasl
 
 					    BindIq bIq = string.IsNullOrEmpty(m_XmppClient.Resource) ? new BindIq(IqType.set) : new BindIq(IqType.set, m_XmppClient.Resource);						
 						
-                        m_XmppClient.IqGrabber.SendIq(bIq, BindResult, null);					
+                        m_XmppClient.IqGrabber.SendIq(bIq, BindResult);
 					}
 				}
 								
@@ -198,11 +198,12 @@ namespace agsXMPP.Sasl
 
             BindIq bIq = string.IsNullOrEmpty(m_XmppClient.Resource) ? new BindIq(IqType.set) : new BindIq(IqType.set, m_XmppClient.Resource);
 
-            m_XmppClient.IqGrabber.SendIq(bIq, BindResult, null);	
+            m_XmppClient.IqGrabber.SendIq(bIq, BindResult);
         }
 
-		private void BindResult(object sender, IQ iq, object data)
+		private void BindResult(object sender, IQEventArgs e)
 		{	
+            var iq = e.IQ;
 			// Once the server has generated a resource identifier for the client or accepted the resource 
 			// identifier provided by the client, it MUST return an IQ stanza of type "result" 
 			// to the client, which MUST include a <jid/> child element that specifies the full JID for 
@@ -234,7 +235,7 @@ namespace agsXMPP.Sasl
 				// success, so start the session now
 				m_XmppClient.DoChangeXmppConnectionState(XmppConnectionState.StartSession);
 				SessionIq sIq = new SessionIq(IqType.set, new Jid(m_XmppClient.Server));
-				m_XmppClient.IqGrabber.SendIq(sIq, SessionResult, null);
+				m_XmppClient.IqGrabber.SendIq(sIq, SessionResult);
 
 			}
 			else if (iq.Type == IqType.error)
@@ -244,15 +245,15 @@ namespace agsXMPP.Sasl
 			}			
 		}
 
-		private void SessionResult(object sender, IQ iq, object data)
+        private void SessionResult(object sender, IQEventArgs e)
 		{
-			if (iq.Type == IqType.result)
+            if (e.IQ.Type == IqType.result)
 			{
 				m_XmppClient.DoChangeXmppConnectionState(XmppConnectionState.SessionStarted);
 				m_XmppClient.RaiseOnLogin();
 
 			}
-			else if (iq.Type == IqType.error)
+            else if (e.IQ.Type == IqType.error)
 			{
 
 			}

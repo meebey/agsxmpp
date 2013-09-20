@@ -54,25 +54,20 @@ namespace agsXMPP.protocol.extensions.pubsub
         
         public void CreateInstantNode(Jid to)
         {
-            CreateInstantNode(to, null, null, null);
+            CreateInstantNode(to, null, null);
         }
 
         public void CreateInstantNode(Jid to, Jid from)
         {
-            CreateInstantNode(to, from, null, null);
+            CreateInstantNode(to, from, null);
         }
 
-        public void CreateInstantNode(Jid to, Jid from, IqCB cb)
+        public void CreateInstantNode(Jid to, IqHandler cb)
         {
-            CreateInstantNode(to, from, cb, null);
+            CreateInstantNode(to, null, cb);
         }
 
-        public void CreateInstantNode(Jid to, IqCB cb)
-        {
-            CreateInstantNode(to, null, cb, null);
-        }
-
-        public void CreateInstantNode(Jid to, Jid from, IqCB cb,object cbArgs)
+        public void CreateInstantNode(Jid to, Jid from, IqHandler cb)
         {
             PubSubIq pubsubIq = new PubSubIq(IqType.set, to);
 
@@ -84,7 +79,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -109,12 +104,12 @@ namespace agsXMPP.protocol.extensions.pubsub
         /// <param name="node"></param>
         public void CreateNode(Jid to, string node)
         {
-            CreateNode(to, null, node, true, null, null);
+            CreateNode(to, null, node, true, null);
         }
 
         public void CreateNode(Jid to, Jid from, string node)
         {
-            CreateNode(to, from, node, true, null, null);
+            CreateNode(to, from, node, true, null);
         }
 
         /// <summary>
@@ -125,25 +120,15 @@ namespace agsXMPP.protocol.extensions.pubsub
         /// <param name="defaultConfig"></param>
         public void CreateNode(Jid to, Jid from, string node, bool defaultConfig)
         {
-            CreateNode(to, from, node, defaultConfig, null, null);
+            CreateNode(to, from, node, defaultConfig, null);
         }
 
-        public void CreateNode(Jid to, string node, bool defaultConfig, IqCB cb)
+        public void CreateNode(Jid to, string node, bool defaultConfig, IqHandler cb)
         {
-            CreateNode(to, null, node, defaultConfig, cb, null);
+            CreateNode(to, null, node, defaultConfig, cb);
         }
 
-        public void CreateNode(Jid to, string node, bool defaultConfig, IqCB cb, object cbArgs)
-        {
-            CreateNode(to, null, node, defaultConfig, cb, cbArgs);
-        }
-
-        public void CreateNode(Jid to, Jid from, string node, bool defaultConfig, IqCB cb)
-        {
-            CreateNode(to, from, node, defaultConfig, cb, null);
-        }
-
-        public void CreateNode(Jid to, Jid from, string node, bool defaultConfig, IqCB cb, object cbArgs)
+        public void CreateNode(Jid to, Jid from, string node, bool defaultConfig, IqHandler cb)
         {
             PubSubIq pubsubIq = new PubSubIq(IqType.set, to);
 
@@ -158,7 +143,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -187,31 +172,20 @@ namespace agsXMPP.protocol.extensions.pubsub
         */
         public void CreateCollectionNode(Jid to, string node, bool defaultConfig)
         {
-            CreateCollectionNode(to, null, node, defaultConfig, null, null);
+            CreateCollectionNode(to, null, node, defaultConfig, null);
         }
 
-        public void CreateCollectionNode(Jid to, string node, bool defaultConfig, IqCB cb)
+        public void CreateCollectionNode(Jid to, string node, bool defaultConfig, IqHandler cb)
         {
-            CreateCollectionNode(to, null, node, defaultConfig, cb, null);
+            CreateCollectionNode(to, null, node, defaultConfig, cb);
         }
-
-        public void CreateCollectionNode(Jid to, string node, bool defaultConfig, IqCB cb, object cbArgs)
-        {
-            CreateCollectionNode(to, null, node, defaultConfig, cb, cbArgs);
-        }
-
 
         public void CreateCollectionNode(Jid to, Jid from, string node, bool defaultConfig)
         {
-            CreateCollectionNode(to, from, node, defaultConfig, null, null);
+            CreateCollectionNode(to, from, node, defaultConfig, null);
         }
 
-        public void CreateCollectionNode(Jid to, Jid from, string node, bool defaultConfig, IqCB cb)
-        {
-            CreateCollectionNode(to, from, node, defaultConfig, cb, null);
-        }
-
-        public void CreateCollectionNode(Jid to, Jid from, string node, bool defaultConfig, IqCB cb, object cbArgs)
+        public void CreateCollectionNode(Jid to, Jid from, string node, bool defaultConfig, IqHandler cb)
         {
             PubSubIq pubsubIq = new PubSubIq(IqType.set, to);
 
@@ -226,7 +200,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -246,30 +220,20 @@ namespace agsXMPP.protocol.extensions.pubsub
 
         public void DeleteNode(Jid to, string node)
         {
-            DeleteNode(to, null, node, null, null);
+            DeleteNode(to, null, node, null);
         }
 
-        public void DeleteNode(Jid to, string node, IqCB cb)
+        public void DeleteNode(Jid to, string node, IqHandler cb)
         {
-            DeleteNode(to, null, node, cb, null);
-        }
-        
-        public void DeleteNode(Jid to, string node, IqCB cb, object cbArgs)
-        {
-            DeleteNode(to, null, node, cb, cbArgs);
+            DeleteNode(to, null, node, cb);
         }
 
         public void DeleteNode(Jid to, Jid from, string node)
         {
-            DeleteNode(to, from, node, null, null);
+            DeleteNode(to, from, node, null);
         }
 
-        public void DeleteNode(Jid to, Jid from, string node, IqCB cb)
-        {
-            DeleteNode(to, from, node, cb, null);
-        }
-
-        public void DeleteNode(Jid to, Jid from, string node, IqCB cb, object cbArgs)
+        public void DeleteNode(Jid to, Jid from, string node, IqHandler cb)
         {
             owner.PubSubIq pubsubIq = new owner.PubSubIq(IqType.set, to);
 
@@ -281,7 +245,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -301,30 +265,20 @@ namespace agsXMPP.protocol.extensions.pubsub
 
         public void PurgeNode(Jid to, string node)
         {
-            PurgeNode(to, null, node, null, null);
+            PurgeNode(to, null, node, null);
         }
 
-        public void PurgeNode(Jid to, string node, IqCB cb)
+        public void PurgeNode(Jid to, string node, IqHandler cb)
         {
-            PurgeNode(to, null, node, cb, null);
-        }
-
-        public void PurgeNode(Jid to, string node, IqCB cb, object cbArgs)
-        {
-            PurgeNode(to, null, node, cb, cbArgs);
+            PurgeNode(to, null, node, cb);
         }
 
         public void PurgeNode(Jid to, Jid from, string node)
         {
-            PurgeNode(to, from, node, null, null);
+            PurgeNode(to, from, node, null);
         }
 
-        public void PurgeNode(Jid to, Jid from, string node, IqCB cb)
-        {
-            PurgeNode(to, from, node, cb, null);
-        }
-
-        public void PurgeNode(Jid to, Jid from, string node, IqCB cb, object cbArgs)
+        public void PurgeNode(Jid to, Jid from, string node, IqHandler cb)
         {
             owner.PubSubIq pubsubIq = new owner.PubSubIq(IqType.set, to);
 
@@ -336,7 +290,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -370,7 +324,7 @@ namespace agsXMPP.protocol.extensions.pubsub
         /// <param name="payload"></param>
         public void PublishItem(Jid to, string node, Item payload)
         {
-            PublishItem(to, null, node, payload, null, null);
+            PublishItem(to, null, node, payload, null);
         }
 
         /// <summary>
@@ -380,22 +334,9 @@ namespace agsXMPP.protocol.extensions.pubsub
         /// <param name="node"></param>
         /// <param name="payload"></param>
         /// <param name="cb"></param>
-        public void PublishItem(Jid to, string node, Item payload, IqCB cb)
+        public void PublishItem(Jid to, string node, Item payload, IqHandler cb)
         {
-            PublishItem(to, null, node, payload, cb, null);
-        }
-
-        /// <summary>
-        /// Publish a payload to a Node
-        /// </summary>
-        /// <param name="to"></param>
-        /// <param name="node"></param>
-        /// <param name="payload"></param>
-        /// <param name="cb"></param>
-        /// <param name="cbArgs"></param>
-        public void PublishItem(Jid to, string node, Item payload, IqCB cb, object cbArgs)
-        {
-            PublishItem(to, null, node, payload, cb, cbArgs);
+            PublishItem(to, null, node, payload, cb);
         }
 
         /// <summary>
@@ -407,7 +348,7 @@ namespace agsXMPP.protocol.extensions.pubsub
         /// <param name="payload"></param>
         public void PublishItem(Jid to, Jid from, string node, Item payload)
         {
-            PublishItem(to, from, node, payload, null, null);
+            PublishItem(to, from, node, payload, null);
         }
 
         /// <summary>
@@ -418,21 +359,7 @@ namespace agsXMPP.protocol.extensions.pubsub
         /// <param name="node"></param>
         /// <param name="payload"></param>
         /// <param name="cb"></param>
-        public void PublishItem(Jid to, Jid from, string node, Item payload, IqCB cb)
-        {
-            PublishItem(to, from, node, payload, cb, null);
-        }
-
-        /// <summary>
-        /// Publish a payload to a Node
-        /// </summary>
-        /// <param name="to"></param>
-        /// <param name="from"></param>
-        /// <param name="node"></param>
-        /// <param name="payload"></param>
-        /// <param name="cb"></param>
-        /// <param name="cbArgs"></param>
-        public void PublishItem(Jid to, Jid from, string node, Item payload, IqCB cb, object cbArgs)
+        public void PublishItem(Jid to, Jid from, string node, Item payload, IqHandler cb)
         {
             PubSubIq pubsubIq = new PubSubIq(IqType.set, to);
 
@@ -447,7 +374,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
 
         #endregion
@@ -468,31 +395,21 @@ namespace agsXMPP.protocol.extensions.pubsub
 
         public void RetractItem(Jid to, string node, string id)
         {
-            RetractItem(to, null, node, id, null, null);
+            RetractItem(to, null, node, id, null);
         }
 
-        public void RetractItem(Jid to, string node, string id, IqCB cb)
+        public void RetractItem(Jid to, string node, string id, IqHandler cb)
         {
-            RetractItem(to, null, node, id, cb, null);
-        }
-
-        public void RetractItem(Jid to, string node, string id, IqCB cb, object cbArgs)
-        {
-            RetractItem(to, null, node, id, cb, cbArgs);
+            RetractItem(to, null, node, id, cb);
         }
 
 
         public void RetractItem(Jid to, Jid from, string node, string id)
         {
-            RetractItem(to, from, node, id, null, null);
+            RetractItem(to, from, node, id, null);
         }
 
-        public void RetractItem(Jid to, Jid from, string node, string id, IqCB cb)
-        {
-            RetractItem(to, from, node, id, cb, null);
-        }
-
-        public void RetractItem(Jid to, Jid from, string node, string id, IqCB cb, object cbArgs)
+        public void RetractItem(Jid to, Jid from, string node, string id, IqHandler cb)
         {
             PubSubIq pubsubIq = new PubSubIq(IqType.set, to);
 
@@ -505,7 +422,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -531,30 +448,20 @@ namespace agsXMPP.protocol.extensions.pubsub
         /// <param name="node">node to which we want to subscribe</param>
         public void Subscribe(Jid to, Jid subscribe, string node)
         {
-            Subscribe(to, null, subscribe, node, null, null);
+            Subscribe(to, null, subscribe, node, null);
         }
 
-        public void Subscribe(Jid to, Jid subscribe, string node, IqCB cb)
+        public void Subscribe(Jid to, Jid subscribe, string node, IqHandler cb)
         {
-            Subscribe(to, null, subscribe, node, cb, null);
-        }
-
-        public void Subscribe(Jid to, Jid subscribe, string node, IqCB cb, object cbArgs)
-        {
-            Subscribe(to, null, subscribe, node, cb, cbArgs);
+            Subscribe(to, null, subscribe, node, cb);
         }
 
         public void Subscribe(Jid to, Jid from, Jid subscribe, string node)
         {
-            Subscribe(to, from, subscribe, node, null, null);
+            Subscribe(to, from, subscribe, node, null);
         }
 
-        public void Subscribe(Jid to, Jid from, Jid subscribe, string node, IqCB cb)
-        {
-            Subscribe(to, from, subscribe, node, cb, null);
-        }
-
-        public void Subscribe(Jid to, Jid from, Jid subscribe, string node, IqCB cb, object cbArgs)
+        public void Subscribe(Jid to, Jid from, Jid subscribe, string node, IqHandler cb)
         {
             PubSubIq pubsubIq = new PubSubIq(IqType.set, to);
 
@@ -566,7 +473,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
 
         #endregion
@@ -601,27 +508,17 @@ namespace agsXMPP.protocol.extensions.pubsub
 
         public void Unsubscribe(Jid to, Jid unsubscribe, string node, string subid)
         {
-            Unsubscribe(to, null, unsubscribe, node, subid, null, null);
+            Unsubscribe(to, null, unsubscribe, node, subid, null);
         }
 
-        public void Unsubscribe(Jid to, Jid unsubscribe, string node, IqCB cb)
+        public void Unsubscribe(Jid to, Jid unsubscribe, string node, IqHandler cb)
         {
-            Unsubscribe(to, null, unsubscribe, node, cb, null);
+            Unsubscribe(to, null, unsubscribe, node, cb);
         }
 
-        public void Unsubscribe(Jid to, Jid unsubscribe, string node, string subid, IqCB cb)
+        public void Unsubscribe(Jid to, Jid unsubscribe, string node, string subid, IqHandler cb)
         {
-            Unsubscribe(to, null, unsubscribe, node, subid, cb, null);
-        }
-
-        public void Unsubscribe(Jid to, Jid unsubscribe, string node, IqCB cb, object cbArgs)
-        {
-            Unsubscribe(to, null, unsubscribe, node, cb, cbArgs);
-        }
-
-        public void Unsubscribe(Jid to, Jid unsubscribe, string node, string subid, IqCB cb, object cbArgs)
-        {
-            Unsubscribe(to, null, unsubscribe, node, subid, cb, cbArgs);
+            Unsubscribe(to, null, unsubscribe, node, subid, cb);
         }
 
         public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node)
@@ -631,25 +528,15 @@ namespace agsXMPP.protocol.extensions.pubsub
 
         public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node, string subid)
         {
-            Unsubscribe(to, from, unsubscribe, node, subid, null, null);
+            Unsubscribe(to, from, unsubscribe, node, subid, null);
         }
 
-        public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node, IqCB cb)
+        public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node, IqHandler cb)
         {
-            Unsubscribe(to, from, unsubscribe, node, cb, null);
+            Unsubscribe(to, from, unsubscribe, node, cb);
         }
 
-        public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node, string subid, IqCB cb)
-        {
-            Unsubscribe(to, from, unsubscribe, node, subid, cb, null);
-        }
-
-        public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node, IqCB cb, object cbArgs)
-        {
-            Unsubscribe(to, from, unsubscribe, node, null, cb, cbArgs);
-        }
-
-        public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node, string subid, IqCB cb, object cbArgs)
+        public void Unsubscribe(Jid to, Jid from, Jid unsubscribe, string node, string subid, IqHandler cb)
         {
             PubSubIq pubsubIq = new PubSubIq(IqType.set, to);
 
@@ -665,7 +552,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
 
         #endregion
@@ -683,30 +570,20 @@ namespace agsXMPP.protocol.extensions.pubsub
         */
         public void RequestSubscriptions(Jid to)
         {
-            RequestSubscriptions(to, null, null, null);
+            RequestSubscriptions(to, null, null);
         }
 
-        public void RequestSubscriptions(Jid to, IqCB cb)
+        public void RequestSubscriptions(Jid to, IqHandler cb)
         {
-            RequestSubscriptions(to, null, cb, null);
-        }
-
-        public void RequestSubscriptions(Jid to, IqCB cb, object cbArgs)
-        {
-            RequestSubscriptions(to, null, cb, cbArgs);
+            RequestSubscriptions(to, null, cb);
         }
 
         public void RequestSubscriptions(Jid to, Jid from)
         {
-            RequestSubscriptions(to, from, null, null);
+            RequestSubscriptions(to, from, null);
         }
 
-        public void RequestSubscriptions(Jid to, Jid from, IqCB cb)
-        {
-            RequestSubscriptions(to, from, cb, null);
-        }
-
-        public void RequestSubscriptions(Jid to, Jid from, IqCB cb, object cbArgs)
+        public void RequestSubscriptions(Jid to, Jid from, IqHandler cb)
         {
             PubSubIq pubsubIq = new PubSubIq(IqType.get, to);
 
@@ -718,7 +595,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -735,30 +612,20 @@ namespace agsXMPP.protocol.extensions.pubsub
         */
         public void RequestAffiliations(Jid to)
         {
-            RequestAffiliations(to, null, null, null);
+            RequestAffiliations(to, null, null);
         }
 
-        public void RequestAffiliations(Jid to, IqCB cb)
+        public void RequestAffiliations(Jid to, IqHandler cb)
         {
-            RequestAffiliations(to, null, cb, null);
-        }
-
-        public void RequestAffiliations(Jid to, IqCB cb, object cbArgs)
-        {
-            RequestAffiliations(to, null, cb, cbArgs);
+            RequestAffiliations(to, null, cb);
         }
 
         public void RequestAffiliations(Jid to, Jid from)
         {
-            RequestAffiliations(to, from, null, null);
+            RequestAffiliations(to, from, null);
         }
 
-        public void RequestAffiliations(Jid to, Jid from, IqCB cb)
-        {
-            RequestAffiliations(to, from, cb, null);
-        }
-
-        public void RequestAffiliations(Jid to, Jid from, IqCB cb, object cbArgs)
+        public void RequestAffiliations(Jid to, Jid from, IqHandler cb)
         {
             PubSubIq pubsubIq = new PubSubIq(IqType.get, to);
 
@@ -770,7 +637,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -788,30 +655,20 @@ namespace agsXMPP.protocol.extensions.pubsub
 
         public void RequestSubscriptionOptions(Jid to, Jid subscribe, string node)
         {
-            RequestSubscriptionOptions(to, null, subscribe, node, null, null);
+            RequestSubscriptionOptions(to, null, subscribe, node, null);
         }
 
-        public void RequestSubscriptionOptions(Jid to, Jid subscribe, string node, IqCB cb)
+        public void RequestSubscriptionOptions(Jid to, Jid subscribe, string node, IqHandler cb)
         {
-            RequestSubscriptionOptions(to, null, subscribe, node, cb, null);
-        }
-
-        public void RequestSubscriptionOptions(Jid to, Jid subscribe, string node, IqCB cb, object cbArgs)
-        {
-            RequestSubscriptionOptions(to, null, subscribe, node, cb, cbArgs);
+            RequestSubscriptionOptions(to, null, subscribe, node, cb);
         }
 
         public void RequestSubscriptionOptions(Jid to, Jid from, Jid subscribe, string node)
         {
-            RequestSubscriptionOptions(to, from, subscribe, node, null, null);
+            RequestSubscriptionOptions(to, from, subscribe, node, null);
         }
 
-        public void RequestSubscriptionOptions(Jid to, Jid from, Jid subscribe, string node, IqCB cb)
-        {
-            RequestSubscriptionOptions(to, from, subscribe, node, cb, null);
-        }
-
-        public void RequestSubscriptionOptions(Jid to, Jid from, Jid subscribe, string node, IqCB cb, object cbArgs)
+        public void RequestSubscriptionOptions(Jid to, Jid from, Jid subscribe, string node, IqHandler cb)
         {
             PubSubIq pubsubIq = new PubSubIq(IqType.get, to);
 
@@ -823,7 +680,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -841,30 +698,20 @@ namespace agsXMPP.protocol.extensions.pubsub
 
         public void OwnerRequestSubscribers(Jid to, string node)
         {
-            OwnerRequestSubscribers(to, null, node, null, null);
+            OwnerRequestSubscribers(to, null, node, null);
         }
 
-        public void OwnerRequestSubscribers(Jid to, string node, IqCB cb)
+        public void OwnerRequestSubscribers(Jid to, string node, IqHandler cb)
         {
-            OwnerRequestSubscribers(to, null, node, cb, null);
-        }
-
-        public void OwnerRequestSubscribers(Jid to, string node, IqCB cb, object cbArgs)
-        {
-            OwnerRequestSubscribers(to, null, node, cb, cbArgs);
+            OwnerRequestSubscribers(to, null, node, cb);
         }
 
         public void OwnerRequestSubscribers(Jid to, Jid from, string node)
         {
-            OwnerRequestSubscribers(to, from, node, null, null);
+            OwnerRequestSubscribers(to, from, node, null);
         }
 
-        public void OwnerRequestSubscribers(Jid to, Jid from, string node, IqCB cb)
-        {
-            OwnerRequestSubscribers(to, from, node, cb, null);
-        }
-
-        public void OwnerRequestSubscribers(Jid to, Jid from, string node, IqCB cb, object cbArgs)
+        public void OwnerRequestSubscribers(Jid to, Jid from, string node, IqHandler cb)
         {
             owner.PubSubIq pubsubIq = new owner.PubSubIq(IqType.get, to);
 
@@ -876,7 +723,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -904,31 +751,20 @@ namespace agsXMPP.protocol.extensions.pubsub
 
         public void OwnerModifySubscriptionState(Jid to, string node, Jid subscriber, SubscriptionState state)
         {
-            OwnerModifySubscriptionState(to, null, node, subscriber, state, null, null);
+            OwnerModifySubscriptionState(to, null, node, subscriber, state, null);
         }
 
-        public void OwnerModifySubscriptionState(Jid to, string node, Jid subscriber, SubscriptionState state, IqCB cb)
+        public void OwnerModifySubscriptionState(Jid to, string node, Jid subscriber, SubscriptionState state, IqHandler cb)
         {
-            OwnerModifySubscriptionState(to, null, node, subscriber, state, cb, null);
+            OwnerModifySubscriptionState(to, null, node, subscriber, state, cb);
         }
-
-        public void OwnerModifySubscriptionState(Jid to, string node, Jid subscriber, SubscriptionState state, IqCB cb, object cbArgs)
-        {
-            OwnerModifySubscriptionState(to, null, node, subscriber, state, cb, cbArgs);
-        }
-
 
         public void OwnerModifySubscriptionState(Jid to, Jid from, string node, Jid subscriber, SubscriptionState state)
         {
-            OwnerModifySubscriptionState(to, from, node, subscriber, state, null, null);
+            OwnerModifySubscriptionState(to, from, node, subscriber, state, null);
         }
 
-        public void OwnerModifySubscriptionState(Jid to, Jid from, string node, Jid subscriber, SubscriptionState state, IqCB cb)
-        {
-            OwnerModifySubscriptionState(to, from, node, subscriber, state, cb, null);
-        }
-
-        public void OwnerModifySubscriptionState(Jid to, Jid from, string node, Jid subscriber, SubscriptionState state, IqCB cb, object cbArgs)
+        public void OwnerModifySubscriptionState(Jid to, Jid from, string node, Jid subscriber, SubscriptionState state, IqHandler cb)
         {
             owner.PubSubIq pubsubIq = new owner.PubSubIq(IqType.set, to);
 
@@ -943,7 +779,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -964,31 +800,20 @@ namespace agsXMPP.protocol.extensions.pubsub
 
         public void OwnerModifySubscriptionStates(Jid to, string node, owner.Subscriber[] subscribers)
         {
-            OwnerModifySubscriptionStates(to, null, node, subscribers, null, null);
+            OwnerModifySubscriptionStates(to, null, node, subscribers, null);
         }
 
-        public void OwnerModifySubscriptionStates(Jid to, string node, owner.Subscriber[] subscribers, IqCB cb)
+        public void OwnerModifySubscriptionStates(Jid to, string node, owner.Subscriber[] subscribers, IqHandler cb)
         {
-            OwnerModifySubscriptionStates(to, null, node, subscribers, cb, null);
+            OwnerModifySubscriptionStates(to, null, node, subscribers, cb);
         }
-
-        public void OwnerModifySubscriptionStates(Jid to, string node, owner.Subscriber[] subscribers, IqCB cb, object cbArgs)
-        {
-            OwnerModifySubscriptionStates(to, null, node, subscribers, cb, cbArgs);
-        }
-
 
         public void OwnerModifySubscriptionStates(Jid to, Jid from, string node, owner.Subscriber[] subscribers)
         {
-            OwnerModifySubscriptionStates(to, from, node, subscribers, null, null);
+            OwnerModifySubscriptionStates(to, from, node, subscribers, null);
         }
 
-        public void OwnerModifySubscriptionStates(Jid to, Jid from, string node, owner.Subscriber[] subscribers, IqCB cb)
-        {
-            OwnerModifySubscriptionStates(to, from, node, subscribers, cb, null);
-        }
-
-        public void OwnerModifySubscriptionStates(Jid to, Jid from, string node, owner.Subscriber[] subscribers, IqCB cb, object cbArgs)
+        public void OwnerModifySubscriptionStates(Jid to, Jid from, string node, owner.Subscriber[] subscribers, IqHandler cb)
         {
             owner.PubSubIq pubsubIq = new owner.PubSubIq(IqType.set, to);
 
@@ -1003,7 +828,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -1023,31 +848,20 @@ namespace agsXMPP.protocol.extensions.pubsub
 
         public void OwnerRequestAffiliations(Jid to, string node)
         {
-            OwnerRequestAffiliations(to, null, node, null, null);
+            OwnerRequestAffiliations(to, null, node, null);
         }
 
-        public void OwnerRequestAffiliations(Jid to, string node, IqCB cb)
+        public void OwnerRequestAffiliations(Jid to, string node, IqHandler cb)
         {
-            OwnerRequestAffiliations(to, null, node, cb, null);
+            OwnerRequestAffiliations(to, null, node, cb);
         }
-
-        public void OwnerRequestAffiliations(Jid to, string node, IqCB cb, object cbArgs)
-        {
-            OwnerRequestAffiliations(to, null, node, cb, cbArgs);
-        }
-
 
         public void OwnerRequestAffiliations(Jid to, Jid from, string node)
         {
-            OwnerRequestAffiliations(to, from, node, null, null);
+            OwnerRequestAffiliations(to, from, node, null);
         }
 
-        public void OwnerRequestAffiliations(Jid to, Jid from, string node, IqCB cb)
-        {
-            OwnerRequestAffiliations(to, from, node, cb, null);
-        }
-
-        public void OwnerRequestAffiliations(Jid to, Jid from, string node, IqCB cb, object cbArgs)
+        public void OwnerRequestAffiliations(Jid to, Jid from, string node, IqHandler cb)
         {
             owner.PubSubIq pubsubIq = new owner.PubSubIq(IqType.get, to);
 
@@ -1059,7 +873,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -1082,31 +896,20 @@ namespace agsXMPP.protocol.extensions.pubsub
         
         public void OwnerModifyAffiliation(Jid to, string node, Jid affiliate, AffiliationType affiliation)
         {
-            OwnerModifyAffiliation(to, null, node, affiliate, affiliation, null, null);
+            OwnerModifyAffiliation(to, null, node, affiliate, affiliation, null);
         }
         
-        public void OwnerModifyAffiliation(Jid to, string node, Jid affiliate, AffiliationType affiliation, IqCB cb)
+        public void OwnerModifyAffiliation(Jid to, string node, Jid affiliate, AffiliationType affiliation, IqHandler cb)
         {
-            OwnerModifyAffiliation(to, null, node, affiliate, affiliation, cb, null);
+            OwnerModifyAffiliation(to, null, node, affiliate, affiliation, cb);
         }
-
-        public void OwnerModifyAffiliation(Jid to, string node, Jid affiliate, AffiliationType affiliation, IqCB cb, object cbArgs)
-        {
-            OwnerModifyAffiliation(to, null, node, affiliate, affiliation, cb, cbArgs);
-        }
-
 
         public void OwnerModifyAffiliation(Jid to, Jid from, string node, Jid affiliate, AffiliationType affiliation)
         {
-            OwnerModifyAffiliation(to, from, node, affiliate, affiliation, null, null);
+            OwnerModifyAffiliation(to, from, node, affiliate, affiliation, null);
         }
-        
-        public void OwnerModifyAffiliation(Jid to, Jid from, string node, Jid affiliate, AffiliationType affiliation, IqCB cb)
-        {
-            OwnerModifyAffiliation(to, from, node, affiliate, affiliation, cb, null);
-        }
-        
-        public void OwnerModifyAffiliation(Jid to, Jid from, string node, Jid affiliate, AffiliationType affiliation, IqCB cb, object cbArgs)
+
+        public void OwnerModifyAffiliation(Jid to, Jid from, string node, Jid affiliate, AffiliationType affiliation, IqHandler cb)
         {
             owner.PubSubIq pubsubIq = new owner.PubSubIq(IqType.set, to);
 
@@ -1121,7 +924,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
 
@@ -1145,31 +948,20 @@ namespace agsXMPP.protocol.extensions.pubsub
 
         public void OwnerModifyAffiliations(Jid to, string node, owner.Affiliate[] affiliates)
         {
-            OwnerModifyAffiliations(to, null, node, affiliates, null, null);
+            OwnerModifyAffiliations(to, null, node, affiliates, null);
         }
 
-        public void OwnerModifyAffiliations(Jid to, string node, owner.Affiliate[] affiliates, IqCB cb)
+        public void OwnerModifyAffiliations(Jid to, string node, owner.Affiliate[] affiliates, IqHandler cb)
         {
-            OwnerModifyAffiliations(to, null, node, affiliates, cb, null);
+            OwnerModifyAffiliations(to, null, node, affiliates, cb);
         }
-
-        public void OwnerModifyAffiliations(Jid to, string node, owner.Affiliate[] affiliates, IqCB cb, object cbArgs)
-        {
-            OwnerModifyAffiliations(to, null, node, affiliates, cb, cbArgs);
-        }
-
 
         public void OwnerModifyAffiliations(Jid to, Jid from, string node, owner.Affiliate[] affiliates)
         {
-            OwnerModifyAffiliations(to, from, node, affiliates, null, null);
+            OwnerModifyAffiliations(to, from, node, affiliates, null);
         }
 
-        public void OwnerModifyAffiliations(Jid to, Jid from, string node, owner.Affiliate[] affiliates, IqCB cb)
-        {
-            OwnerModifyAffiliations(to, from, node, affiliates, cb, null);
-        }
-
-        public void OwnerModifyAffiliations(Jid to, Jid from, string node, owner.Affiliate[] affiliates, IqCB cb, object cbArgs)
+        public void OwnerModifyAffiliations(Jid to, Jid from, string node, owner.Affiliate[] affiliates, IqHandler cb)
         {
             owner.PubSubIq pubsubIq = new owner.PubSubIq(IqType.set, to);
 
@@ -1184,7 +976,7 @@ namespace agsXMPP.protocol.extensions.pubsub
             if (cb == null)
                 m_connection.Send(pubsubIq);
             else
-                m_connection.IqGrabber.SendIq(pubsubIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(pubsubIq, cb);
         }
         #endregion
     }

@@ -334,17 +334,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         public void AcceptDefaultConfiguration(Jid room)
         {
-            AcceptDefaultConfiguration(room, null, null);
-        }
-
-        /// <summary>
-        /// create an "instant room". This means you accept the default configuration and dont want to configure the room.
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="cb"></param>
-        public void AcceptDefaultConfiguration(Jid room, IqCB cb)
-        {
-            AcceptDefaultConfiguration(room, cb, null);
+            AcceptDefaultConfiguration(room, null);
         }
 
         /// <summary>
@@ -353,7 +343,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         /// <param name="cb"></param>
         /// <param name="cbArgs"></param>
-        public void AcceptDefaultConfiguration(Jid room, IqCB cb, object cbArgs)
+        public void AcceptDefaultConfiguration(Jid room, IqHandler cb)
         {
             OwnerIq oIq = new agsXMPP.protocol.x.muc.iq.owner.OwnerIq(IqType.set, room);
             oIq.Query.AddChild(new Data(XDataFormType.submit));
@@ -361,7 +351,7 @@ namespace agsXMPP.protocol.x.muc
             if (cb == null)
                 m_connection.Send(oIq);
             else
-                m_connection.IqGrabber.SendIq(oIq, cb, cbArgs);
+                m_connection.IqGrabber.SendIq(oIq, cb);
         }
         
         /*
@@ -383,19 +373,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         public void RequestConfigurationForm(Jid room)
         {
-            RequestConfigurationForm(room, null, null);
-        }
-
-        /// <summary>
-        /// Request the configuration form of a chatroom.
-        /// You can request the from when creating a new room. or at any time later if you want to change the room configuration.
-        /// Only room owners can request this from. Otherwise the service must return a 403 forbidden error
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="cb"></param>
-        public void RequestConfigurationForm(Jid room, IqCB cb)
-        {
-            RequestConfigurationForm(room, cb, null);
+            RequestConfigurationForm(room, null);
         }
 
         /// <summary>
@@ -406,11 +384,11 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         /// <param name="cb"></param>
         /// <param name="cbArgs"></param>
-        public void RequestConfigurationForm(Jid room, IqCB cb, object cbArgs)
+        public void RequestConfigurationForm(Jid room, IqHandler cb)
         {
             OwnerIq oIq = new agsXMPP.protocol.x.muc.iq.owner.OwnerIq(IqType.get, room);          
 
-            m_connection.IqGrabber.SendIq(oIq, cb, cbArgs);
+            m_connection.IqGrabber.SendIq(oIq, cb);
         }
 
         /*
@@ -436,7 +414,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="nickname">Nickname od the occupant to kick</param>
         public void KickOccupant(Jid room, string nickname)
         {
-            KickOccupant(room, nickname, null, null, null);
+            KickOccupant(room, nickname, null, null);
         }
 
         /// <summary>
@@ -450,23 +428,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason">A optional reason why you kick this occupant</param>
         public void KickOccupant(Jid room, string nickname, string reason)
         {
-            KickOccupant(room, nickname, reason, null, null);
-        }
-
-
-        /// <summary>
-        /// Kick a occupant
-        /// A moderator has permissions kick a visitor or participant from a room.
-        /// The kick is normally performed based on the occupant's room nickname (though it MAY be based on the full JID)
-        /// and is completed by setting the role of a participant or visitor to a value of "none".
-        /// </summary>
-        /// <param name="room">Jid of the room to which this iq is sent</param>
-        /// <param name="nickname">Nickname od the occupant to kick</param>
-        /// <param name="reason">A optional reason why you kick this occupant</param>
-        /// <param name="cb">Callback which is invoked with the result to this iq</param>        
-        public void KickOccupant(Jid room, string nickname, string reason, IqCB cb)
-        {
-            KickOccupant(room, nickname, reason, cb, null);
+            KickOccupant(room, nickname, reason, null);
         }
 
         /// <summary>
@@ -480,9 +442,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason">A optional reason why you kick this occupant</param>
         /// <param name="cb">Callback which is invoked with the result to this iq</param>
         /// <param name="cbArg">Callback which is invoked with the result to this iq</param>
-        public void KickOccupant(Jid room, string nickname, string reason, IqCB cb, object cbArg)
+        public void KickOccupant(Jid room, string nickname, string reason, IqHandler cb)
         {
-            ChangeRole(Role.none, room, nickname, reason, cb, cbArg);            
+            ChangeRole(Role.none, room, nickname, reason, cb);            
         }
 
         /*
@@ -508,7 +470,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="nickname"></param>
         public void GrantVoice(Jid room, string nickname)
         {
-            GrantVoice(room, nickname, null, null, null);
+            GrantVoice(room, nickname, null, null);
         }
 
         /// <summary>
@@ -519,19 +481,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         public void GrantVoice(Jid room, string nickname, string reason)
         {
-            GrantVoice(room, nickname, reason, null, null);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="room">Jid of the room to which this iq is sent</param>
-        /// <param name="nickname"></param>
-        /// <param name="reason"></param>
-        /// <param name="cb"></param>        
-        public void GrantVoice(Jid room, string nickname, string reason, IqCB cb)
-        {
-            GrantVoice(room, nickname, reason, cb, null);
+            GrantVoice(room, nickname, reason, null);
         }
 
         /// <summary>
@@ -542,9 +492,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void GrantVoice(Jid room, string nickname, string reason, IqCB cb, object cbArg)
+        public void GrantVoice(Jid room, string nickname, string reason, IqHandler cb)
         {
-            ChangeRole(Role.participant, room, nickname, reason, cb, cbArg);            
+            ChangeRole(Role.participant, room, nickname, reason, cb);            
         }
 
         /*
@@ -569,7 +519,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="nickname"></param>
         public void RevokeVoice(Jid room, string nickname)
         {
-            RevokeVoice(room, nickname, null, null, null);
+            RevokeVoice(room, nickname, null, null);
         }
 
         /// <summary>
@@ -581,20 +531,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         public void RevokeVoice(Jid room, string nickname, string reason)
         {
-            RevokeVoice(room, nickname, reason, null, null);
-        }
-
-        /// <summary>
-        /// In a moderated room, a moderator may want to revoke a participant's privileges to speak.
-        /// The moderator can revoke voice from a participant by changing the participant's role to "visitor":
-        /// </summary>
-        /// <param name="room">Jid of the room to which this iq is sent</param>
-        /// <param name="nickname"></param>
-        /// <param name="reason"></param>
-        /// <param name="cb"></param>
-        public void RevokeVoice(Jid room, string nickname, string reason, IqCB cb)
-        {
-            RevokeVoice(room, nickname, reason, cb, null);
+            RevokeVoice(room, nickname, reason, null);
         }
 
         /// <summary>
@@ -606,9 +543,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void RevokeVoice(Jid room, string nickname, string reason, IqCB cb, object cbArg)
+        public void RevokeVoice(Jid room, string nickname, string reason, IqHandler cb)
         {
-            ChangeRole(Role.visitor, room, nickname, reason, cb, cbArg);
+            ChangeRole(Role.visitor, room, nickname, reason, cb);
         }        
 
         /*
@@ -641,27 +578,8 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room">Jid of the room to which this iq is sent</param>
         public void RequestVoiceList(Jid room)
         {
-            RequestVoiceList(room, null, null);
+            RequestVoiceList(room, null);
         }        
-        
-        /// <summary>
-        /// A moderator in a moderated room may want to modify the voice list. 
-        /// To do so, the moderator first requests the voice list by querying the room for all occupants 
-        /// with a role of 'participant'.
-        /// The service MUST then return the voice list to the moderator; each item MUST include 
-        /// the 'nick' and 'role' attributes and SHOULD include the 'affiliation' and 'jid' attributes.
-        /// The moderator MAY then modify the voice list. In order to do so, the moderator MUST send the 
-        /// changed items (i.e., only the "delta") back to the service; each item MUST include 
-        /// the 'nick' attribute and 'role' attribute (normally set to a value of "participant" or "visitor") 
-        /// but SHOULD NOT include the 'jid' attribute and MUST NOT include the 'affiliation' attribute 
-        /// (which is used to manage affiliations such as owner rather than the participant role),        
-        /// </summary>
-        /// <param name="room">Jid of the room to which this iq is sent</param>
-        /// <param name="cb"></param>
-        public void RequestVoiceList(Jid room, IqCB cb)
-        {
-            RequestVoiceList(room, cb, null);
-        }
 
         /// <summary>
         /// A moderator in a moderated room may want to modify the voice list. 
@@ -678,9 +596,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room">Jid of the room to which this iq is sent</param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void RequestVoiceList(Jid room, IqCB cb, object cbArg)
+        public void RequestVoiceList(Jid room, IqHandler cb)
         {
-            RequestList(Role.participant, room, cb, cbArg);            
+            RequestList(Role.participant, room, cb);            
         }
 
         /*
@@ -706,7 +624,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="user"></param>
         public void BanUser(Jid room, Jid user)
         {
-            BanUser(room, user, null, null, null);
+            BanUser(room, user, null, null);
         }
 
         /// <summary>
@@ -717,20 +635,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         public void BanUser(Jid room, Jid user, string reason)
         {
-            BanUser(room, user, reason, null, null);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="user"></param>
-        /// <param name="reason"></param>
-        /// <param name="cb"></param>
-        public void BanUser(Jid room, Jid user, string reason, IqCB cb)
-        {
-            BanUser(room, user, reason, cb, null);
+            BanUser(room, user, reason, null);
         }
 
         /// <summary>
@@ -741,9 +646,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void BanUser(Jid room, Jid user, string reason, IqCB cb, object cbArg)
+        public void BanUser(Jid room, Jid user, string reason, IqHandler cb)
         {
-            ChangeAffiliation(Affiliation.outcast, room, user, null, reason, cb, cbArg);            
+            ChangeAffiliation(Affiliation.outcast, room, user, null, reason, cb);            
         }
 
         /*
@@ -774,24 +679,8 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         public void RequestBanList(Jid room)
         {
-            RequestBanList(room, null, null);
+            RequestBanList(room, null);
         }        
-
-        /// <summary>
-        /// A room admin may want to modify the ban list. 
-        /// <remarks>
-        /// Note: The ban list is always based on a user's bare JID, 
-        /// although a nick (perhaps the last room nickname associated with that JID) MAY be included for convenience. 
-        /// To modify the list of banned JIDs, the admin first requests the ban list by querying the room for all 
-        /// users with an affiliation of 'outcast'.
-        /// </remarks>
-        /// </summary>
-        /// <param name="room"></param>        
-        /// <param name="cb"></param>
-        public void RequestBanList(Jid room, IqCB cb)
-        {
-            RequestBanList(room, cb, null);
-        }
 
         /// <summary>
         /// A room admin may want to modify the ban list. 
@@ -805,9 +694,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void RequestBanList(Jid room, IqCB cb, object cbArg)
+        public void RequestBanList(Jid room, IqHandler cb)
         {
-            RequestList(Affiliation.outcast, room, cb, cbArg);
+            RequestList(Affiliation.outcast, room, cb);
         }
 
 
@@ -835,19 +724,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="user"></param>
         public void GrantAdminPrivileges(Jid room, Jid user)
         {
-            GrantAdminPrivileges(room, user, null, null);
-        }
-
-        /// <summary>
-        /// Grant administrative privileges to a member or unaffiliated user.
-        /// This could be done by an room owner
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="user"></param>
-        /// <param name="cb"></param>
-        public void GrantAdminPrivileges(Jid room, Jid user, IqCB cb)
-        {
-            GrantAdminPrivileges(room, user, cb, null);
+            GrantAdminPrivileges(room, user, null);
         }
 
         /// <summary>
@@ -858,9 +735,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="user"></param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void GrantAdminPrivileges(Jid room, Jid user, IqCB cb, object cbArg)
+        public void GrantAdminPrivileges(Jid room, Jid user, IqHandler cb)
         {
-            ChangeAffiliation(Affiliation.admin, room, user, cb, cbArg);
+            ChangeAffiliation(Affiliation.admin, room, user, cb);
         }
 
 
@@ -895,7 +772,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="user"></param>
         public void GrantMembership(Jid room, Jid user)
         {
-            GrantMembership(room, user, null, null, null);
+            GrantMembership(room, user, null, null);
         }
 
         /// <summary>
@@ -910,23 +787,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         public void GrantMembership(Jid room, Jid user, string reason)
         {
-            GrantMembership(room, user, reason, null, null);
-        }
-
-        /// <summary>
-        /// An admin can grant membership to a user; 
-        /// this is done by changing the user's affiliation to "member" 
-        /// (normally based on nick if the user is in the room, or on bare JID if not; 
-        /// in either case, if the nick is provided, that nick becomes the user's default nick in the room
-        /// if that functionality is supported by the implementation)
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="user"></param>
-        /// <param name="reason"></param>
-        /// <param name="cb"></param>
-        public void GrantMembership(Jid room, Jid user, string reason, IqCB cb)
-        {
-            GrantMembership(room, user, reason, cb, null);
+            GrantMembership(room, user, reason, null);
         }
 
         /// <summary>
@@ -941,9 +802,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void GrantMembership(Jid room, Jid user, string reason, IqCB cb, object cbArg)
+        public void GrantMembership(Jid room, Jid user, string reason, IqHandler cb)
         {
-            ChangeAffiliation(Affiliation.member, room, user, null, reason, cb, cbArg);
+            ChangeAffiliation(Affiliation.member, room, user, null, reason, cb);
         }
 
         /// <summary>
@@ -957,7 +818,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="nickname"></param>
         public void GrantMembership(Jid room, string nickname)
         {
-            GrantMembership(room, nickname, null, null, null);
+            GrantMembership(room, nickname, null, null);
         }
 
         /// <summary>
@@ -972,23 +833,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         public void GrantMembership(Jid room, string nickname, string reason)
         {
-            GrantMembership(room, nickname, reason, null, null);
-        }
-
-        /// <summary>
-        /// An admin can grant membership to a user; 
-        /// this is done by changing the user's affiliation to "member" 
-        /// (normally based on nick if the user is in the room, or on bare JID if not; 
-        /// in either case, if the nick is provided, that nick becomes the user's default nick in the room
-        /// if that functionality is supported by the implementation)
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="nickname"></param>
-        /// <param name="reason"></param>
-        /// <param name="cb"></param>
-        public void GrantMembership(Jid room, string nickname, string reason, IqCB cb)
-        {
-            GrantMembership(room, nickname, reason, cb, null);
+            GrantMembership(room, nickname, reason, null);
         }
 
         /// <summary>
@@ -1003,9 +848,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void GrantMembership(Jid room, string nickname, string reason, IqCB cb, object cbArg)
+        public void GrantMembership(Jid room, string nickname, string reason, IqHandler cb)
         {
-            ChangeAffiliation(Affiliation.member, room, nickname, reason, cb, cbArg);
+            ChangeAffiliation(Affiliation.member, room, nickname, reason, cb);
         }
 
 
@@ -1039,21 +884,10 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         /// <param name="user"></param>
         /// <param name="cb"></param>
-        public void GrantOwnershipPrivileges(Jid room, Jid user, IqCB cb)
-        {
-            ChangeAffiliation(Affiliation.owner, room, user, cb, null);
-        }
-
-        /// <summary>
-        /// If allowed by an implementation, an owner MAY grant ownership privileges to another user.        
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="user"></param>
-        /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void GrantOwnershipPrivileges(Jid room, Jid user, IqCB cb, object cbArg)
+        public void GrantOwnershipPrivileges(Jid room, Jid user, IqHandler cb)
         {
-            ChangeAffiliation(Affiliation.owner, room, user, cb, cbArg);
+            ChangeAffiliation(Affiliation.owner, room, user, cb);
         }
 
         /*
@@ -1094,20 +928,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         public void RevokeMembership(Jid room, string nickname, string reason)
         {
-            RevokeMembership(room, nickname, reason, null, null);
-        }
-
-        /// <summary>
-        /// An admin may want to revoke a user's membership
-        /// this is done by changing the user's affiliation to "none"
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="nickname"></param>
-        /// <param name="reason"></param>
-        /// <param name="cb"></param>
-        public void RevokeMembership(Jid room, string nickname, string reason, IqCB cb)
-        {
-            RevokeMembership(room, nickname, reason, cb, null);
+            RevokeMembership(room, nickname, reason, null);
         }
 
         /// <summary>
@@ -1119,9 +940,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void RevokeMembership(Jid room, string nickname, string reason, IqCB cb, object cbArg)
+        public void RevokeMembership(Jid room, string nickname, string reason, IqHandler cb)
         {
-            ChangeAffiliation(Affiliation.none, room, nickname, reason, cb, cbArg);  
+            ChangeAffiliation(Affiliation.none, room, nickname, reason, cb);  
         }
 
 
@@ -1150,17 +971,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         public void RequestAdminList(Jid room)
         {
-            RequestAdminList(room, null, null);
-        }
-
-        /// <summary>
-        /// Request the list of admins. This could be done by the room owner
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="cb"></param>
-        public void RequestAdminList(Jid room, IqCB cb)
-        {
-            RequestAdminList(room, cb, null);
+            RequestAdminList(room, null);
         }
 
         /// <summary>
@@ -1169,9 +980,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void RequestAdminList(Jid room, IqCB cb, object cbArg)
+        public void RequestAdminList(Jid room, IqHandler cb)
         {
-            RequestList(Affiliation.admin, room, cb, cbArg);
+            RequestList(Affiliation.admin, room, cb);
         }
 
         /*
@@ -1197,17 +1008,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         public void RequestOwnerList(Jid room)
         {
-            RequestOwnerList(room, null, null);
-        }
-
-        /// <summary>
-        /// Request the owner list of a room
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="cb"></param>
-        public void RequestOwnerList(Jid room, IqCB cb)
-        {
-            RequestOwnerList(room, cb, null);
+            RequestOwnerList(room, null);
         }
 
         /// <summary>
@@ -1216,9 +1017,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void RequestOwnerList(Jid room, IqCB cb, object cbArg)
+        public void RequestOwnerList(Jid room, IqHandler cb)
         {
-            RequestList(Affiliation.owner, room, cb, cbArg);
+            RequestList(Affiliation.owner, room, cb);
         }
 
         /*
@@ -1248,24 +1049,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         public void RequestMemberList(Jid room)
         {
-            RequestMemberList(room, null, null);
-        }
-
-        /// <summary>
-        /// In the context of a members-only room, the member list is essentially a "whitelist" of people 
-        /// who are allowed to enter the room. Anyone who is not a member is effectively banned from entering the room, 
-        /// even if their affiliation is not "outcast".
-        /// In the context of an open room, the member list is simply a list of users (bare JID and reserved nick) 
-        /// who are registered with the room. Such users may appear in a room roster, have their room nickname reserved, 
-        /// be returned in search results or FAQ queries, and the like.
-        /// It is RECOMMENDED that only room admins have the privilege to modify the member list in members-only rooms. 
-        /// To do so, the admin first requests the member list by querying the room for all users with an affiliation of "member"
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="cb"></param>
-        public void RequestMemberList(Jid room, IqCB cb)
-        {
-            RequestMemberList(room, cb, null);
+            RequestMemberList(room, null);
         }
 
         /// <summary>
@@ -1281,9 +1065,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room"></param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void RequestMemberList(Jid room, IqCB cb, object cbArg)
+        public void RequestMemberList(Jid room, IqHandler cb)
         {
-            RequestList(Affiliation.member, room, cb, cbArg);            
+            RequestList(Affiliation.member, room, cb);
         }
 
         /*
@@ -1313,7 +1097,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="nickname"></param>
         public void GrantModeratorPrivileges(Jid room, string nickname)
         {
-            GrantModeratorPrivileges(room, nickname, null, null, null);
+            GrantModeratorPrivileges(room, nickname, null, null);
         }
 
         /// <summary>
@@ -1325,20 +1109,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         public void GrantModeratorPrivileges(Jid room, string nickname, string reason)
         {
-            GrantModeratorPrivileges(room, nickname, reason, null, null);
-        }
-
-        /// <summary>
-        /// An admin may want to grant moderator privileges to a participant or visitor
-        /// this is done by changing the user's role to "moderator"
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="nickname"></param>
-        /// <param name="reason"></param>
-        /// <param name="cb"></param>
-        public void GrantModeratorPrivileges(Jid room, string nickname, string reason, IqCB cb)
-        {
-            GrantModeratorPrivileges(room, nickname, reason, cb, null);
+            GrantModeratorPrivileges(room, nickname, reason, null);
         }
 
         /// <summary>
@@ -1350,9 +1121,9 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="reason"></param>
         /// <param name="cb"></param>
         /// <param name="cbArg"></param>
-        public void GrantModeratorPrivileges(Jid room, string nickname, string reason, IqCB cb, object cbArg)
+        public void GrantModeratorPrivileges(Jid room, string nickname, string reason, IqHandler cb)
         {
-            ChangeRole(Role.moderator, room, nickname, reason, cb, cbArg);
+            ChangeRole(Role.moderator, room, nickname, reason, cb);
         }
         
         /*
@@ -1375,22 +1146,17 @@ namespace agsXMPP.protocol.x.muc
 
         public void RevokeModerator(Jid room, string nickname)
         {
-            RevokeModerator(room, nickname, null, null, null);
+            RevokeModerator(room, nickname, null, null);
         }
 
         public void RevokeModerator(Jid room, string nickname, string reason)
         {
-            RevokeModerator(room, nickname, reason, null, null);
+            RevokeModerator(room, nickname, reason, null);
         }
 
-        public void RevokeModerator(Jid room, string nickname, string reason, IqCB cb)
+        public void RevokeModerator(Jid room, string nickname, string reason, IqHandler cb)
         {
-            RevokeModerator(room, nickname, reason, cb, null);
-        }
-
-        public void RevokeModerator(Jid room, string nickname, string reason, IqCB cb, object cbArg)
-        {
-            ChangeRole(Role.participant, room, nickname, reason, cb, cbArg);
+            ChangeRole(Role.participant, room, nickname, reason, cb);
         }
 
         /*
@@ -1417,17 +1183,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room">The room.</param>
         public void RequestModeratorList(Jid room)
         {
-            RequestModeratorList(room, null, null);
-        }
-
-        /// <summary>
-        /// Requests the moderator list.
-        /// </summary>
-        /// <param name="room">The room.</param>
-        /// <param name="cb">The cb.</param>
-        public void RequestModeratorList(Jid room, IqCB cb)
-        {
-            RequestModeratorList(room, cb, null);
+            RequestModeratorList(room, null);
         }
 
         /// <summary>
@@ -1436,13 +1192,13 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room">The room.</param>
         /// <param name="cb">The cb.</param>
         /// <param name="cbArg">The cb arg.</param>
-        public void RequestModeratorList(Jid room, IqCB cb, object cbArg)
+        public void RequestModeratorList(Jid room, IqHandler cb)
         {
-            RequestList(Role.moderator, room, cb, cbArg);
+            RequestList(Role.moderator, room, cb);
         }
 
 
-        public void RequestList(Affiliation affiliation, Jid room, IqCB cb, object cbArg)
+        public void RequestList(Affiliation affiliation, Jid room, IqHandler cb)
         {
             AdminIq aIq = new AdminIq();
             aIq.To = room;
@@ -1453,10 +1209,10 @@ namespace agsXMPP.protocol.x.muc
             if (cb == null)
                 m_connection.Send(aIq);
             else
-                m_connection.IqGrabber.SendIq(aIq, cb, cbArg);
+                m_connection.IqGrabber.SendIq(aIq, cb);
         }
 
-        public void RequestList(Role role, Jid room, IqCB cb, object cbArg)
+        public void RequestList(Role role, Jid room, IqHandler cb)
         {
             AdminIq aIq = new AdminIq();
             aIq.To = room;
@@ -1467,7 +1223,7 @@ namespace agsXMPP.protocol.x.muc
             if (cb == null)
                 m_connection.Send(aIq);
             else
-                m_connection.IqGrabber.SendIq(aIq, cb, cbArg);
+                m_connection.IqGrabber.SendIq(aIq, cb);
         }
 
         #region << Create Reserved Room >>
@@ -1479,21 +1235,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room">Jid of the room to create</param>
         public void CreateReservedRoom(Jid room)
         {
-            CreateReservedRoom(room, null, null);
-        }
-
-        /// <summary>
-        /// <para>
-        /// Creates a reserved room. The MUC server replies to this request either with an error if the room already exists 
-        /// or another error occured. Or with the configuration for, for the reserved room which you have submit in the
-        /// second step.
-        /// </para>        
-        /// </summary>
-        /// <param name="room">Jid of the room to create</param>
-        /// <param name="cb">callback for the response</param>
-        public void CreateReservedRoom(Jid room, IqCB cb)
-        {
-            CreateReservedRoom(room, cb, null);
+            CreateReservedRoom(room, null);
         }
 
         /// <summary>
@@ -1506,7 +1248,7 @@ namespace agsXMPP.protocol.x.muc
         /// <param name="room">Jid of the room to create</param>
         /// <param name="cb">callback for the response</param>
         /// <param name="cbArg">optional callback arguments</param>
-        public void CreateReservedRoom(Jid room, IqCB cb, object cbArg)
+        public void CreateReservedRoom(Jid room, IqHandler cb)
         {
             /*
             <iq from='crone1@shakespeare.lit/desktop'
@@ -1524,7 +1266,7 @@ namespace agsXMPP.protocol.x.muc
             if (cb == null)
                 m_connection.Send(iq);
             else
-                m_connection.IqGrabber.SendIq(iq, cb, cbArg);
+                m_connection.IqGrabber.SendIq(iq, cb);
         }
         #endregion       
 
@@ -1532,45 +1274,30 @@ namespace agsXMPP.protocol.x.muc
         #region << Destroy Room >>
         public void DestroyRoom(Jid room, Jid altVenue)
         {
-            DestroyRoom(room, altVenue, null, null, null);
+            DestroyRoom(room, altVenue, null, null);
         }
 
-        public void DestroyRoom(Jid room, Jid altVenue, IqCB cb)
+        public void DestroyRoom(Jid room, Jid altVenue, IqHandler cb)
         {
-            DestroyRoom(room, altVenue, null, cb, null);
-        }
-
-        public void DestroyRoom(Jid room, Jid altVenue, IqCB cb, object cbArg)
-        {
-            DestroyRoom(room, altVenue, null, cb, cbArg);
+            DestroyRoom(room, altVenue, null, cb);
         }
 
         public void DestroyRoom(Jid room, string reason)
         {
-            DestroyRoom(room, null, reason, null, null);
+            DestroyRoom(room, null, reason, null);
         }
 
-        public void DestroyRoom(Jid room, string reason, IqCB cb)
+        public void DestroyRoom(Jid room, string reason, IqHandler cb)
         {
-            DestroyRoom(room, null, reason, cb, null);
-        }
-
-        public void DestroyRoom(Jid room, string reason, IqCB cb, object cbArg)
-        {
-            DestroyRoom(room, null, reason, cb, cbArg);
+            DestroyRoom(room, null, reason, cb);
         }
 
         public void DestroyRoom(Jid room, Jid altVenue, string reason)
         {
-            DestroyRoom(room, altVenue, reason, null, null);
+            DestroyRoom(room, altVenue, reason, null);
         }
 
-        public void DestroyRoom(Jid room, Jid altVenue, string reason, IqCB cb)
-        {
-            DestroyRoom(room, altVenue, reason, cb, null);
-        }
-
-        public void DestroyRoom(Jid room, Jid altVenue, string reason, IqCB cb, object cbArg)       
+        public void DestroyRoom(Jid room, Jid altVenue, string reason, IqHandler cb)       
         {
             /*
              Example 177. Owner Submits Room Destruction Request
@@ -1604,22 +1331,17 @@ namespace agsXMPP.protocol.x.muc
             if (cb == null)
                 m_connection.Send(iq);
             else
-                m_connection.IqGrabber.SendIq(iq, cb, cbArg);
+                m_connection.IqGrabber.SendIq(iq, cb);
 
         }
         #endregion
 
         public void ModifyList(Jid room, agsXMPP.protocol.x.muc.iq.admin.Item[] items)
         {
-            ModifyList(room, items, null, null);
+            ModifyList(room, items, null);
         }
 
-        public void ModifyList(Jid room, agsXMPP.protocol.x.muc.iq.admin.Item[] items, IqCB cb)
-        {
-            ModifyList(room, items, cb, null);
-        }
-
-        public void ModifyList(Jid room, agsXMPP.protocol.x.muc.iq.admin.Item[] items, IqCB cb, object cbArg)
+        public void ModifyList(Jid room, agsXMPP.protocol.x.muc.iq.admin.Item[] items, IqHandler cb)
         {
             AdminIq aIq = new AdminIq();
             aIq.To = room;
@@ -1633,13 +1355,13 @@ namespace agsXMPP.protocol.x.muc
             if (cb == null)
                 m_connection.Send(aIq);
             else
-                m_connection.IqGrabber.SendIq(aIq, cb, cbArg);
+                m_connection.IqGrabber.SendIq(aIq, cb);
         }
 
 
         #region << private functions >>
 
-        private void ChangeRole(Role role, Jid room, string nickname, string reason, IqCB cb, object cbArg)
+        private void ChangeRole(Role role, Jid room, string nickname, string reason, IqHandler cb)
         {
             AdminIq aIq = new AdminIq();
             aIq.To = room;
@@ -1657,10 +1379,10 @@ namespace agsXMPP.protocol.x.muc
             if (cb == null)
                 m_connection.Send(aIq);
             else
-                m_connection.IqGrabber.SendIq(aIq, cb, cbArg);
+                m_connection.IqGrabber.SendIq(aIq, cb);
         }
         
-        private void ChangeAffiliation(Affiliation affiliation, Jid room, string nickname, string reason, IqCB cb, object cbArg)
+        private void ChangeAffiliation(Affiliation affiliation, Jid room, string nickname, string reason, IqHandler cb)
         {
             AdminIq aIq = new AdminIq();
             aIq.To = room;
@@ -1680,15 +1402,15 @@ namespace agsXMPP.protocol.x.muc
             if (cb == null)
                 m_connection.Send(aIq);
             else
-                m_connection.IqGrabber.SendIq(aIq, cb, cbArg);
+                m_connection.IqGrabber.SendIq(aIq, cb);
         }
 
-        private void ChangeAffiliation(Affiliation affiliation, Jid room, Jid user, IqCB cb, object cbArg)
+        private void ChangeAffiliation(Affiliation affiliation, Jid room, Jid user, IqHandler cb)
         {            
-            ChangeAffiliation(affiliation, room, user, null, null, cb, cbArg);
+            ChangeAffiliation(affiliation, room, user, null, null, cb);
         }
 
-        private void ChangeAffiliation(Affiliation affiliation, Jid room, Jid user, string nickname, string reason, IqCB cb, object cbArg)
+        private void ChangeAffiliation(Affiliation affiliation, Jid room, Jid user, string nickname, string reason, IqHandler cb)
         {
             var aIq = new AdminIq();
             aIq.To = room;
@@ -1711,7 +1433,7 @@ namespace agsXMPP.protocol.x.muc
             if (cb == null)
                 m_connection.Send(aIq);
             else
-                m_connection.IqGrabber.SendIq(aIq, cb, cbArg);      
+                m_connection.IqGrabber.SendIq(aIq, cb);      
         }
         #endregion
     }
