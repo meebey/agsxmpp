@@ -54,11 +54,13 @@ namespace agsXMPP.protocol.iq.disco
         }
         #endregion
 
-        private void OnIq(object sender, IQ iq)
+        private void OnIq(object sender, IQEventArgs e)
         {
             // DiscoInfo
-            if (m_AutoAnswerDiscoInfoRequests && iq.Query is DiscoInfo && iq.Type == IqType.get)
-                ProcessDiscoInfo(iq);
+            if (m_AutoAnswerDiscoInfoRequests && e.IQ.Query is DiscoInfo && e.IQ.Type == IqType.get) {
+                e.Handled = true;
+                ProcessDiscoInfo(e.IQ);
+            }
         }
 
         private void ProcessDiscoInfo(IQ iq)
@@ -76,59 +78,40 @@ namespace agsXMPP.protocol.iq.disco
         #region << Discover Info >>
         public void DiscoverInformation(Jid to)
         {
-            DiscoverInformation(to, null, null, null, null);
+            DiscoverInformation(to, null, null, null);
         }
 
         public void DiscoverInformation(Jid to, Jid from)
         {
-            DiscoverInformation(to, from, null, null, null);
+            DiscoverInformation(to, from, null, null);
         }
 
-        public void DiscoverInformation(Jid to, IqCB cb)
+        public void DiscoverInformation(Jid to, IqHandler cb)
         {
-            DiscoverInformation(to, null, null, cb, null);
+            DiscoverInformation(to, null, null, cb);
         }
 
-        public void DiscoverInformation(Jid to, Jid from, IqCB cb)
+        public void DiscoverInformation(Jid to, Jid from, IqHandler cb)
         {
-            DiscoverInformation(to, from, null, cb, null);
-        }
-
-        public void DiscoverInformation(Jid to, IqCB cb, object cbArgs)
-        {
-            DiscoverInformation(to, null, null, cb, cbArgs);
-        }
-
-        public void DiscoverInformation(Jid to, Jid from, IqCB cb, object cbArgs)
-        {
-            DiscoverInformation(to, from, null, cb, cbArgs);
+            DiscoverInformation(to, from, null, cb);
         }
 
         public void DiscoverInformation(Jid to, string node)
         {
-            DiscoverInformation(to, null, node, null, null);
+            DiscoverInformation(to, null, node, null);
         }
 
         public void DiscoverInformation(Jid to, Jid from, string node)
         {
-            DiscoverInformation(to, from, node, null, null);
+            DiscoverInformation(to, from, node, null);
         }
 
-        public void DiscoverInformation(Jid to, string node, IqCB cb)
+        public void DiscoverInformation(Jid to, string node, IqHandler cb)
         {
-            DiscoverInformation(to, null, node, cb, null);
+            DiscoverInformation(to, null, node, cb);
         }
 
-        public void DiscoverInformation(Jid to, Jid from, string node, IqCB cb)
-        {
-            DiscoverInformation(to, from, node, cb, null);
-        }
-
-        public void DiscoverInformation(Jid to, string node, IqCB cb, object cbArgs)
-        {
-            DiscoverInformation(to, null, node, cb, cbArgs);
-        }
-        public void DiscoverInformation(Jid to, Jid from, string node, IqCB cb, object cbArgs)
+        public void DiscoverInformation(Jid to, Jid from, string node, IqHandler cb)
         {
             /*
             
@@ -166,7 +149,7 @@ namespace agsXMPP.protocol.iq.disco
             if (node != null && node.Length > 0)
                 discoIq.Query.Node = node;
             
-            xmppConnection.IqGrabber.SendIq(discoIq, cb, cbArgs);
+            xmppConnection.IqGrabber.SendIq(discoIq, cb);
         }
         #endregion
 
@@ -178,55 +161,35 @@ namespace agsXMPP.protocol.iq.disco
 
         public void DiscoverItems(Jid to, Jid from)
         {
-            DiscoverItems(to, from, null, null, null);
+            DiscoverItems(to, from, null, null);
         }
 
-        public void DiscoverItems(Jid to, IqCB cb)
+        public void DiscoverItems(Jid to, IqHandler cb)
         {
-            DiscoverItems(to, null, null, cb, null);
+            DiscoverItems(to, null, null, cb);
         }
 
-        public void DiscoverItems(Jid to, Jid from, IqCB cb)
+        public void DiscoverItems(Jid to, Jid from, IqHandler cb)
         {
-            DiscoverItems(to, from, null, cb, null);
-        }
-
-        public void DiscoverItems(Jid to, IqCB cb, object cbArgs)
-        {
-            DiscoverItems(to, null, null, cb, cbArgs);
-        }
-
-        public void DiscoverItems(Jid to, Jid from, IqCB cb, object cbArgs)
-        {
-            DiscoverItems(to, from, null, cb, cbArgs);
+            DiscoverItems(to, from, null, cb);
         }
 
         public void DiscoverItems(Jid to, string node)
         {
-            DiscoverItems(to, null, node, null, null);
+            DiscoverItems(to, null, node, null);
         }
 
         public void DiscoverItems(Jid to, Jid from, string node)
         {
-            DiscoverItems(to, from, node, null, null);
+            DiscoverItems(to, from, node, null);
         }
 
-        public void DiscoverItems(Jid to, string node, IqCB cb)
+        public void DiscoverItems(Jid to, string node, IqHandler cb)
         {
-            DiscoverItems(to, null, node, cb, null);
+            DiscoverItems(to, null, node, cb);
         }
 
-        public void DiscoverItems(Jid to, Jid from, string node, IqCB cb)
-        {
-            DiscoverItems(to, from, node, cb, null);
-        }
-
-        public void DiscoverItems(Jid to, string node, IqCB cb, object cbArgs)
-        {
-            DiscoverItems(to, null, node, cb, cbArgs);
-        }
-
-        public void DiscoverItems(Jid to, Jid from, string node, IqCB cb, object cbArgs)
+        public void DiscoverItems(Jid to, Jid from, string node, IqHandler cb)
         {
             DiscoItemsIq discoIq = new DiscoItemsIq(IqType.get);
             discoIq.To = to;
@@ -237,7 +200,7 @@ namespace agsXMPP.protocol.iq.disco
             if (node != null && node.Length > 0)
                 discoIq.Query.Node = node;
 
-            xmppConnection.IqGrabber.SendIq(discoIq, cb, cbArgs);
+            xmppConnection.IqGrabber.SendIq(discoIq, cb);
         }
         #endregion
                         
