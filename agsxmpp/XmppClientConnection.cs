@@ -24,6 +24,7 @@ using System.IO;
 using System.Text;
 using System.Collections;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
@@ -500,6 +501,8 @@ namespace agsXMPP
         		
 		public event ObjectHandler				OnClose;
 
+        public event EventHandler<SendingServiceUnavailableEventArgs> SendingServiceUnavailable;
+
 
         /// <summary>
         /// This event is raised when a response to a roster query is received. The roster query contains the contact list.
@@ -708,6 +711,12 @@ namespace agsXMPP
 			if(!m_CleanUpDone)
 				CleanupSession();
 		}
+
+        protected virtual void OnSendingServiceUnavailable(SendingServiceUnavailableEventArgs e)
+        {
+            if (SendingServiceUnavailable != null)
+                SendingServiceUnavailable(this, e);
+        }
 
         public override void SocketOnError(object sender, Exception ex)
         {
@@ -1509,21 +1518,21 @@ namespace agsXMPP
             }
 
             if (!handled) {
-                if (e is IQ) {
-                    var iq = e as IQ;
-                    iq.Error = new protocol.client.Error(ErrorCondition.ServiceUnavailable);
-                } else if (e is Message) {
-                    var msg = e as Message;
-                    msg.Error = new protocol.client.Error(ErrorCondition.ServiceUnavailable);
-                } else if (e is Presence) {
-                    var pres = e as Presence;
-                    pres.Error = new protocol.client.Error(ErrorCondition.ServiceUnavailable);
-                } else {
+                var stanza = e as protocol.Base.StanzaWithError;
+                if (stanza == null) {
                     // what should we do here?
                     return;
                 }
-                var dir = (protocol.Base.DirectionalElement)e;
-                dir.SwitchDirection();
+                stanza.Error = new protocol.client.Error(ErrorCondition.ServiceUnavailable);
+                stanza.SwitchDirection();
+
+                // allow the client to prevent this message (privacy/security reasons)
+                var ev = new SendingServiceUnavailableEventArgs(stanza);
+                OnSendingServiceUnavailable(ev);
+                if (ev.Cancel) {
+                    // the client has cancelled this
+                    return;
+                }
                 Send((Element)e);
             }
 		}
@@ -1649,4 +1658,15 @@ namespace agsXMPP
 		}
 		#endregion        
 	}
+
+    public class SendingServiceUnavailableEventArgs : CancelEventArgs
+    {
+        public protocol.Base.StanzaWithError Stanza { get; protected set; }
+
+        public SendingServiceUnavailableEventArgs(protocol.Base.StanzaWithError stanza)
+            :base()
+        {
+            Stanza = stanza;
+        }
+    }
 }

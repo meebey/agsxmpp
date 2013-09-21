@@ -32,18 +32,6 @@ namespace agsXMPP.protocol.component
         {
             this.Namespace = Uri.ACCEPT;
         }
-                
-        public Error(int code)
-            : base(code)
-        {
-            this.Namespace = Uri.ACCEPT;
-        }
-
-        public Error(agsXMPP.protocol.client.ErrorCode code)
-            : base(code)
-        {
-            this.Namespace = Uri.ACCEPT;
-        }
 
         public Error(agsXMPP.protocol.client.ErrorType type)
             : base(type)

@@ -399,6 +399,7 @@
     <Compile Include="XmppClientConnectionState.cs" />
     <Compile Include="XmppComponentConnection.cs" />
     <Compile Include="XmppConnection.cs" />
+    <Compile Include="protocol\Base\StanzaWithError.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Xml\Xpnet\copying.txt" />
