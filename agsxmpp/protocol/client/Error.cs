@@ -252,78 +252,6 @@ namespace agsXMPP.protocol.client
 		wait
 	}
 
-
-	/// <summary>
-	/// The legacy Error Code
-	/// </summary>
-	public enum ErrorCode
-	{		
-		/// <summary>
-		/// Bad request
-		/// </summary>
-		BadRequest				= 400,
-		/// <summary>
-		/// Unauthorized
-		/// </summary>
-		Unauthorized			= 401,
-		/// <summary>
-		/// Payment required
-		/// </summary>
-		PaymentRequired			= 402,
-		/// <summary>
-		/// Forbidden
-		/// </summary>
-		Forbidden				= 403,
-		/// <summary>
-		/// Not found
-		/// </summary>
-		NotFound				= 404,
-		/// <summary>
-		/// Not allowed
-		/// </summary>
-		NotAllowed				= 405,
-		/// <summary>
-		/// Not acceptable
-		/// </summary>
-		NotAcceptable			= 406,
-		/// <summary>
-		/// Registration required 
-		/// </summary>
-		RegistrationRequired	= 407,
-		/// <summary>
-		/// Request timeout
-		/// </summary>
-		RequestTimeout			= 408,
-		/// <summary>
-		/// Conflict
-		/// </summary>
-		Conflict                = 409,
-		/// <summary>
-		/// Internal server error
-		/// </summary>
-		InternalServerError		= 500,
-		/// <summary>
-		/// Not implemented
-		/// </summary>
-		NotImplemented			= 501,
-		/// <summary>
-		/// Remote server error
-		/// </summary>
-		RemoteServerError		= 502,
-		/// <summary>
-		/// Service unavailable
-		/// </summary>
-		ServiceUnavailable		= 503,
-		/// <summary>
-		/// Remote server timeout
-		/// </summary>
-		RemoteServerTimeout		= 504,
-		/// <summary>
-		/// Disconnected
-		/// </summary>
-		Disconnected            = 510
-	}
-
 	
 	/// <summary>
 	/// Summary description for Error.
@@ -337,20 +265,6 @@ namespace agsXMPP.protocol.client
             this.Namespace  = Uri.CLIENT;
 			this.TagName    = "error";
         }
-
-        #region << Obsolete Constructors >>
-        [Obsolete("Please don't use old Jabber style errors. Use XMPP ErrorCondition instead")]
-		public Error(int code) : this()
-		{			
-			this.SetAttribute("code", code.ToString());
-		}
-
-        [Obsolete("Please don't use old Jabber style errors. Use XMPP ErrorCondition instead")]
-        public Error(ErrorCode code) : this()
-        {
-            this.SetAttribute("code", (int)code);
-        }
-        #endregion
 
         /// <summary>
 		/// Creates an error Element according the the condition
@@ -410,18 +324,6 @@ namespace agsXMPP.protocol.client
                 SetTag("text", value, Uri.STANZAS);
             }
         }
-
-		public ErrorCode Code
-		{
-			get
-			{
-				return (ErrorCode) GetAttributeInt("code");
-			}
-			set
-			{
-				SetAttribute("code", (int) value);
-			}
-		}
        
 		public ErrorType Type
 		{
