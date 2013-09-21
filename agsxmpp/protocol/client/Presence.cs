@@ -30,7 +30,7 @@ namespace agsXMPP.protocol.client
 	/// <summary>
 	/// Zusammenfassung für Presence.
 	/// </summary>
-	public class Presence : Base.Stanza
+	public class Presence : Base.StanzaWithError
     {
         #region << Constructors >>
         public Presence()
@@ -85,29 +85,6 @@ namespace agsXMPP.protocol.client
 			}
 
 		}
-
-        /// <summary>
-        /// Error Child Element
-        /// </summary>
-        public agsXMPP.protocol.client.Error Error
-        {
-            get
-            {
-                return SelectSingleElement(typeof(agsXMPP.protocol.client.Error)) as agsXMPP.protocol.client.Error;
-
-            }
-            set
-            {
-                // set type automatically to error
-                Type = PresenceType.error;
-
-                if (HasTag(typeof(agsXMPP.protocol.client.Error)))
-                    RemoveTag(typeof(agsXMPP.protocol.client.Error));
-
-                if (value != null)
-                    this.AddChild(value);
-            }
-        }
 
         /// <summary>
         /// The OPTIONAL show element contains non-human-readable XML character data that specifies the particular availability

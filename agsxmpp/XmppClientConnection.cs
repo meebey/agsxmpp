@@ -1509,21 +1509,14 @@ namespace agsXMPP
             }
 
             if (!handled) {
-                if (e is IQ) {
-                    var iq = e as IQ;
-                    iq.Error = new protocol.client.Error(ErrorCondition.ServiceUnavailable);
-                } else if (e is Message) {
-                    var msg = e as Message;
-                    msg.Error = new protocol.client.Error(ErrorCondition.ServiceUnavailable);
-                } else if (e is Presence) {
-                    var pres = e as Presence;
-                    pres.Error = new protocol.client.Error(ErrorCondition.ServiceUnavailable);
-                } else {
+                var stanza = e as protocol.Base.StanzaWithError;
+                if (stanza == null) {
                     // what should we do here?
                     return;
                 }
-                var dir = (protocol.Base.DirectionalElement)e;
-                dir.SwitchDirection();
+                stanza.Error = new protocol.client.Error(ErrorCondition.ServiceUnavailable);
+                stanza.SwitchDirection();
+
                 Send((Element)e);
             }
 		}

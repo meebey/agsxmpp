@@ -44,7 +44,7 @@ namespace agsXMPP.protocol.client
 	/// <summary>
 	/// Iq Stanza.
 	/// </summary>
-	public class IQ : Base.Stanza
+	public class IQ : Base.StanzaWithError
 	{        
         #region << Constructors >>
         public IQ()
@@ -101,29 +101,6 @@ namespace agsXMPP.protocol.client
 					RemoveTag("query");				
 			}
 		}
-
-        /// <summary>
-        /// Error Child Element
-        /// </summary>
-        public agsXMPP.protocol.client.Error Error
-        {
-            get
-            {
-                return SelectSingleElement(typeof(agsXMPP.protocol.client.Error)) as agsXMPP.protocol.client.Error;
-
-            }
-            set
-            {
-                // set type automatically to error
-                Type = IqType.error;
-
-                if (HasTag(typeof(agsXMPP.protocol.client.Error)))
-                    RemoveTag(typeof(agsXMPP.protocol.client.Error));
-
-                if (value != null)
-                    this.AddChild(value);
-            }
-        }
 
 		/// <summary>
 		/// Get or Set the VCard if it is a Vcard IQ

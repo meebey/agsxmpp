@@ -32,7 +32,7 @@ namespace agsXMPP.protocol.client
 	/// <summary>
 	/// This class represents a XMPP message.
 	/// </summary>
-	public class Message : Base.Stanza
+	public class Message : Base.StanzaWithError
 	{
 		#region << Constructors >>
 		public Message()
@@ -239,29 +239,6 @@ namespace agsXMPP.protocol.client
 					SetAttribute("type", value.ToString()); 
 			}
 		}
-
-        /// <summary>
-        /// Error Child Element
-        /// </summary>
-        public agsXMPP.protocol.client.Error Error
-        {
-            get
-            {
-                return SelectSingleElement(typeof(agsXMPP.protocol.client.Error)) as agsXMPP.protocol.client.Error;
-
-            }
-            set
-            {
-                // set type automatically to error
-                Type = MessageType.error;
-
-                if (HasTag(typeof(agsXMPP.protocol.client.Error)))
-                    RemoveTag(typeof(agsXMPP.protocol.client.Error));
-
-                if (value != null)
-                    this.AddChild(value);
-            }
-        }
 
         /// <summary>
         /// The html part of the message if you want to support the html-im Jep. This part of the message is optional.
