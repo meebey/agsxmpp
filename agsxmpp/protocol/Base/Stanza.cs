@@ -93,25 +93,5 @@ namespace agsXMPP.protocol.Base
             get { return GetAttribute("xml:lang"); }
             set { SetAttribute("xml:lang", value); }
         }
-        		
-        ///// <summary>
-        ///// Error Child Element
-        ///// </summary>
-        //public agsXMPP.protocol.client.Error Error
-        //{
-        //    get
-        //    {
-        //        return SelectSingleElement(typeof(agsXMPP.protocol.client.Error)) as agsXMPP.protocol.client.Error;
-
-        //    }
-        //    set
-        //    {
-        //        if (HasTag(typeof(agsXMPP.protocol.client.Error)))
-        //            RemoveTag(typeof(agsXMPP.protocol.client.Error));
-                
-        //        if (value != null)
-        //            this.AddChild(value);
-        //    }
-        //}
 	}
 }
