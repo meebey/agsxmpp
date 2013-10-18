@@ -1523,6 +1523,10 @@ namespace agsXMPP
                     // what should we do here?
                     return;
                 }
+                if (stanza.Error != null) {
+                    // don't respond to error messages with service unavailable
+                    return;
+                }
                 stanza.Error = new protocol.client.Error(ErrorCondition.ServiceUnavailable);
                 stanza.SwitchDirection();
 
