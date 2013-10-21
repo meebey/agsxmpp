@@ -102,8 +102,10 @@ namespace agsXMPP
 		private		bool					m_UseSSL			= false;
 #if (CF || CF_2) && !BCCRYPTO
         private     bool                    m_UseStartTLS       = false;
+        private bool f_ForceStartTLS = false;
 #else
         private		bool					m_UseStartTLS		= true;
+        private bool f_ForceStartTLS = true;
 #endif
         private     bool                    m_UseCompression    = false;
 		internal	bool					m_Binded			= false;
@@ -311,6 +313,7 @@ namespace agsXMPP
         /// <summary>
 		/// use "old style" ssl for this connection (Port 5223).
 		/// </summary>
+        [Obsolete("Try to use ForceStartTls instead")]
 		public bool UseSSL
 		{
 			get	{ return m_UseSSL; }
@@ -325,6 +328,16 @@ namespace agsXMPP
 			}
 #endif
 		}
+
+        public bool ForceStartTls {
+            get {
+                return f_ForceStartTLS;
+            }
+            set {
+                UseStartTLS = UseStartTLS || value;
+                f_ForceStartTLS = value;
+            }
+        }
 
 		/// <summary>
 		/// use Start-TLS on this connection when the server supports it. Make sure UseSSL is false when 
@@ -1421,6 +1434,11 @@ namespace agsXMPP
 					DoChangeXmppConnectionState(XmppConnectionState.Securing);
 					Send(new StartTls());
 				}
+                // these are the initial ServerCapabilities, don't support Tls, but we require Tls
+                else if (ServerCapabilities == null && (!f.SupportsStartTls && ForceStartTls)) {
+                    FireOnError(this, new StartTlsException("StartTls is not supported on this server"));
+                    Close();
+                }
                 else
 #endif
                 if (m_UseCompression &&

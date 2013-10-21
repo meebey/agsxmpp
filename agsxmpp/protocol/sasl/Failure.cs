@@ -52,6 +52,8 @@ namespace agsXMPP.protocol.sasl
                     return FailureCondition.aborted;
                 else if (HasTag("incorrect-encoding"))
                     return FailureCondition.incorrect_encoding;
+                else if (HasTag("encryption-required"))
+                    return FailureCondition.encryption_required;
                 else if (HasTag("invalid-authzid"))
                     return FailureCondition.invalid_authzid;
                 else if (HasTag("invalid-mechanism"))
@@ -71,6 +73,8 @@ namespace agsXMPP.protocol.sasl
                     SetTag("aborted");
                 else if (value == FailureCondition.incorrect_encoding)
                     SetTag("incorrect-encoding");
+                else if (value == FailureCondition.encryption_required)
+                    SetTag("encryption-required");
                 else if (value == FailureCondition.invalid_authzid)
                     SetTag("invalid-authzid");
                 else if (value == FailureCondition.invalid_mechanism)

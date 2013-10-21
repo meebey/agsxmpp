@@ -399,6 +399,7 @@
     <Compile Include="XmppClientConnectionState.cs" />
     <Compile Include="XmppComponentConnection.cs" />
     <Compile Include="XmppConnection.cs" />
+    <Compile Include="Exceptions\StartTlsException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Xml\Xpnet\copying.txt" />
