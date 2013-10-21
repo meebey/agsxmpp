@@ -25,6 +25,7 @@ using agsXMPP.Net;
 using agsXMPP.Xml.Dom;
 using agsXMPP.protocol;
 using agsXMPP.protocol.component;
+using agsXMPP.Xml;
 
 
 namespace agsXMPP
@@ -243,9 +244,10 @@ namespace agsXMPP
 				CleanupSession();
 		}
 
-		public override void StreamParserOnStreamElement(object sender, Node e)
+        public override void StreamParserOnStreamElement(object sender, ElementEventArgs eventArgs)
 		{
-			base.StreamParserOnStreamElement (sender, e);
+            base.StreamParserOnStreamElement (sender, eventArgs);
+            var e = eventArgs.Element;
 
 			if (e is Handshake)
 			{
@@ -256,11 +258,13 @@ namespace agsXMPP
 
                 if (KeepAlive)
                     CreateKeepAliveTimer();
+                eventArgs.Handled  = true;
 			}
 			else if (e is Route)
 			{
 				if (OnRoute != null)
 					OnRoute(this, e as Route);
+                eventArgs.Handled = true;
 			}
             else if (e is protocol.Error)
             {
@@ -279,21 +283,31 @@ namespace agsXMPP
                             OnStreamError(this, e as Element);
                         break;
                 }                
+                eventArgs.Handled = true;
             }
             else if (e is Message)
             {
-                if (OnMessage != null)
+                if (OnMessage != null) {
                     OnMessage(this, e as Message);
+                    eventArgs.Handled = true;
+                }
             }
             else if (e is Presence)
             {
-                if (OnPresence != null)
+                if (OnPresence != null) {
                     OnPresence(this, e as Presence);
+                    eventArgs.Handled = true;
+                }
             }
             else if (e is IQ)
             {
-                if (OnIq != null)
-                    OnIq(this, new protocol.client.IQEventArgs((IQ)e));
+                if (OnIq != null) {
+                    var iqEventArgs = new protocol.client.IQEventArgs((IQ)e);
+                    OnIq(this, iqEventArgs);
+                    if (iqEventArgs.Handled) {
+                        eventArgs.Handled = true;
+                    }
+                }
             }
 		
 		}
