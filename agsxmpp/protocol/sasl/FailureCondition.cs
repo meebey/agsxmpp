@@ -9,6 +9,11 @@ namespace agsXMPP.protocol.sasl
         /// The receiving entity acknowledges an <abort/> element sent by the initiating entity; sent in reply to the <abort/> element.
         /// </summary>
         aborted,
+
+        /// <summary>
+        /// The mechanism chosen by the initiating entity may be used only if the stream is already encrypted; provided in response to the <auth/> element.
+        /// </summary>
+        encryption_required,
         
         /// <summary>
         /// The data provided by the initiating entity could not be processed because the [BASE64] (Josefsson, S., “The Base16, Base32, and Base64 Data Encodings,” July 2003.) encoding is incorrect (e.g., because the encoding does not adhere to the definition in Section 3 of [BASE64] (Josefsson, S., “The Base16, Base32, and Base64 Data Encodings,” July 2003.)); sent in reply to a <response/> element or an <auth/> element with initial response data.
