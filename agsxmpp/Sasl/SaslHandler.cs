@@ -26,6 +26,7 @@ using agsXMPP.protocol.iq.session;
 using agsXMPP.protocol.sasl;
 using agsXMPP.protocol.stream;
 using agsXMPP.Xml.Dom;
+using agsXMPP.Xml;
 
 namespace agsXMPP.Sasl
 {
@@ -62,12 +63,13 @@ namespace agsXMPP.Sasl
 			Dispose(false);
 		}
 		
-		internal void OnStreamElement(object sender, Node e)
+		internal void OnStreamElement(object sender, ElementEventArgs eventArgs)
 		{
             if (m_XmppClient == null) return;
             if ( m_XmppClient.XmppConnectionState == XmppConnectionState.Securing
                 || m_XmppClient.XmppConnectionState == XmppConnectionState.StartCompression)
                 return;
+            var e = eventArgs.Element;
 
 			if (e is Features)
 			{
@@ -236,7 +238,7 @@ namespace agsXMPP.Sasl
 				m_XmppClient.DoChangeXmppConnectionState(XmppConnectionState.StartSession);
 				SessionIq sIq = new SessionIq(IqType.set, new Jid(m_XmppClient.Server));
 				m_XmppClient.IqGrabber.SendIq(sIq, SessionResult);
-
+                e.Handled = true;
 			}
 			else if (iq.Type == IqType.error)
 			{
@@ -251,7 +253,7 @@ namespace agsXMPP.Sasl
 			{
 				m_XmppClient.DoChangeXmppConnectionState(XmppConnectionState.SessionStarted);
 				m_XmppClient.RaiseOnLogin();
-
+                e.Handled = true;
 			}
             else if (e.IQ.Type == IqType.error)
 			{

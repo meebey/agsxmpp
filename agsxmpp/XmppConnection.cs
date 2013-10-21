@@ -83,7 +83,8 @@ namespace agsXMPP
 			
             m_StreamParser.OnStreamStart		+= new StreamHandler(StreamParserOnStreamStart);
 			m_StreamParser.OnStreamEnd			+= new StreamHandler(StreamParserOnStreamEnd);
-			m_StreamParser.OnStreamElement		+= new StreamHandler(StreamParserOnStreamElement);
+            m_StreamParser.OnStreamElement += StreamParserOnStreamElement;
+            m_StreamParser.StreamElementNotHandled += StreamParserStreamElementNotHandled;
 			m_StreamParser.OnStreamError		+= new StreamError	(StreamParserOnStreamError);
             m_StreamParser.OnError              += new ErrorHandler (StreamParserOnError);            
 		}
@@ -302,9 +303,13 @@ namespace agsXMPP
 			this.FireOnReadXml(this, xml);
 		}
 
-		public virtual  void StreamParserOnStreamElement	(object sender, Node e)
+        public virtual void StreamParserStreamElementNotHandled(object sender, UnhandledElementEventArgs eventArgs)
+        {
+        }
+
+        public virtual void StreamParserOnStreamElement(object sender, ElementEventArgs e)
 		{
-			this.FireOnReadXml(this, e.ToString());
+            this.FireOnReadXml(this, e.Element.ToString());
 		}
 		public virtual void StreamParserOnStreamError		(object sender, Exception ex)
 		{

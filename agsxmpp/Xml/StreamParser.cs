@@ -46,7 +46,8 @@ namespace agsXMPP.Xml
 		// Stream Event Handlers
 		public event StreamHandler		OnStreamStart;
 		public event StreamHandler		OnStreamEnd;
-		public event StreamHandler		OnStreamElement;
+        public event EventHandler<ElementEventArgs> OnStreamElement;
+        public event EventHandler<UnhandledElementEventArgs> StreamElementNotHandled;
 		
         /// <summary>
         /// Event for XML-Stream errors
@@ -358,13 +359,25 @@ namespace agsXMPP.Xml
         {
             try
             {
-                if (OnStreamElement != null)
-                    OnStreamElement(this, el);
+                if (OnStreamElement != null) {
+                    var eventArgs = new ElementEventArgs(el);
+                    OnStreamElement(this, eventArgs);
+                    if (!eventArgs.Handled) {
+                        OnStreamElementNotHandled(el);
+                    }
+                }
             }
             catch (Exception ex)
             {
                 if (OnError != null)
                     OnError(this, ex);                
+            }
+        }
+
+        void OnStreamElementNotHandled(Element el)
+        {
+            if (StreamElementNotHandled != null) {
+                StreamElementNotHandled(this, new UnhandledElementEventArgs(el));
             }
         }
 
@@ -480,4 +493,31 @@ namespace agsXMPP.Xml
 			}
 		}
 	}
+    
+    public class UnhandledElementEventArgs : EventArgs
+    {
+        public Element Element { get; private set; }
+
+        public UnhandledElementEventArgs(Element el)
+        {
+            if (el == null) {
+                throw new ArgumentNullException("el");
+            }
+            Element = el;
+        }
+    }
+
+    public class ElementEventArgs : EventArgs
+    {
+        public Element Element { get; private set; }
+        public bool Handled { get; set; }
+
+        public ElementEventArgs(Element el)
+        {
+            if (el == null) {
+                throw new ArgumentNullException("el");
+            }
+            Element = el;
+        }
+    }
 }
