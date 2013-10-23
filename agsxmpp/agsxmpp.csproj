@@ -400,6 +400,7 @@
     <Compile Include="XmppComponentConnection.cs" />
     <Compile Include="XmppConnection.cs" />
     <Compile Include="protocol\Base\StanzaWithError.cs" />
+    <Compile Include="Exceptions\StartTlsException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Xml\Xpnet\copying.txt" />
