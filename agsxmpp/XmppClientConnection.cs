@@ -1238,6 +1238,11 @@ namespace agsXMPP
 			
             var iq = e.IQ;
 
+            if (iq.Error != null) {
+                FireOnAuthError(iq);
+                e.Handled = true;
+                return;
+            }
 			iq.GenerateId();
 			iq.SwitchDirection();
 			iq.Type = IqType.set;
