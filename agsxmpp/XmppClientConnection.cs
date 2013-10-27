@@ -1212,6 +1212,10 @@ namespace agsXMPP
 			//		</iq>
 			// Recv:<iq id="mx_login" type="result"/> 
 			
+            if (iq.Error != null) {
+                FireOnAuthError(iq);
+                return;
+            }
 			iq.GenerateId();
 			iq.SwitchDirection();
 			iq.Type = IqType.set;
