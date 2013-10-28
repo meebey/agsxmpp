@@ -1235,8 +1235,14 @@ namespace agsXMPP
 			//			<query xmlns='jabber:iq:auth'><username>gnauck</username><digest>27c05d464e3f908db3b2ca1729674bfddb28daf2</digest><resource>Office</resource></query>
 			//		</iq>
 			// Recv:<iq id="mx_login" type="result"/> 
+
+            e.Handled = true;
 			
             var iq = e.IQ;
+            if (iq.Error != null) {
+                FireOnAuthError(iq);
+                return;
+            }
 
 			iq.GenerateId();
 			iq.SwitchDirection();
@@ -1247,7 +1253,6 @@ namespace agsXMPP
 			auth.Resource = this.m_Resource;
 			auth.SetAuth(this.m_Username, this.m_Password, this.StreamId);
 			
-            e.Handled = true;
             IqGrabber.SendIq(iq, OnAuthenticate);
 		}
 
@@ -1508,7 +1513,6 @@ namespace agsXMPP
                     }
                 }
                 ServerCapabilities = f.Capabilities;
-                handled = true;
             }
 #if SSL || BCCRYPTO || CF_2
             else if (e is Proceed)
