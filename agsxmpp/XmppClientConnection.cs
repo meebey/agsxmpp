@@ -1438,8 +1438,8 @@ namespace agsXMPP
 					DoChangeXmppConnectionState(XmppConnectionState.Securing);
 					Send(new StartTls());
 				}
-                // these are the initial ServerCapabilities, don't support Tls, but we require Tls
-                else if (ServerCapabilities == null && (!f.SupportsStartTls && ForceStartTls)) {
+                // connection is not encrypted, doesn't support starttls but tls is forced
+                else if (!ClientSocket.IsEncrypted && !f.SupportsStartTls && ForceStartTls) {
                     FireOnError(this, new StartTlsException("StartTls is not supported on this server"));
                     Close();
                 }
