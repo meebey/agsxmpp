@@ -77,6 +77,8 @@ namespace agsXMPP.Net
         private long    m_ConnectTimeout    = 10000; // 10 seconds is default
 
         internal XmppConnection  m_XmppCon = null;
+
+        public bool IsEncrypted { get; protected set; }
         
 		public BaseSocket()
 		{
