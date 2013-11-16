@@ -183,6 +183,7 @@ namespace agsXMPP.Net
 
             // Socket is never compressed at startup
             m_Compressed = false;
+            IsEncrypted = false;
 
             m_ReadBuffer = null;
             m_ReadBuffer = new byte[BUFFERSIZE];
@@ -277,6 +278,7 @@ namespace agsXMPP.Net
 
             m_NetworkStream = m_SSLStream;
 			m_SSL = true;
+            IsEncrypted = true;
             
             return true;
 		}
