@@ -1370,20 +1370,14 @@ namespace agsXMPP
 		}
         
 		#region << StreamParser Events >>
-		public override void StreamParserOnStreamStart(object sender, Node e)
+        public override void StreamParserOnStreamStart(object sender, StreamStartedEventArgs e)
 		{
-			base.StreamParserOnStreamStart(this, e);
+            base.StreamParserOnStreamStart(this, e);
 
             m_StreamStarted = true;
 
-			//m_CleanUpDone = false; moved that to _Open();
-                            
-            protocol.Stream st = (protocol.Stream)e;
-            if (st == null)
-                return;
-
             // Read the server language string
-            m_ServerLanguage = st.Language;               
+            m_ServerLanguage = e.Stream.Language;
         
 
 			// Auth stuff

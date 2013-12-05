@@ -44,7 +44,7 @@ namespace agsXMPP.Xml
 	public class StreamParser 
 	{		
 		// Stream Event Handlers
-		public event StreamHandler		OnStreamStart;
+        public event EventHandler<StreamStartedEventArgs> OnStreamStart;
 		public event StreamHandler		OnStreamEnd;
         public event EventHandler<ElementEventArgs> OnStreamElement;
         public event EventHandler<UnhandledElementEventArgs> StreamElementNotHandled;
@@ -60,7 +60,7 @@ namespace agsXMPP.Xml
         public event ErrorHandler       OnError;
 			
 		private int						m_Depth;
-		private Node					m_root;
+        private protocol.Stream m_root;
 	    private Element                 current;
 		
 		private static System.Text.Encoding utf = System.Text.Encoding.UTF8;
@@ -293,10 +293,10 @@ namespace agsXMPP.Xml
             
 			if (m_root == null)
 			{
-				m_root = newel;
-				//FireOnDocumentStart(m_root);
-				if (OnStreamStart!=null)
-					OnStreamStart(this, m_root);
+                m_root = (protocol.Stream)newel;
+                if (OnStreamStart != null) {
+                    OnStreamStart(this, new StreamStartedEventArgs(m_root));
+                }
 			}
 			else
 			{
@@ -520,4 +520,18 @@ namespace agsXMPP.Xml
             Element = el;
         }
     }
+
+    public class StreamStartedEventArgs : EventArgs
+    {
+        public protocol.Stream Stream { get; private set; }
+
+        public StreamStartedEventArgs(protocol.Stream st)
+        {
+            if (st == null) {
+                throw new ArgumentNullException("st");
+            }
+            Stream = st;
+        }
+    }
+
 }

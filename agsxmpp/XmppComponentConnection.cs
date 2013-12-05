@@ -227,9 +227,9 @@ namespace agsXMPP
 		}
 
 		#region << Stream Parser events >>
-		public override void StreamParserOnStreamStart(object sender, Node e)
+        public override void StreamParserOnStreamStart(object sender, StreamStartedEventArgs e)
 		{
-			base.StreamParserOnStreamStart (sender, e);
+            base.StreamParserOnStreamStart(sender, e);
             
             m_StreamStarted = true;
 			
