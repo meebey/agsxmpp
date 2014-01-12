@@ -380,11 +380,17 @@ namespace agsXMPP
         #region << implicit operators >>
         static public implicit operator Jid(string value)
         {
+            if (value == null) {
+                return null;
+            }
             return new Jid(value);
         }
 
         static public implicit operator string(Jid jid)
         {
+            if (jid == null) {
+                return null;
+            }
             return jid.ToString();
         }
         #endregion
