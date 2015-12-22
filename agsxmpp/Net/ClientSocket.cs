@@ -79,16 +79,7 @@ namespace agsXMPP.Net
         /// <summary>
         /// is compression used for this connection
         /// </summary>
-        private bool m_Compressed = false;
-
-        /// <summary>
-        /// is used to compress data
-        /// </summary>
-        private Deflater deflater = null;
-        /// <summary>
-        /// is used to decompress data
-        /// </summary>
-        private Inflater inflater = null;
+        Compression Compression;
   
         public IProxyClient Proxy { get; set; }
 
@@ -158,12 +149,6 @@ namespace agsXMPP.Net
                 //}
             }
         }
-
-        public bool Compressed
-        {
-            get { return m_Compressed; }
-            set { m_Compressed = value; }
-        }
         #endregion
 
         /// <summary>
@@ -182,7 +167,6 @@ namespace agsXMPP.Net
             base.Connect();
 
             // Socket is never compressed at startup
-            m_Compressed = false;
             IsEncrypted = false;
 
             m_ReadBuffer = null;
@@ -373,21 +357,7 @@ namespace agsXMPP.Net
         /// </summary>
         public override void StartCompression()
         {
-            InitCompression();
-        }
-
-        /// <summary>
-        /// Initialize compression stuff (Inflater, Deflater)
-        /// </summary>
-        private void InitCompression()
-        {
-            base.StartCompression();
-
-            inflater = new Inflater();
-            deflater = new Deflater();
-
-            // Set the compressed flag to true when we init compression
-            m_Compressed = true;
+            Compression = new Compression();
         }
 
         /// <summary>
@@ -442,12 +412,12 @@ namespace agsXMPP.Net
                     //Console.WriteLine("Socket OnSend: " + System.Text.Encoding.UTF8.GetString(bData, 0, bData.Length));
 
                     // compress bytes if we are on a compressed socket
-                    if (m_Compressed)
+                    if (Compression != null)
                     {
                         byte[] tmpData = new byte[bData.Length];
                         bData.CopyTo(tmpData, 0);
 
-                        bData = Compress(bData);
+                        bData = Compression.Compress(bData);
 
                         // for compression debug statistics
                         // base.FireOnOutgoingCompressionDebug(this, bData, bData.Length, tmpData, tmpData.Length);
@@ -496,9 +466,9 @@ namespace agsXMPP.Net
                 if (nBytes > 0)
                 {
                     // uncompress Data if we are on a compressed socket
-                    if (m_Compressed)
+                    if (Compression != null)
                     {
-                        byte[] buf = Decompress(m_ReadBuffer, nBytes);
+                        byte[] buf = Compression.Decompress(m_ReadBuffer, nBytes);
                         base.FireOnReceive(buf, buf.Length);
                         // for compression debug statistics
                         //base.FireOnInComingCompressionDebug(this, m_ReadBuffer, nBytes, buf, buf.Length);
@@ -553,14 +523,32 @@ namespace agsXMPP.Net
                 }
             }
         }
+    }
 
-        #region << compression functions >>
+    class Compression
+    {
+        const int BUFFERSIZE = 1024;
+        /// <summary>
+        /// is used to compress data
+        /// </summary>
+        Deflater Deflater { get; set; }
+
+        /// <summary>
+        /// is used to decompress data
+        /// </summary>
+        Inflater Inflater { get; set; }
+
+        public Compression()
+        {
+            Deflater = new Deflater();
+            Inflater = new Inflater();
+        }
         /// <summary>
         /// Compress bytes
         /// </summary>
         /// <param name="bIn"></param>
         /// <returns></returns>
-        private byte[] Compress(byte[] bIn)
+        public byte[] Compress(byte[] bIn)
         {
             int ret;
 
@@ -568,14 +556,14 @@ namespace agsXMPP.Net
             // The libds sends always one complete XML Element/stanza,
             // it doesn't cache stanza and send them in groups, and also doesnt send partial
             // stanzas. So everything should be ok here.
-            deflater.SetInput(bIn);
-            deflater.Flush();
+            Deflater.SetInput(bIn);
+            Deflater.Flush();
 
             MemoryStream ms = new MemoryStream();
             do
             {
                 byte[] buf = new byte[BUFFERSIZE];
-                ret = deflater.Deflate(buf);
+                ret = Deflater.Deflate(buf);
                 if (ret > 0)
                     ms.Write(buf, 0, ret);
 
@@ -591,17 +579,17 @@ namespace agsXMPP.Net
         /// <param name="bIn"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        private byte[] Decompress(byte[] bIn, int length)
+        public byte[] Decompress(byte[] bIn, int length)
         {
             int ret;
 
-            inflater.SetInput(bIn, 0, length);
+            Inflater.SetInput(bIn, 0, length);
 
             MemoryStream ms = new MemoryStream();
             do
             {
                 byte[] buf = new byte[BUFFERSIZE];
-                ret = inflater.Inflate(buf);
+                ret = Inflater.Inflate(buf);
                 if (ret > 0)
                     ms.Write(buf, 0, ret);
 
@@ -609,7 +597,5 @@ namespace agsXMPP.Net
 
             return ms.ToArray();
         }
-
-        #endregion
     }
 }
