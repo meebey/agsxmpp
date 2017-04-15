@@ -1476,7 +1476,8 @@ namespace agsXMPP
 				// StartTLS stuff
 				protocol.stream.Features f = e as protocol.stream.Features;
 #if SSL || BCCRYPTO || CF_2
-				if (f.SupportsStartTls && m_UseStartTLS)
+                var startTls = f.StartTls;
+                if ((startTls != null) && (m_UseStartTLS || startTls.Required))
 				{
 					DoChangeXmppConnectionState(XmppConnectionState.Securing);
 					Send(new StartTls());
