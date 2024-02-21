@@ -32,7 +32,7 @@ namespace agsXMPP.Xml.Dom
 		{
             var sp =new StreamParser();
 
-            sp.OnStreamStart += (sender, node) => doc.ChildNodes.Add(node);
+            sp.OnStreamStart += (sender, e) => doc.ChildNodes.Add(e.Stream);
             sp.OnStreamElement += (sender, args) => doc.RootElement.ChildNodes.Add(args.Element);
             
             

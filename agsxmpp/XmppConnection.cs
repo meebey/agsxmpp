@@ -81,7 +81,7 @@ namespace agsXMPP
 			// Streamparser stuff
 			m_StreamParser = new StreamParser();
 			
-            m_StreamParser.OnStreamStart		+= new StreamHandler(StreamParserOnStreamStart);
+            m_StreamParser.OnStreamStart += StreamParserOnStreamStart;
 			m_StreamParser.OnStreamEnd			+= new StreamHandler(StreamParserOnStreamEnd);
             m_StreamParser.OnStreamElement += StreamParserOnStreamElement;
             m_StreamParser.StreamElementNotHandled += StreamParserStreamElementNotHandled;
@@ -273,19 +273,15 @@ namespace agsXMPP
 		#endregion
 
 		#region << StreamParser Events >>
-		public virtual void StreamParserOnStreamStart		(object sender, Node e)
+        public virtual void StreamParserOnStreamStart(object sender, StreamStartedEventArgs e)
 		{            
-            string xml = e.ToString().Trim();
+            string xml = e.Stream.ToString().Trim();
             xml = xml.Substring(0, xml.Length - 2) + ">";
 
             this.FireOnReadXml(this, xml);
 
-            protocol.Stream st = (protocol.Stream)e;
-            if (st != null)
-            {
-                m_StreamId = st.StreamId;
-                m_StreamVersion = st.Version;
-            }        
+            m_StreamId = e.Stream.StreamId;
+            m_StreamVersion = e.Stream.Version;
 		}
 
 		public virtual void StreamParserOnStreamEnd			(object sender, Node e)
